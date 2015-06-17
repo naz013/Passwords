@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_line">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/help_settings_title"
+                android:id="@+id/help"
+                android:paddingRight="15dp"
+                android:drawableLeft="@drawable/ic_help_grey600_24dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:drawablePadding="10dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_line">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/menu_about"
+                android:id="@+id/about"
+                android:paddingRight="15dp"
+                android:paddingTop="15dp"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/ic_info_outline_grey600_24dp"
+                android:paddingBottom="15dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_line">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/rate_settings_title"
+                android:id="@+id/rateApp"
+                android:paddingRight="15dp"
+                android:paddingTop="15dp"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/ic_star_rate_grey600_24dp"
+                android:paddingBottom="15dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_line">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/license_settings_title"
+                android:id="@+id/thanks"
+                android:paddingRight="15dp"
+                android:paddingTop="15dp"
+                android:drawableLeft="@drawable/ic_security_grey600_24dp"
+                android:paddingBottom="15dp"
+                android:drawablePadding="10dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

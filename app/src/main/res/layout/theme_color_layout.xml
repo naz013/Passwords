@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:paddingBottom="16dp"
+    android:paddingTop="24dp"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp">
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/themeGroup"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:id="@+id/red_checkbox"
+            android:button="@drawable/red_checkbox"
+            android:layout_margin="5dp"/>
+
+        <RadioButton
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:id="@+id/violet_checkbox"
+            android:button="@drawable/violet_checkbox"
+            android:layout_margin="5dp"/>
+
+        <RadioButton
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:id="@+id/green_checkbox"
+            android:button="@drawable/green_checkbox"
+            android:layout_margin="5dp"/>
+
+        <RadioButton
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:id="@+id/light_green_checkbox"
+            android:button="@drawable/light_green_checkbox"
+            android:layout_margin="5dp"/>
+    </RadioGroup>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/themeGroup2"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:id="@+id/blue_checkbox"
+            android:button="@drawable/blue_checkbox"
+            android:layout_margin="5dp"/>
+
+        <RadioButton
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:id="@+id/light_blue_checkbox"
+            android:button="@drawable/light_blue_checkbox"
+            android:layout_margin="5dp"/>
+
+        <RadioButton
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:id="@+id/yellow_checkbox"
+            android:button="@drawable/yellow_checkbox"
+            android:layout_margin="5dp"/>
+
+        <RadioButton
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:id="@+id/orange_checkbox"
+            android:button="@drawable/orange_checkbox"
+            android:layout_margin="5dp"/>
+
+    </RadioGroup>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/themeGroup3"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:id="@+id/grey_checkbox"
+            android:button="@drawable/grey_checkbox"
+            android:layout_margin="5dp"/>
+
+        <RadioButton
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:id="@+id/pink_checkbox"
+            android:button="@drawable/pink_checkbox"
+            android:layout_margin="5dp"/>
+
+        <RadioButton
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:id="@+id/sand_checkbox"
+            android:button="@drawable/sand_checkbox"
+            android:layout_margin="5dp"/>
+
+        <RadioButton
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:id="@+id/brown_checkbox"
+            android:button="@drawable/brown_checkbox"
+            android:layout_margin="5dp"/>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/themeClose"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:layout_gravity="center|right"
+        android:layout_marginTop="20dp"
+        android:text="@string/button_close"/>
+
+</LinearLayout>

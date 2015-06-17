@@ -1,0 +1,116 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/startSingleScreen"
+    android:background="@color/colorBlue" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:paddingTop="25dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="40sp"
+            android:text="@string/app_name"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/singleLayout"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:gravity="center|bottom"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/loginPass"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/enter_pass"
+                android:inputType="numberPassword"
+                android:maxLength="4"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/single_screen_forgot_password_title"
+                android:id="@+id/forgotPassword"
+                android:onClick="onClick"
+                android:visibility="visible"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"/>
+
+            <Button
+                android:id="@+id/loginButtonLoader"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="70dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/login_button_states"
+                android:text="@string/enter_button" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:layout_gravity="center"
+            android:gravity="center|bottom"
+            android:id="@+id/doubleLayout">
+
+            <EditText
+                android:id="@+id/firstPass"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/enter_pass"
+                android:inputType="numberPassword"
+                android:maxLength="4" />
+
+            <EditText
+                android:id="@+id/secondPass"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/repeat_pass"
+                android:inputType="numberPassword"
+                android:layout_marginTop="25dp"
+                android:maxLength="4"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"/>
+
+            <Button
+                android:id="@+id/loginButtonSaver"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/login_button_states"
+                android:text="@string/enter_button"
+                android:layout_gravity="center"
+                android:layout_marginTop="70dp"
+                android:layout_marginBottom="50dp"
+                android:textSize="18sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+</FrameLayout>
