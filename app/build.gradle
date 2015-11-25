@@ -8,9 +8,10 @@ android {
         applicationId "com.cray.software.passwords"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 23
+        versionCode 24
         versionName '1.2'
     }
+    
     signingConfigs {
         freeApp {
             storeFile file("passwords.jks")
@@ -25,6 +26,7 @@ android {
             keyPassword 'passpro20052014'
         }
     }
+    
     productFlavors {
         free {
             applicationId 'com.cray.software.passwords'
@@ -33,9 +35,10 @@ android {
         pro {
             applicationId 'com.cray.software.passwordspro'
             buildConfigField "boolean", "IS_PRO", "true"
-            versionCode 20
+            versionCode 21
         }
     }
+    
     buildTypes {
         release {
             minifyEnabled true
