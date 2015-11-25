@@ -24,7 +24,6 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
@@ -36,10 +35,6 @@ import com.cray.software.passwords.helpers.DataBase;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.interfaces.Constants;
-import com.cray.software.passwords.interfaces.ModuleManager;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 
 import java.util.Calendar;
 
@@ -49,7 +44,6 @@ public class AddItem extends ActionBarActivity {
     Spinner spinnerColor;
     ImageButton generateDialog;
     RelativeLayout showColorRelLay, addActLayout;
-    LinearLayout linearLayout;
 
     ColorSetter cSetter;
     SyncHelper sHelpers = new SyncHelper(AddItem.this);
@@ -59,8 +53,6 @@ public class AddItem extends ActionBarActivity {
     int myYear = 0;
     int myMonth = 0;
     int myDay = 1;
-
-    private AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,30 +112,6 @@ public class AddItem extends ActionBarActivity {
                 dateDialog().show();
             }
         });
-
-        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        linearLayout.setVisibility(View.GONE);
-        if (!new ModuleManager().isPro()) {
-            adView = (AdView) findViewById(R.id.adView);
-            adView.setVisibility(View.GONE);
-            AdRequest adRequest = new AdRequest.Builder()
-                    .build();
-            adView.loadAd(adRequest);
-
-            adView.setAdListener(new AdListener() {
-                @Override
-                public void onAdFailedToLoad(int errorCode) {
-                    linearLayout.setVisibility(View.GONE);
-                    adView.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onAdLoaded() {
-                    linearLayout.setVisibility(View.VISIBLE);
-                    adView.setVisibility(View.VISIBLE);
-                }
-            });
-        }
 
         generateDialog = (ImageButton) findViewById(R.id.generateDialog);
         generateDialog.setOnClickListener(new View.OnClickListener() {
@@ -520,13 +488,5 @@ public class AddItem extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (!new ModuleManager().isPro()) {
-            adView.destroy();
-        }
-        super.onDestroy();
     }
 }

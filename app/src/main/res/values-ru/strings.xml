@@ -189,7 +189,7 @@
     <string name="gen_insert">ВСТАВ</string>
     <string name="pass_length">Длина пароля должна быть больше 0</string>
     <string name="pass_checks">Вы должны отметить хотя бы один пункт</string>
-    <string name="copyright_text">2014 © hexrain Studio. All rights reserved.</string>
+    <string name="copyright_text">2015© Nazar Suhovych. Все права защищены.</string>
 
     <string name="export_settings_block">Экспорт и синхронизация</string>
     <string name="interface_block">Интерфейс пользователя</string>

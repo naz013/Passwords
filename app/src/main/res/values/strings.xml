@@ -188,7 +188,7 @@
     <string name="gen_insert">INS</string>
     <string name="pass_length">Password length must be more than 0</string>
     <string name="pass_checks">You must check at least one item</string>
-    <string name="copyright_text">2014 © hexrain Studio. All rights reserved.</string>
+    <string name="copyright_text">2015© Nazar Suhovych. All rights reserved.</string>
     <string name="export_settings_block">Export &amp; Synchronization</string>
     <string name="interface_block">User Interface</string>
     <string name="other_settings">Other</string>

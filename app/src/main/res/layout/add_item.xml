@@ -9,7 +9,6 @@
         android:id="@+id/formsScroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout"
         android:overScrollMode="never">
 
         <LinearLayout
@@ -181,20 +180,4 @@
 
         </LinearLayout>
     </ScrollView>
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="wrap_content">
-
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:layout_height="50dp"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-5133908997831400/4591683451"
-            android:layout_width="match_parent"/>
-
-    </LinearLayout>
 </RelativeLayout>

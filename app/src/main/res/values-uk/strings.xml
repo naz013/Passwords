@@ -188,7 +188,7 @@
     <string name="gen_insert">ВСТАВ</string>
     <string name="pass_length">Довжина пароля має бути більшою за 0</string>
     <string name="pass_checks">Ви повинні відмітити хоча б один пункт</string>
-    <string name="copyright_text">2014 © hexrain Studio. Всі права захищені.</string>
+    <string name="copyright_text">2015© Nazar Suhovych. Всі права захищені.</string>
 
     <string name="export_settings_block">Експорт і синхронізація</string>
     <string name="interface_block">Інтерфейс користувача</string>

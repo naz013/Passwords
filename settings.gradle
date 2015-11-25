@@ -1,1 +1,1 @@
-include ':app', ':lvl', ':liveSDK'
+include ':app'

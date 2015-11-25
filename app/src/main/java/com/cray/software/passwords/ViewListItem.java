@@ -46,11 +46,7 @@ import com.cray.software.passwords.helpers.DataBase;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.interfaces.Constants;
-import com.cray.software.passwords.interfaces.ModuleManager;
 import com.cray.software.passwords.tasks.DeleteTask;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -59,7 +55,7 @@ import java.util.Date;
 public class ViewListItem extends ActionBarActivity implements View.OnClickListener {
     EditText comment_enter, link_enter, password_enter, login_enter, title_enter, date_enter;
     TextView viewLogin, viewPassword, viewLink, viewComment, viewDate;
-    LinearLayout showLayout, editLayout, linearLayout;
+    LinearLayout showLayout, editLayout;
     CheckBox editCheck, showPass;
     Spinner spinnerColor;
     DataBase DB;
@@ -77,7 +73,6 @@ public class ViewListItem extends ActionBarActivity implements View.OnClickListe
     SharedPrefs sPrefs = new SharedPrefs(ViewListItem.this);
     ActionBar ab;
     Crypter crypter = new Crypter();
-    private AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,30 +95,6 @@ public class ViewListItem extends ActionBarActivity implements View.OnClickListe
         editLayout.setVisibility(View.GONE);
         showLayout = (LinearLayout) findViewById(R.id.showLayout);
         showLayout.setVisibility(View.VISIBLE);
-
-        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        linearLayout.setVisibility(View.GONE);
-        if (!new ModuleManager().isPro()) {
-            adView = (AdView) findViewById(R.id.adView);
-            adView.setVisibility(View.GONE);
-            AdRequest adRequest = new AdRequest.Builder()
-                    .build();
-            adView.loadAd(adRequest);
-
-            adView.setAdListener(new AdListener() {
-                @Override
-                public void onAdFailedToLoad(int errorCode) {
-                    linearLayout.setVisibility(View.GONE);
-                    adView.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onAdLoaded() {
-                    linearLayout.setVisibility(View.VISIBLE);
-                    adView.setVisibility(View.VISIBLE);
-                }
-            });
-        }
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -744,18 +715,5 @@ public class ViewListItem extends ActionBarActivity implements View.OnClickListe
 
     protected void onStart() {
         super.onStart();
-    }
-
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (!new ModuleManager().isPro()) {
-            adView.destroy();
-        }
-        super.onDestroy();
     }
 }
