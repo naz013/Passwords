@@ -24,7 +24,7 @@ import com.cray.software.passwords.cloud.DropboxHelper;
 import com.cray.software.passwords.cloud.GDriveHelper;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.interfaces.Constants;
-import com.cray.software.passwords.interfaces.ModuleManager;
+import com.cray.software.passwords.interfaces.Module;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
@@ -73,7 +73,7 @@ public class CloudDrives extends Activity {
             @Override
             public void onClick(View view) {
                 boolean isIn;
-                if (new ModuleManager().isPro()) isIn = isAppInstalled(MARKET_APP_JUSTREMINDER);
+                if (new Module().isPro()) isIn = isAppInstalled(MARKET_APP_JUSTREMINDER);
                 else isIn = isAppInstalled(MARKET_APP_JUSTREMINDER_PRO);
                 if (isIn){
                     checkDialog().show();
@@ -126,7 +126,7 @@ public class CloudDrives extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent i;
                         PackageManager manager = getPackageManager();
-                        if (new ModuleManager().isPro()) i = manager.getLaunchIntentForPackage(MARKET_APP_JUSTREMINDER);
+                        if (new Module().isPro()) i = manager.getLaunchIntentForPackage(MARKET_APP_JUSTREMINDER);
                         else i = manager.getLaunchIntentForPackage(MARKET_APP_JUSTREMINDER_PRO);
                         i.addCategory(Intent.CATEGORY_LAUNCHER);
                         startActivity(i);
@@ -135,7 +135,7 @@ public class CloudDrives extends Activity {
                 .setNegativeButton(getString(R.string.dialog_button_delete), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        if (new ModuleManager().isPro())
+                        if (new Module().isPro())
                             intent.setData(Uri.parse("package:" + MARKET_APP_JUSTREMINDER));
                         else intent.setData(Uri.parse("package:" + MARKET_APP_JUSTREMINDER_PRO));
                         startActivity(intent);

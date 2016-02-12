@@ -4,20 +4,15 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -35,20 +30,22 @@ import com.cray.software.passwords.helpers.DataBase;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.interfaces.Constants;
+import com.cray.software.passwords.interfaces.Module;
 
 import java.util.Calendar;
 
-public class AddItem extends ActionBarActivity {
+public class ManagePassword extends AppCompatActivity {
+
     EditText title_enter, login_enter, password_enter, link_enter, comment_enter, date_enter;
     CheckBox showPass;
     Spinner spinnerColor;
     ImageButton generateDialog;
-    RelativeLayout showColorRelLay, addActLayout;
+    RelativeLayout showColorRelLay;
+    Toolbar toolbar;
 
     ColorSetter cSetter;
-    SyncHelper sHelpers = new SyncHelper(AddItem.this);
+    SyncHelper sHelpers = new SyncHelper(ManagePassword.this);
     SharedPrefs prefs;
-    ActionBar ab;
 
     int myYear = 0;
     int myMonth = 0;
@@ -57,33 +54,14 @@ public class AddItem extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_item);
-        cSetter = new ColorSetter(AddItem.this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        setContentView(R.layout.activity_manage_password);
+        cSetter = new ColorSetter(ManagePassword.this);
+        if (Module.isLollipop()) {
             getWindow().setStatusBarColor(cSetter.colorStatus());
         }
-        ab = getSupportActionBar();
-        if (ab != null) {
-            ab.setDisplayShowTitleEnabled(true);
-            ab.setHomeButtonEnabled(true);
-            ab.setDisplayUseLogoEnabled(false);
-            ab.setDisplayShowHomeEnabled(false);
-            ab.setDisplayHomeAsUpEnabled(true);
-            ab.setTitle(R.string.activity_title);
-        }
-
-        addActLayout = (RelativeLayout) findViewById(R.id.addActLayout);
-        addActLayout.setVisibility(View.GONE);
-        viewSetter(ab);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Animation slide = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
-                addActLayout.startAnimation(slide);
-                addActLayout.setVisibility(View.VISIBLE);
-            }
-        }, 500);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.activity_title);
 
         title_enter = (EditText) findViewById(R.id.title_enter);
 
@@ -117,7 +95,7 @@ public class AddItem extends ActionBarActivity {
         generateDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(AddItem.this, GeneratePassword.class), Constants.REQUEST_CODE_PASS);
+                startActivityForResult(new Intent(ManagePassword.this, GeneratePassword.class), Constants.REQUEST_CODE_PASS);
             }
         });
 
@@ -191,9 +169,7 @@ public class AddItem extends ActionBarActivity {
             link_enter.setText(savedInstanceState.getString("link"));
             comment_enter.setText(savedInstanceState.getString("comm"));
             date_enter.setText(savedInstanceState.getString("date"));
-        }
-        else {
-
+        } else {
             final Calendar cal = Calendar.getInstance();
             myYear = cal.get(Calendar.YEAR);
             myMonth = cal.get(Calendar.MONTH);
@@ -208,7 +184,7 @@ public class AddItem extends ActionBarActivity {
             if (myMonth < 9) monthStr = "0" + (myMonth + 1);
             else monthStr = String.valueOf(myMonth + 1);
 
-            prefs = new SharedPrefs(AddItem.this);
+            prefs = new SharedPrefs(ManagePassword.this);
             int dateSwitchInd = prefs.loadInt(Constants.NEW_PREFERENCES_DATE_FORMAT);
             //Log.d(LOG_TAG, "check ind: " + dateSwitchInd);
             if(dateSwitchInd == 1){
@@ -223,7 +199,7 @@ public class AddItem extends ActionBarActivity {
         }
 
         if (isFirstTime()) {
-            Intent overflow = new Intent(AddItem.this, HelpOverflow.class);
+            Intent overflow = new Intent(ManagePassword.this, HelpOverflow.class);
             overflow.putExtra("fromActivity", 2);
             startActivity(overflow);
         }
@@ -248,13 +224,6 @@ public class AddItem extends ActionBarActivity {
             editor.commit();
         }
         return !ranBefore;
-    }
-
-    private void viewSetter(ActionBar ab){
-        cSetter = new ColorSetter(AddItem.this);
-        ab.setBackgroundDrawable(new ColorDrawable(cSetter.colorSetter()));
-        ab.setDisplayShowTitleEnabled(false);
-        ab.setDisplayShowTitleEnabled(true);
     }
 
     @Override
@@ -350,7 +319,7 @@ public class AddItem extends ActionBarActivity {
 
                 if (!memptyCheck) {
                     savePassword(mtitle_str, mlogin_str, mpass_str, mlink_str, mcomm_str, mdate_str,
-                                colorStringI);
+                            colorStringI);
                     fieldClear();
                     String link_enter_str = link_enter.getText().toString();
                     if (link_enter_str.equals("")) {
@@ -372,7 +341,7 @@ public class AddItem extends ActionBarActivity {
         String link_crypted = crypter.encrypt(url);
         String comment_crypted = crypter.encrypt(comment);
         String date_crypted = crypter.encrypt(date);
-        DataBase DB = new DataBase(AddItem.this);
+        DataBase DB = new DataBase(ManagePassword.this);
         DB.open();
         String uuID = sHelpers.generateID();
         DB.insertPass(title_crypted, login_crypted, pass_crypted, link_crypted, comment_crypted, date_crypted, color, uuID);
@@ -470,7 +439,7 @@ public class AddItem extends ActionBarActivity {
             if (myMonth < 9) monthStr = "0" + (myMonth + 1);
             else monthStr = String.valueOf(myMonth + 1);
 
-            prefs = new SharedPrefs(AddItem.this);
+            prefs = new SharedPrefs(ManagePassword.this);
             int dateSwitchInd = prefs.loadInt(Constants.NEW_PREFERENCES_DATE_FORMAT);
             //Log.d(LOG_TAG, "check ind: " + dateSwitchInd);
             if(dateSwitchInd == 1){

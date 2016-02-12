@@ -270,4 +270,5 @@
     <string name="sort_by_title_az">За назвою (A-Z)</string>
     <string name="sort_by_title_za">За назвою (Z-A)</string>
     <string name="string_more_apps">Більше додатків</string>
+    <string name="no_passwords">No passwords</string>
 </resources>

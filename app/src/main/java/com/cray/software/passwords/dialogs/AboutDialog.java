@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cray.software.passwords.R;
-import com.cray.software.passwords.interfaces.ModuleManager;
+import com.cray.software.passwords.interfaces.Module;
 
 public class AboutDialog extends Activity {
 
@@ -24,7 +24,7 @@ public class AboutDialog extends Activity {
 
         appName = (TextView) findViewById(R.id.appName);
         String name;
-        if (new ModuleManager().isPro()) name = getString(R.string.app_name);
+        if (new Module().isPro()) name = getString(R.string.app_name);
         else name = getString(R.string.app_name_free);
         appName.setText(name.toUpperCase());
 

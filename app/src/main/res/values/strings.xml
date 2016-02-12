@@ -269,4 +269,6 @@
     <string name="sort_by_title_az">By title (A-Z)</string>
     <string name="sort_by_title_za">By title (Z-A)</string>
     <string name="string_more_apps">More applications</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="no_passwords">No passwords</string>
 </resources>

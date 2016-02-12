@@ -8,10 +8,10 @@ android {
         applicationId "com.cray.software.passwords"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 24
-        versionName '1.2'
+        versionCode 26
+        versionName '1.3'
     }
-    
+
     signingConfigs {
         freeApp {
             storeFile file("passwords.jks")
@@ -26,7 +26,7 @@ android {
             keyPassword 'passpro20052014'
         }
     }
-    
+
     productFlavors {
         free {
             applicationId 'com.cray.software.passwords'
@@ -35,15 +35,15 @@ android {
         pro {
             applicationId 'com.cray.software.passwordspro'
             buildConfigField "boolean", "IS_PRO", "true"
-            versionCode 21
+            versionCode 23
         }
     }
-    
+
     buildTypes {
         release {
             minifyEnabled true
-            productFlavors.free.proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-free.txt'
-            productFlavors.pro.proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
+            productFlavors.free.proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            productFlavors.pro.proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable false
             zipAlignEnabled true
             jniDebuggable false
@@ -51,23 +51,25 @@ android {
             productFlavors.pro.signingConfig signingConfigs.proApp
         }
         debug {
-            applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
+            signingConfig signingConfigs.proApp
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
-    compile 'com.nhaarman.listviewanimations:lib-manipulation:3.1.0@aar'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:cardview-v7:23.1.1'
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.melnykov:floatingactionbutton:1.3.0'
-    compile 'com.google.android.gms:play-services-auth:8.3.0'
-    compile 'com.google.android.gms:play-services-drive:8.3.0'
-    compile 'com.google.http-client:google-http-client-gson:1.20.0' exclude module: 'httpclient'
-    compile 'com.google.api-client:google-api-client-android:1.20.0' exclude module: 'httpclient'
-    compile 'com.google.apis:google-api-services-drive:v2-rev192-1.20.0' exclude module: 'httpclient'
+    compile 'com.google.android.gms:play-services-auth:8.4.0'
+    compile 'com.google.android.gms:play-services-drive:8.4.0'
+    compile 'com.google.http-client:google-http-client-gson:1.21.0' exclude module: 'httpclient'
+    compile 'com.google.api-client:google-api-client-android:1.21.0' exclude module: 'httpclient'
+    compile 'com.google.apis:google-api-services-drive:v3-rev6-1.21.0' exclude module: 'httpclient'
+    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.8.6@aar'){
+        transitive=true
+    }
 }

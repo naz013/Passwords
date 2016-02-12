@@ -12,7 +12,7 @@ import com.cray.software.passwords.cloud.DropboxHelper;
 import com.cray.software.passwords.cloud.GDriveHelper;
 import com.cray.software.passwords.helpers.DataBase;
 import com.cray.software.passwords.helpers.SyncHelper;
-import com.cray.software.passwords.interfaces.ModuleManager;
+import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.interfaces.SyncListener;
 
 import org.json.JSONException;
@@ -95,7 +95,7 @@ public class SyncTask extends AsyncTask<Void, Void, Boolean> {
         super.onPostExecute(aVoid);
         builder.setContentTitle(tContext.getString(R.string.sync_finished_message));
         builder.setSmallIcon(R.drawable.ic_done_white_24dp);
-        if (new ModuleManager().isPro()){
+        if (new Module().isPro()){
             builder.setContentText(tContext.getString(R.string.app_name));
         } else builder.setContentText(tContext.getString(R.string.app_name_free));
         builder.setWhen(System.currentTimeMillis());

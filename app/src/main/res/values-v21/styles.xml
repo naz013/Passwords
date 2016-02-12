@@ -1,8 +1,8 @@
 <resources>
 
-    <style name="HomeWhite" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:colorPrimaryDark">@color/colorBlue</item>
-        <item name="android:actionBarStyle">@style/MyTheme.ActionBarStyle</item>
+    <style name="HomeWhite" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/colorBlue</item>
+        <item name="windowActionBar">false</item>
     </style>
 
     <style name="MyTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
@@ -13,11 +13,9 @@
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
-    <style name="HomeWhite.Dialog" parent="Theme.AppCompat.Light.Dialog">
-    </style>
+    <style name="HomeWhite.Dialog" parent="Theme.AppCompat.Light.Dialog"></style>
 
-    <style name="HomeWhite.NoAction" parent="Theme.AppCompat.Light.NoActionBar">
-    </style>
+    <style name="HomeWhite.NoAction" parent="Theme.AppCompat.Light.NoActionBar"></style>
 
     <style name="Transparent" parent="@android:style/Theme.NoTitleBar">
         <item name="android:windowContentOverlay">@null</item>
@@ -25,6 +23,13 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="HomeWhite.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
 </resources>

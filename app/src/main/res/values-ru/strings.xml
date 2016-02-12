@@ -270,4 +270,5 @@
     </string-array>
     <string name="menu_sort_title">Сортировать</string>
     <string name="string_more_apps">Больше приложений</string>
+    <string name="no_passwords">No passwords</string>
 </resources>

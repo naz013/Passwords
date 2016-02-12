@@ -18,7 +18,7 @@ import com.cray.software.passwords.dialogs.ProMarket;
 import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.interfaces.Constants;
-import com.cray.software.passwords.interfaces.ModuleManager;
+import com.cray.software.passwords.interfaces.Module;
 
 public class ExportSettingsFragment extends Fragment implements View.OnClickListener {
 
@@ -97,7 +97,7 @@ public class ExportSettingsFragment extends Fragment implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.autoBackup:
-                if (!new ModuleManager().isPro()){
+                if (!new Module().isPro()){
                     getActivity().startActivity(new Intent(getActivity(), ProMarket.class)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 } else {
@@ -105,7 +105,7 @@ public class ExportSettingsFragment extends Fragment implements View.OnClickList
                 }
                 break;
             case R.id.autoSync:
-                if (!new ModuleManager().isPro()){
+                if (!new Module().isPro()){
                     getActivity().startActivity(new Intent(getActivity(), ProMarket.class)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 } else {

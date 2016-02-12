@@ -23,7 +23,7 @@ import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.interfaces.Constants;
-import com.cray.software.passwords.interfaces.ModuleManager;
+import com.cray.software.passwords.interfaces.Module;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -53,7 +53,7 @@ public class SplashScreen extends Activity {
 
         typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
         textView = (TextView) findViewById(R.id.textView);
-        if (!new ModuleManager().isPro()) textView.setText(getString(R.string.app_name_free));
+        if (!Module.isPro()) textView.setText(getString(R.string.app_name_free));
         else textView.setText(getString(R.string.app_name));
         textView.setTypeface(typeface);
 
@@ -105,8 +105,6 @@ public class SplashScreen extends Activity {
         appUISettings = getSharedPreferences(Constants.NEW_PREFERENCES, MODE);
         sPrefs = new SharedPrefs(getApplicationContext());
         int passLenghtInt = sPrefs.loadInt(Constants.NEW_PREFERENCES_EDIT_LENGHT);
-
-        //Log.d(LOG_TAG, "max lenght: " + passLenghtInt);
 
         appSettings = getSharedPreferences(Constants.NEW_APP_PREFS, Context.MODE_PRIVATE);
         String loadedPass = appSettings.getString(Constants.NEW_APP_PREFERENCES_LOGIN, "").trim();
@@ -174,11 +172,11 @@ public class SplashScreen extends Activity {
         String passDecrypted;
         byte[] byte_pass = Base64.decode(loadedPass, Base64.DEFAULT);
         passDecrypted = new String(byte_pass, "UTF-8");
-        if (loginPassStr.matches("")){
+        if (loginPassStr.matches("")) {
             loginPass.setError(getResources().getString(R.string.set_att_if_all_field_empty));
         } else {
-            if(loginPassStr.equals(passDecrypted)) {
-                Intent intentMain = new Intent(this, MainScreen.class);
+            if (loginPassStr.equals(passDecrypted)) {
+                Intent intentMain = new Intent(this, MainActivity.class);
                 startActivity(intentMain);
                 finish();
             } else {
@@ -208,7 +206,6 @@ public class SplashScreen extends Activity {
     }
 
     private void writePrefs(){
-
         checkPrefs();
 
         sPrefs = new SharedPrefs(SplashScreen.this);
@@ -234,10 +231,8 @@ public class SplashScreen extends Activity {
             sPrefs = new SharedPrefs(SplashScreen.this);
             boolean loadedStr = sPrefs.isPassString();
             if (loadedStr) {
-                // single screen
                 attachSingle();
             } else {
-                // double screen
                 attachDouble();
             }
         } else {
@@ -268,7 +263,7 @@ public class SplashScreen extends Activity {
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
-                        Intent intentMain = new Intent(this, MainScreen.class);
+                        Intent intentMain = new Intent(this, MainActivity.class);
                         startActivity(intentMain);
                         finish();
                     } else {
@@ -307,7 +302,7 @@ public class SplashScreen extends Activity {
         if (!sPrefs.isString(Constants.NEW_PREFERENCES_CHECKBOX)){
             sPrefs.saveBoolean(Constants.NEW_PREFERENCES_CHECKBOX, false);
         }
-        if (new ModuleManager().isPro()){
+        if (Module.isPro()){
             if (!sPrefs.isString(Constants.NEW_PREFERENCES_AUTO_SYNC)){
                 sPrefs.saveBoolean(Constants.NEW_PREFERENCES_AUTO_SYNC, false);
             }

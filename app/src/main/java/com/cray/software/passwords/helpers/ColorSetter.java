@@ -1,25 +1,28 @@
 package com.cray.software.passwords.helpers;
 
 import android.content.Context;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.interfaces.Constants;
 
 public class ColorSetter {
 
-    Context cContext;
+    Context mContext;
     SharedPrefs sPrefs;
 
     public ColorSetter(Context context){
-        this.cContext = context;
+        this.mContext = context;
     }
 
-    private int getColor(int color){
-        return cContext.getResources().getColor(color);
+    @ColorInt
+    private int getColor(@ColorRes int color){
+        return Utils.getColor(mContext, color);
     }
 
     public int colorSetter(){
-        sPrefs = new SharedPrefs(cContext);
+        sPrefs = new SharedPrefs(mContext);
         String loadedColor = sPrefs.loadPrefs(Constants.NEW_PREFERENCES_THEME);
         int color;
         switch (loadedColor) {
@@ -67,7 +70,7 @@ public class ColorSetter {
     }
 
     public int colorStatus(){
-        sPrefs = new SharedPrefs(cContext);
+        sPrefs = new SharedPrefs(mContext);
         String loadedColor = sPrefs.loadPrefs(Constants.NEW_PREFERENCES_THEME);
         int color;
         switch (loadedColor) {
@@ -179,7 +182,7 @@ public class ColorSetter {
     }
 
     public int colorChooser(){
-        sPrefs = new SharedPrefs(cContext);
+        sPrefs = new SharedPrefs(mContext);
         String loadedColor = sPrefs.loadPrefs(Constants.NEW_PREFERENCES_THEME);
         int color;
         switch (loadedColor) {

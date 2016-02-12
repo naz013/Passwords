@@ -6,122 +6,71 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.cray.software.passwords.dialogs.HelpOverflow;
 import com.cray.software.passwords.dialogs.ProMarket;
 import com.cray.software.passwords.dialogs.RateDialog;
 import com.cray.software.passwords.helpers.ColorSetter;
-import com.cray.software.passwords.helpers.CustomCursorAdapter;
 import com.cray.software.passwords.helpers.DataBase;
+import com.cray.software.passwords.helpers.DataProvider;
+import com.cray.software.passwords.helpers.Password;
+import com.cray.software.passwords.helpers.PasswordsRecyclerAdapter;
 import com.cray.software.passwords.helpers.SharedPrefs;
+import com.cray.software.passwords.helpers.Utils;
 import com.cray.software.passwords.interfaces.Constants;
-import com.cray.software.passwords.interfaces.ModuleManager;
+import com.cray.software.passwords.interfaces.Module;
+import com.cray.software.passwords.interfaces.SimpleListener;
 import com.cray.software.passwords.interfaces.SyncListener;
 import com.cray.software.passwords.tasks.BackupTask;
 import com.cray.software.passwords.tasks.DelayedTask;
 import com.cray.software.passwords.tasks.DeleteTask;
 import com.cray.software.passwords.tasks.SyncTask;
-import com.melnykov.fab.FloatingActionButton;
-import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
-import com.nhaarman.listviewanimations.appearance.simple.SwingRightInAnimationAdapter;
-import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
-import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
 
-public class MainScreen extends ActionBarActivity implements OnDismissCallback, SyncListener {
+import java.util.ArrayList;
 
-    ListView listViewMain;
-    DataBase DB;
+public class MainActivity extends AppCompatActivity implements SyncListener, SimpleListener {
 
-    private CustomCursorAdapter customAdapter;
-    ColorSetter cSetter = new ColorSetter(MainScreen.this);
-    ActionBar ab;
-    
-    boolean isOpened;
-    FloatingActionButton mFab;
-    Toolbar toolbar;
+    private RecyclerView currentList;
+
+    private ArrayList<Password> data;
+
+    private FloatingActionButton mFab;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_screen);
+        setContentView(R.layout.activity_main);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (Module.isPro()) toolbar.setTitle(getString(R.string.app_name));
+        else toolbar.setTitle(getString(R.string.app_name_free));
+        toolbar.setLogo(R.drawable.ic_key);
 
-        getIntent().setAction("JustActivity Created");
-
-        cSetter = new ColorSetter(MainScreen.this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(cSetter.colorStatus());
-        }
-        ab = getSupportActionBar();
-        if (ab != null) {
-            ab.setDisplayShowHomeEnabled(true);
-            ab.setHomeButtonEnabled(true);
-            ab.setDisplayHomeAsUpEnabled(false);
-            ab.setDisplayShowTitleEnabled(true);
-            if (new ModuleManager().isPro()) ab.setTitle(getString(R.string.app_name));
-            else ab.setTitle(getString(R.string.app_name_free));
-            ab.setIcon(R.drawable.ic_key);
-            viewSetter();
-        }
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar_layout);
-
-        mFab = (FloatingActionButton) findViewById(R.id.button_floating_action);
-        mFab.setVisibility(View.GONE);
+        mFab = (FloatingActionButton) findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Animation slide = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_zoom_out);
-                mFab.startAnimation(slide);
-                mFab.setVisibility(View.GONE);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intentMain = new Intent(MainScreen.this, AddItem.class);
-                        startActivity(intentMain);
-                    }
-                }, 300);
+            public void onClick(View view) {
+                Intent intentMain = new Intent(MainActivity.this, ManagePassword.class);
+                startActivity(intentMain);
             }
         });
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Animation slide = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_zoom);
-                mFab.startAnimation(slide);
-                mFab.setVisibility(View.VISIBLE);
-            }
-        }, 500);
 
-        listViewMain = (ListView) findViewById(R.id.listViewMain);
-
-        mFab.attachToListView(listViewMain);
-
-        listViewMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Intent intentId = new Intent(MainScreen.this, ViewListItem.class);
-                intentId.putExtra("itemId", id);
-                startActivity(intentId);
-            }
-        });
+        currentList = (RecyclerView) findViewById(R.id.currentList);
+        currentList.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private boolean isListFirstTime() {
@@ -141,7 +90,7 @@ public class MainScreen extends ActionBarActivity implements OnDismissCallback, 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
-        if (!new ModuleManager().isPro()) {
+        if (!Module.isPro()) {
             menu.add(Menu.NONE, MENU_ITEM_PRO, 100, getString(R.string.buy_pro_title));
         }
         return true;
@@ -151,17 +100,17 @@ public class MainScreen extends ActionBarActivity implements OnDismissCallback, 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                new SyncTask(this, MainScreen.this).execute();
+                new SyncTask(this, MainActivity.this).execute();
                 return true;
             case R.id.action_settings:
-                Intent intentS = new Intent(MainScreen.this, SettingsActivity.class);
+                Intent intentS = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intentS);
                 return true;
             case R.id.action_send:
                 final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
                 emailIntent.setType("plain/text");
                 emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"feedback.cray@gmail.com"});
-                if (new ModuleManager().isPro()){
+                if (Module.isPro()){
                     emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Passwords PRO");
                 } else {
                     emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Passwords");
@@ -169,7 +118,7 @@ public class MainScreen extends ActionBarActivity implements OnDismissCallback, 
                 startActivity(Intent.createChooser(emailIntent, "Send mail..."));
                 return true;
             case MENU_ITEM_PRO:
-                Intent market = new Intent(MainScreen.this, ProMarket.class);
+                Intent market = new Intent(MainActivity.this, ProMarket.class);
                 startActivity(market);
                 return true;
             case R.id.action_order:
@@ -198,7 +147,7 @@ public class MainScreen extends ActionBarActivity implements OnDismissCallback, 
         builder.setTitle(getString(R.string.menu_sort_title));
         builder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
-                SharedPrefs prefs = new SharedPrefs(MainScreen.this);
+                SharedPrefs prefs = new SharedPrefs(MainActivity.this);
                 if (item == 0) {
                     prefs.savePrefs(Constants.NEW_PREFERENCES_ORDER_BY, Constants.ORDER_DATE_A_Z);
                 } else if (item == 1) {
@@ -217,86 +166,60 @@ public class MainScreen extends ActionBarActivity implements OnDismissCallback, 
     }
 
     private void viewSetter(){
-        cSetter = new ColorSetter(MainScreen.this);
-        ab = getSupportActionBar();
-        if (ab != null) {
-            ab.setBackgroundDrawable(new ColorDrawable(cSetter.colorSetter()));
-            ab.setDisplayShowTitleEnabled(false);
-            ab.setDisplayShowTitleEnabled(true);
+        ColorSetter cSetter = new ColorSetter(MainActivity.this);
+        int colorPrimary = cSetter.colorSetter();
+        int colorDark = cSetter.colorStatus();
+        toolbar.setBackgroundColor(colorPrimary);
+        if (colorPrimary != 0 && colorDark != 0) {
+            mFab.setBackgroundTintList(Utils.getFabState(this, colorPrimary, colorDark));
         }
     }
 
-    private void setSwipeDismissAdapter() {
-        SwipeDismissAdapter adapter = new SwipeDismissAdapter(customAdapter, this);
-        adapter.setAbsListView(listViewMain);
-        listViewMain.setAdapter(adapter);
-    }
-
-    private void setBottomAdapter() {
-        AnimationAdapter animAdapter = new SwingRightInAnimationAdapter(customAdapter);
-        animAdapter.setAbsListView(listViewMain);
-        listViewMain.setAdapter(animAdapter);
-    }
-
     public void loaderAdapter(){
-        DB = new DataBase(MainScreen.this);
-        DB.open();
-        customAdapter = new CustomCursorAdapter(MainScreen.this, DB.fetchAllPasswords());
-        listViewMain.setAdapter(customAdapter);
-        setSwipeDismissAdapter();
-        setBottomAdapter();
+        data = DataProvider.getData(this);
+        PasswordsRecyclerAdapter adapter = new PasswordsRecyclerAdapter(this, data);
+        adapter.setEventListener(this);
+        currentList.setAdapter(adapter);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        String action = getIntent().getAction();
-        if(action == null || !action.equals("JustActivity Created")) {
-            Intent intent = new Intent(this, MainScreen.class);
-            startActivity(intent);
-            finish();
-        }
-        else
-            getIntent().setAction(null);
-
-        SharedPrefs prefs = new SharedPrefs(MainScreen.this);
+        SharedPrefs prefs = new SharedPrefs(MainActivity.this);
 
         viewSetter();
-        mFab.setColorNormal(cSetter.colorSetter());
-        mFab.setColorPressed(cSetter.colorChooser());
-
         loaderAdapter();
 
-        isOpened = false;
-        DB = new DataBase(MainScreen.this);
-        DB.open();
-        int count = DB.getCountPass();
+        DataBase db = new DataBase(MainActivity.this);
+        db.open();
+        int count = db.getCountPass();
         if (count > 0) {
             if (isListFirstTime()) {
-                Intent overflow = new Intent(MainScreen.this, HelpOverflow.class);
+                Intent overflow = new Intent(MainActivity.this, HelpOverflow.class);
                 overflow.putExtra("fromActivity", 4);
                 startActivity(overflow);
             }
         }
-        DB.close();
+        db.close();
 
         delayedThreads();
 
-        if (new ModuleManager().isPro() && !prefs.loadBoolean(Constants.DIALOG_SHOWED)) {
+        if (Module.isPro() && !prefs.loadBoolean(Constants.DIALOG_SHOWED)) {
             thanksDialog().show();
+            new SharedPrefs(this).saveBoolean(Constants.DIALOG_SHOWED, true);
         }
 
         showRate();
-        if (new ModuleManager().isPro()) {
+        if (Module.isPro()) {
             if (prefs.loadBoolean(Constants.NEW_PREFERENCES_AUTO_BACKUP))
-                new BackupTask(MainScreen.this).execute();
+                new BackupTask(MainActivity.this).execute();
 
             if (prefs.loadBoolean(Constants.NEW_PREFERENCES_AUTO_SYNC))
-                new SyncTask(MainScreen.this, null).execute();
+                new SyncTask(MainActivity.this, null).execute();
         }
     }
     private void showRate(){
-        SharedPrefs sPrefs = new SharedPrefs(MainScreen.this);
+        SharedPrefs sPrefs = new SharedPrefs(MainActivity.this);
 
         if (sPrefs.isString(Constants.NEW_PREFERENCES_RATE_SHOW)) {
             if (!sPrefs.loadBoolean(Constants.NEW_PREFERENCES_RATE_SHOW)) {
@@ -305,7 +228,7 @@ public class MainScreen extends ActionBarActivity implements OnDismissCallback, 
                     sPrefs.saveInt(Constants.NEW_PREFERENCES_APP_RUNS_COUNT, counts + 1);
                 } else {
                     sPrefs.saveInt(Constants.NEW_PREFERENCES_APP_RUNS_COUNT, 0);
-                    startActivity(new Intent(MainScreen.this, RateDialog.class));
+                    startActivity(new Intent(MainActivity.this, RateDialog.class));
                 }
             }
         } else {
@@ -315,7 +238,7 @@ public class MainScreen extends ActionBarActivity implements OnDismissCallback, 
     }
 
     private void delayedThreads(){
-        new DelayedTask(MainScreen.this).execute();
+        new DelayedTask(MainActivity.this).execute();
     }
 
     private boolean doubleBackToExitPressedOnce = false;
@@ -335,22 +258,13 @@ public class MainScreen extends ActionBarActivity implements OnDismissCallback, 
             }
         }, 2000);
     }
-    
+
     @Override
     public void EndExecution(boolean result) {
         loaderAdapter();
     }
 
-    @Override
-    public void onDismiss(@NonNull ViewGroup viewGroup, @NonNull int[] ints) {
-        for (int position : ints) {
-            long del = customAdapter.getItemId(position);
-            new DeleteTask(MainScreen.this, this).execute(del);
-        }
-    }
-    
     protected Dialog thanksDialog() {
-        new SharedPrefs(this).saveBoolean(Constants.DIALOG_SHOWED, true);
         return new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.dialog_licensed_title))
                 .setMessage(getString(R.string.dialog_licensed_message))
@@ -361,5 +275,19 @@ public class MainScreen extends ActionBarActivity implements OnDismissCallback, 
                 })
                 .setCancelable(true)
                 .create();
+    }
+
+    @Override
+    public void onItemClicked(int position, View view) {
+        long id = data.get(position).getId();
+        Intent intentId = new Intent(MainActivity.this, ViewListItem.class);
+        intentId.putExtra("itemId", id);
+        startActivity(intentId);
+    }
+
+    @Override
+    public void onItemLongClicked(int position, View view) {
+        long del = data.get(position).getId();
+        new DeleteTask(MainActivity.this, this).execute(del);
     }
 }

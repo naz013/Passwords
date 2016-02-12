@@ -6,11 +6,7 @@ import java.io.UnsupportedEncodingException;
 
 public class Crypter {
 
-    public Crypter(){
-
-    }
-
-    public String decrypt(String toDecrypt){
+    public static String decrypt(String toDecrypt){
         byte[] byte_pass = Base64.decode(toDecrypt, Base64.DEFAULT);
         String decrypted = "";
         try {
@@ -21,7 +17,7 @@ public class Crypter {
         return decrypted;
     }
 
-    public String encrypt(String toEncrypt){
+    public static String encrypt(String toEncrypt){
         byte[] passByted = null;
         try {
             passByted = toEncrypt.getBytes("UTF-8");
