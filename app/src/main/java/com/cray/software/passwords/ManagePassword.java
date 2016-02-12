@@ -284,6 +284,18 @@ public class ManagePassword extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        ColorSetter cSetter = new ColorSetter(ManagePassword.this);
+        int colorPrimary = cSetter.colorSetter();
+        int colorDark = cSetter.colorStatus();
+        toolbar.setBackgroundColor(colorPrimary);
+        if (Module.isLollipop()) {
+            getWindow().setStatusBarColor(colorDark);
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:

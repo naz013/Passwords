@@ -16,7 +16,7 @@ public class SettingsFragment extends ListFragment {
     ActionBar ab;
 
     public interface OnHeadlineSelectedListener {
-        public void onArticleSelected(int position);
+        void onArticleSelected(int position);
     }
 
     @Override

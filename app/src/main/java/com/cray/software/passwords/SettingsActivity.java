@@ -1,12 +1,10 @@
 package com.cray.software.passwords;
 
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.cray.software.passwords.fragments.ExportSettingsFragment;
@@ -18,36 +16,24 @@ import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.interfaces.Constants;
+import com.cray.software.passwords.interfaces.Module;
 
 import java.io.File;
 
-public class SettingsActivity extends ActionBarActivity implements SettingsFragment.OnHeadlineSelectedListener {
+public class SettingsActivity extends AppCompatActivity implements SettingsFragment.OnHeadlineSelectedListener {
 
-    ColorSetter cSetter = new ColorSetter(SettingsActivity.this);
-    ActionBar ab;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category_layout);
 
-        ab = getSupportActionBar();
-        if (ab != null) {
-            ab.setDisplayShowHomeEnabled(true);
-            ab.setDisplayShowTitleEnabled(true);
-            ab.setDisplayHomeAsUpEnabled(true);
-            ab.setHomeButtonEnabled(true);
-            ab.setDisplayUseLogoEnabled(true);
-            ab.setDisplayShowHomeEnabled(true);
-            ab.setIcon(R.drawable.ic_settings_white_24dp);
-            ab.setTitle(R.string.action_settings);
-            viewSetter(ab);
-        }
-
-        cSetter = new ColorSetter(SettingsActivity.this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(cSetter.colorStatus());
-        }
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(R.string.action_settings);
 
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null) {
@@ -56,15 +42,6 @@ public class SettingsActivity extends ActionBarActivity implements SettingsFragm
             SettingsFragment firstFragment = new SettingsFragment();
             firstFragment.setArguments(getIntent().getExtras());
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, firstFragment).commit();
-        }
-    }
-
-    private void viewSetter(ActionBar ab){
-        cSetter = new ColorSetter(SettingsActivity.this);
-        if (ab != null) {
-            ab.setBackgroundDrawable(new ColorDrawable(cSetter.colorSetter()));
-            ab.setDisplayShowTitleEnabled(false);
-            ab.setDisplayShowTitleEnabled(true);
         }
     }
 
@@ -77,13 +54,6 @@ public class SettingsActivity extends ActionBarActivity implements SettingsFragm
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        viewSetter(ab);
-        ab.setTitle(R.string.action_settings);
     }
 
     public void onArticleSelected(int position) {
@@ -136,6 +106,18 @@ public class SettingsActivity extends ActionBarActivity implements SettingsFragm
                 prefs.delete();
             }
             sPrefs.saveSharedPreferencesToFile(prefs);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ColorSetter cSetter = new ColorSetter(SettingsActivity.this);
+        int colorPrimary = cSetter.colorSetter();
+        int colorDark = cSetter.colorStatus();
+        toolbar.setBackgroundColor(colorPrimary);
+        if (Module.isLollipop()) {
+            getWindow().setStatusBarColor(colorDark);
         }
     }
 

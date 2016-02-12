@@ -1,10 +1,10 @@
 package com.cray.software.passwords.fragments;
 
-import android.app.ActionBar;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.dialogs.CloudDrives;
 import com.cray.software.passwords.dialogs.ProMarket;
-import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
@@ -26,13 +25,17 @@ public class ExportSettingsFragment extends Fragment implements View.OnClickList
     CheckBox autoBackupCheck, autoSyncCheck;
     TextView clouds;
     SharedPrefs sPrefs;
-    ColorSetter cSetter;
     ActionBar ab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView =  inflater.inflate(R.layout.export_settings_layout, container, false);
+
+        ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (ab != null){
+            ab.setTitle(R.string.export_settings_block);
+        }
 
         clouds = (TextView) rootView.findViewById(R.id.clouds);
         clouds.setOnClickListener(this);
@@ -77,27 +80,19 @@ public class ExportSettingsFragment extends Fragment implements View.OnClickList
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        ab = getActivity().getActionBar();
+    public void onDetach() {
+        super.onDetach();
+        ab = ((AppCompatActivity)getActivity()).getSupportActionBar();
         if (ab != null){
-            ab.setTitle(R.string.export_settings_block);
-            viewSetter(ab);
+            ab.setTitle(R.string.action_settings);
         }
-    }
-
-    private void viewSetter(ActionBar ab){
-        cSetter = new ColorSetter(getActivity().getApplicationContext());
-        ab.setBackgroundDrawable(new ColorDrawable(cSetter.colorSetter()));
-        ab.setDisplayShowTitleEnabled(false);
-        ab.setDisplayShowTitleEnabled(true);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.autoBackup:
-                if (!new Module().isPro()){
+                if (!Module.isPro()){
                     getActivity().startActivity(new Intent(getActivity(), ProMarket.class)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 } else {
@@ -105,7 +100,7 @@ public class ExportSettingsFragment extends Fragment implements View.OnClickList
                 }
                 break;
             case R.id.autoSync:
-                if (!new Module().isPro()){
+                if (!Module.isPro()){
                     getActivity().startActivity(new Intent(getActivity(), ProMarket.class)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 } else {

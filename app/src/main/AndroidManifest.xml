@@ -175,9 +175,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main"
             android:theme="@style/HomeWhite.NoActionBar" />
-        <activity android:name=".ManagePassword"></activity>
+        <activity android:name=".ManagePassword"/>
     </application>
 
 </manifest>

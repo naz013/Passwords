@@ -1,9 +1,10 @@
 package com.cray.software.passwords.fragments;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,11 @@ public class OtherSettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView =  inflater.inflate(R.layout.other_settings_layout, container, false);
+
+        ab = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        if (ab != null){
+            ab.setTitle(R.string.other_settings);
+        }
 
         about = (TextView) rootView.findViewById(R.id.about);
         about.setOnClickListener(new View.OnClickListener() {
@@ -73,11 +79,11 @@ public class OtherSettingsFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        ab = getActivity().getActionBar();
+    public void onDetach() {
+        super.onDetach();
+        ab = ((AppCompatActivity)getActivity()).getSupportActionBar();
         if (ab != null){
-            ab.setTitle(R.string.other_settings);
+            ab.setTitle(R.string.action_settings);
         }
     }
 }

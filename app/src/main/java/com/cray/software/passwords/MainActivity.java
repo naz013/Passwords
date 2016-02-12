@@ -1,7 +1,6 @@
 package com.cray.software.passwords;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -56,9 +55,9 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         if (Module.isPro()) toolbar.setTitle(getString(R.string.app_name));
         else toolbar.setTitle(getString(R.string.app_name_free));
-        toolbar.setLogo(R.drawable.ic_key);
 
         mFab = (FloatingActionButton) findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -170,6 +169,9 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
         int colorPrimary = cSetter.colorSetter();
         int colorDark = cSetter.colorStatus();
         toolbar.setBackgroundColor(colorPrimary);
+        if (Module.isLollipop()) {
+            getWindow().setStatusBarColor(colorDark);
+        }
         if (colorPrimary != 0 && colorDark != 0) {
             mFab.setBackgroundTintList(Utils.getFabState(this, colorPrimary, colorDark));
         }
@@ -203,11 +205,6 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
         db.close();
 
         delayedThreads();
-
-        if (Module.isPro() && !prefs.loadBoolean(Constants.DIALOG_SHOWED)) {
-            thanksDialog().show();
-            new SharedPrefs(this).saveBoolean(Constants.DIALOG_SHOWED, true);
-        }
 
         showRate();
         if (Module.isPro()) {
@@ -262,19 +259,6 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
     @Override
     public void EndExecution(boolean result) {
         loaderAdapter();
-    }
-
-    protected Dialog thanksDialog() {
-        return new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.dialog_licensed_title))
-                .setMessage(getString(R.string.dialog_licensed_message))
-                .setPositiveButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .setCancelable(true)
-                .create();
     }
 
     @Override
