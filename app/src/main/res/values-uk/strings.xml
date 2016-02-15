@@ -59,37 +59,6 @@
     <string name="list_item_deleted_text">" Видалений"</string>
     
     <string name="local_backup_descr">"Локальне резервне копіювання"</string>
-    
-    <string-array name="sticker_color">
-        <item>"вибрати колір стікера"</item>
-        <item>"сірий"</item>
-        <item>"червоний"</item>
-        <item>"фіолетовий"</item>
-        <item>"світло-зелений"</item>
-        <item>"зелений"</item>
-        <item>"світло-блакитний"</item>
-        <item>"синій"</item>
-        <item>"жовтий"</item>
-        <item>"помаранчевий"</item>
-        <item>"рожевий"</item>
-        <item>"темно-зелений"</item>
-        <item>"коричневий"</item>
-    </string-array>
-
-    <string-array name="view_sticker_color">
-        <item>"сірий"</item>
-        <item>"червоний"</item>
-        <item>"фіолетовий"</item>
-        <item>"світло-зелений"</item>
-        <item>"зелений"</item>
-        <item>"світло-блакитний"</item>
-        <item>"синій"</item>
-        <item>"жовтий"</item>
-        <item>"помаранчевий"</item>
-        <item>"рожевий"</item>
-        <item>"темно-зелений"</item>
-        <item>"коричневий"</item>
-    </string-array>
 
     <string name="about_dialog_title">"Змінити пароль до програми"</string>
     <string name="dialog_old_text">"Введіть старий пароль"</string>
@@ -113,17 +82,6 @@
     <string name="settings_ui_header">"Інтерфейс Користувача"</string>
     <string name="menu_add_item_title">"Додати пароль"</string>
 
-    <string name="switcher_color_red">"червоний"</string>
-    <string name="switcher_color_violet">"фіолетовий"</string>
-    <string name="switcher_color_lGreen">"св. зелений"</string>
-    <string name="switcher_color_green">"зелений"</string>
-    <string name="switcher_color_lBlue">"св. синій"</string>
-    <string name="switcher_color_blue">"синій"</string>
-    <string name="switcher_color_yellow">"жовтий"</string>
-    <string name="switcher_color_orange">"помаранчевий"</string>
-    <string name="switcher_color_grey">"сірий"</string>
-    <string name="switcher_color_white">"білий"</string>
-    <string name="switcher_color_black">"чорний"</string>
     <string name="view_float_item_title">"Відкрити плаваюче вікно"</string>
     <string name="view_delete_item_title">"Видалити"</string>
     <string name="view_save_changes_item_title">"Зберегти зміни"</string>
@@ -270,5 +228,26 @@
     <string name="sort_by_title_az">За назвою (A-Z)</string>
     <string name="sort_by_title_za">За назвою (Z-A)</string>
     <string name="string_more_apps">Більше додатків</string>
-    <string name="no_passwords">No passwords</string>
+    <string name="no_passwords">Немає паролів</string>
+    <string name="choose_color">Оберіть колір</string>
+    <string name="white">"Білий"</string>
+    <string name="red">"Червоний"</string>
+    <string name="purple">"Фіолетовий"</string>
+    <string name="green_light">"Світло-зелений"</string>
+    <string name="green">"Зелений"</string>
+    <string name="blue_light">"Блакитний"</string>
+    <string name="blue">"Синій"</string>
+    <string name="yellow">"Жовтий"</string>
+    <string name="orange">"Помаранчевий"</string>
+    <string name="cyan">"Бірюзовий"</string>
+    <string name="pink">"Рожевий"</string>
+    <string name="dark_green">"Темно-зелений"</string>
+    <string name="amber">"Бурштиновий"</string>
+    <string name="black">"Чорний"</string>
+    <string name="transparent">"Прозорий"</string>
+    <string name="lime">"Лайм"</string>
+    <string name="indigo">"Індиго"</string>
+    <string name="dark_orange">"Темно-оранжевий"</string>
+    <string name="dark_purple">"Темно-фіолетовий"</string>
+    <string name="teal">"Темно-зелений"</string>
 </resources>

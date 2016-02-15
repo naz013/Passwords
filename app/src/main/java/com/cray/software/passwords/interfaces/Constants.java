@@ -20,7 +20,7 @@ public class Constants {
     public static final String NEW_PREFERENCES_RATE_SHOW = "show_rate_state";
     public static final String NEW_PREFERENCES_APP_RUNS_COUNT = "app_runs_state";
     public static final String NEW_PREFERENCES = "new_settings";
-    public static final String NEW_PREFERENCES_THEME = "theme_color_state";
+    public static final String NEW_PREFERENCES_THEME = "color_state";
     public static final String NEW_PREFERENCES_CHECKBOX = "delete_backup_state";
     public static final String NEW_PREFERENCES_DATE_FORMAT = "date_format_state";
     public static final String NEW_PREFERENCES_EDIT_LENGHT = "edit_lenght_state";
@@ -31,7 +31,6 @@ public class Constants {
     public static final String NEW_PREFERENCES_DRIVE_USER = "email_drive_state";
     public static final String NEW_PREFERENCES_SCREEN = "screen_state";
     public static final String NEW_PREFERENCES_ORDER_BY = "order_by";
-    public static final String DIALOG_SHOWED = "showed_dialog";
 
     public static final String ORDER_DATE_A_Z = "date_az";
     public static final String ORDER_DATE_Z_A = "date_za";

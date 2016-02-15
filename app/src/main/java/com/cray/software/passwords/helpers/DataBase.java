@@ -86,7 +86,7 @@ public class DataBase {
     }
 
     public long insertPass (String title, String login, String password, String url,
-                            String comment, String date, String color, String uuID) {
+                            String comment, String date, int color, String uuID) {
         openGuard();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_TITLE, title);
@@ -137,8 +137,7 @@ public class DataBase {
 
     public Cursor fetchOnlyName(long rowId) throws SQLException {
         openGuard();
-        Cursor mCursor = db.query(TABLE_NAME, new String[] {COLUMN_TITLE}, COLUMN_ID + "=" + rowId, null, null, null, null, null);
-        return mCursor;
+        return db.query(TABLE_NAME, new String[] {COLUMN_TITLE}, COLUMN_ID + "=" + rowId, null, null, null, null, null);
     }
 
     public int getCountPass() throws SQLException {
@@ -163,17 +162,17 @@ public class DataBase {
 
     }
 
-    public boolean updatePass(long rowId, String tt, String lg, String ps, String ul,
-                              String cm, String dt, String ct) {
+    public boolean updatePass(long rowId, String title, String login, String password, String link,
+                              String comment, String date, int color) {
         openGuard();
         ContentValues args = new ContentValues();
-        args.put(COLUMN_TITLE, tt);
-        args.put(COLUMN_LOGIN, lg);
-        args.put(COLUMN_PASSWORD, ps);
-        args.put(COLUMN_URL, ul);
-        args.put(COLUMN_COMMENT, cm);
-        args.put(COLUMN_DATE, dt);
-        args.put(COLUMN_TECHNICAL, ct);
+        args.put(COLUMN_TITLE, title);
+        args.put(COLUMN_LOGIN, login);
+        args.put(COLUMN_PASSWORD, password);
+        args.put(COLUMN_URL, link);
+        args.put(COLUMN_COMMENT, comment);
+        args.put(COLUMN_DATE, date);
+        args.put(COLUMN_TECHNICAL, color);
         return db.update(TABLE_NAME, args, COLUMN_ID + "=" + rowId, null) > 0;
     }
 

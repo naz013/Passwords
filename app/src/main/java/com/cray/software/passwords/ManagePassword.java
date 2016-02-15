@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -29,6 +30,7 @@ import com.cray.software.passwords.helpers.Crypter;
 import com.cray.software.passwords.helpers.DataBase;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.helpers.SyncHelper;
+import com.cray.software.passwords.helpers.Utils;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
 
@@ -95,7 +97,8 @@ public class ManagePassword extends AppCompatActivity {
         generateDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(ManagePassword.this, GeneratePassword.class), Constants.REQUEST_CODE_PASS);
+                startActivityForResult(new Intent(ManagePassword.this, GeneratePassword.class),
+                        Constants.REQUEST_CODE_PASS);
             }
         });
 
@@ -115,50 +118,31 @@ public class ManagePassword extends AppCompatActivity {
         showColorRelLay = (RelativeLayout) findViewById(R.id.showColorRelLay);
 
         spinnerColor = (Spinner) findViewById(R.id.spinnerColor);
-        if(savedInstanceState != null){
+        String[] items = new String[]{getString(R.string.choose_color), getString(R.string.red), getString(R.string.purple),
+                getString(R.string.green), getString(R.string.green_light),
+                getString(R.string.blue), getString(R.string.blue_light),
+                getString(R.string.yellow), getString(R.string.orange),
+                getString(R.string.cyan), getString(R.string.pink),
+                getString(R.string.teal), getString(R.string.amber),
+                getString(R.string.dark_purple), getString(R.string.dark_orange),
+                getString(R.string.lime), getString(R.string.indigo)};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, items);
+        spinnerColor.setAdapter(adapter);
+        if (savedInstanceState != null) {
             spinnerColor.setSelection(savedInstanceState.getInt("spinnerPos", 0));
-            showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrRed));
-        } else {
-            spinnerColor.setPrompt("Choose sticker color");
-        }
+            showColorRelLay.setBackgroundColor(cSetter.getPasswordColor(0));
+        } else spinnerColor.setSelection(0);
         spinnerColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                if (position == 0) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrGrayDark));
-                } else if (position == 1) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrGrayDark));
-                } else if (position == 2) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrRed));
-                } else if (position == 3) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrViolet));
-                } else if (position == 4) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrLightCreen));
-                } else if (position == 5) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrGreen));
-                } else if (position == 6) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrLightBlue));
-                } else if (position == 7) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrBlue));
-                } else if (position == 8) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrYellow));
-                } else if (position == 9) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrOrange));
-                } else if (position == 10) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrPink));
-                } else if (position == 11) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrSand));
-                } else if (position == 12) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrBrown));
-                } else {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrGrayDark));
-                }
+                if (position == 0) return;
+                showColorRelLay.setBackgroundColor(cSetter.getPasswordColor(position - 1));
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
-                showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                showColorRelLay.setBackgroundColor(Utils.getColor(ManagePassword.this, R.color.colorBlue));
             }
         });
 
@@ -233,56 +217,6 @@ public class ManagePassword extends AppCompatActivity {
         return true;
     }
 
-    private String spinnerColor(){
-        int color;
-        String colorString;
-        int spinnerPos = spinnerColor.getSelectedItemPosition();
-        if (spinnerPos == 0) {
-            color = getResources().getColor(R.color.colorSemiTrGrayDark);
-            colorString = Integer.toString(color);
-        } else if (spinnerPos == 1) {
-            color = getResources().getColor(R.color.colorSemiTrGrayDark);
-            colorString = Integer.toString(color);
-        } else if (spinnerPos == 2) {
-            color = getResources().getColor(R.color.colorSemiTrRed);
-            colorString = Integer.toString(color);
-        } else if (spinnerPos == 3) {
-            color = getResources().getColor(R.color.colorSemiTrViolet);
-            colorString = Integer.toString(color);
-        } else if (spinnerPos == 4) {
-            color = getResources().getColor(R.color.colorSemiTrLightCreen);
-            colorString = Integer.toString(color);
-        } else if (spinnerPos == 5) {
-            color = getResources().getColor(R.color.colorSemiTrGreen);
-            colorString = Integer.toString(color);
-        } else if (spinnerPos == 6) {
-            color = getResources().getColor(R.color.colorSemiTrLightBlue);
-            colorString = Integer.toString(color);
-        } else if (spinnerPos == 7) {
-            color = getResources().getColor(R.color.colorSemiTrBlue);
-            colorString = Integer.toString(color);
-        } else if (spinnerPos == 8) {
-            color = getResources().getColor(R.color.colorSemiTrYellow);
-            colorString = Integer.toString(color);
-        } else if (spinnerPos == 9) {
-            color = getResources().getColor(R.color.colorSemiTrOrange);
-            colorString = Integer.toString(color);
-        } else if (spinnerPos == 10) {
-            color = getResources().getColor(R.color.colorSemiTrPink);
-            colorString = Integer.toString(color);
-        } else if (spinnerPos == 11) {
-            color = getResources().getColor(R.color.colorSemiTrSand);
-            colorString = Integer.toString(color);
-        } else if (spinnerPos == 12) {
-            color = getResources().getColor(R.color.colorSemiTrBrown);
-            colorString = Integer.toString(color);
-        } else {
-            color = getResources().getColor(R.color.colorSemiTrGrayDark);
-            colorString = Integer.toString(color);
-        }
-        return colorString;
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -302,41 +236,16 @@ public class ManagePassword extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.save:
-                String title_str = title_enter.getText().toString().trim();
-                String login_str = login_enter.getText().toString().trim();
-                String pass_str = password_enter.getText().toString().trim();
-                String link_str = link_enter.getText().toString().trim();
-                String comm_str = comment_enter.getText().toString().trim();
-                String date_str = date_enter.getText().toString().trim();
-                String colorString = spinnerColor();
-                boolean emptyCheck = emptyLogPassCheck();
-                if (!emptyCheck) {
-                    savePassword(title_str, login_str, pass_str, link_str, comm_str, date_str, colorString);
-                    finish();
-                }
+                save();
+                finish();
                 return true;
             case R.id.save_and_new:
-                String mtitle_str = title_enter.getText().toString().trim();
-                String mlogin_str = login_enter.getText().toString().trim();
-                String mpass_str = password_enter.getText().toString().trim();
-                String mlink_str = link_enter.getText().toString().trim();
-                String mcomm_str = comment_enter.getText().toString().trim();
-                if (mcomm_str.equals("")) {
-                    mcomm_str = getString(R.string.comment_stock_string);
-                }
-                String mdate_str = date_enter.getText().toString().trim();
-                boolean memptyCheck = emptyLogPassCheck();
+                save();
 
-                String colorStringI = spinnerColor();
-
-                if (!memptyCheck) {
-                    savePassword(mtitle_str, mlogin_str, mpass_str, mlink_str, mcomm_str, mdate_str,
-                            colorStringI);
-                    fieldClear();
-                    String link_enter_str = link_enter.getText().toString();
-                    if (link_enter_str.equals("")) {
-                        link_enter.setText("http://www.");
-                    }
+                fieldClear();
+                String link_enter_str = link_enter.getText().toString();
+                if (link_enter_str.equals("")) {
+                    link_enter.setText("http://www.");
                 }
                 return true;
             default:
@@ -344,19 +253,25 @@ public class ManagePassword extends AppCompatActivity {
         }
     }
 
-    private void savePassword(String title, String login, String password, String url, String comment,
-                              String date, String color){
-        Crypter crypter = new Crypter();
-        String title_crypted = crypter.encrypt(title);
-        String login_crypted = crypter.encrypt(login);
-        String pass_crypted = crypter.encrypt(password);
-        String link_crypted = crypter.encrypt(url);
-        String comment_crypted = crypter.encrypt(comment);
-        String date_crypted = crypter.encrypt(date);
+    private void save() {
+        String title = title_enter.getText().toString().trim();
+        String login = login_enter.getText().toString().trim();
+        String password = password_enter.getText().toString().trim();
+        String url = link_enter.getText().toString().trim();
+        String comment = comment_enter.getText().toString().trim();
+        String date = date_enter.getText().toString().trim();
+        int color = spinnerColor.getSelectedItemPosition() - 1;
+        if (!emptyLogPassCheck()) return;
+        title = Crypter.encrypt(title);
+        login = Crypter.encrypt(login);
+        password = Crypter.encrypt(password);
+        url = Crypter.encrypt(url);
+        comment = Crypter.encrypt(comment);
+        date = Crypter.encrypt(date);
         DataBase DB = new DataBase(ManagePassword.this);
         DB.open();
         String uuID = sHelpers.generateID();
-        DB.insertPass(title_crypted, login_crypted, pass_crypted, link_crypted, comment_crypted, date_crypted, color, uuID);
+        DB.insertPass(title, login, password, url, comment, date, color, uuID);
         DB.close();
     }
 

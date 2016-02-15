@@ -246,16 +246,21 @@ public class SyncHelper {
         if (!jsonObj.isNull(Constants.COLUMN_DATE)) {
             date = jsonObj.getString(Constants.COLUMN_DATE);
         }
-        String color = null;
-        if (!jsonObj.isNull(Constants.COLUMN_TECHNICAL)) {
-            color = jsonObj.getString(Constants.COLUMN_TECHNICAL);
+        int colorPass = 0;
+        if (jsonObj.has(Constants.COLUMN_TECHNICAL)) {
+            try {
+                String color = jsonObj.getString(Constants.COLUMN_TECHNICAL);
+                if (color != null) colorPass = Integer.parseInt(color);
+            } catch (ClassCastException e) {
+                colorPass = jsonObj.getInt(Constants.COLUMN_TECHNICAL);
+            }
         }
         String uuID = null;
         if (!jsonObj.isNull(Constants.COLUMN_PIC_SEL)) {
             uuID = jsonObj.getString(Constants.COLUMN_PIC_SEL);
         }
         DB = new DataBase(sContext);
-        DB.insertPass(title, login, password, url, comment, date, color, uuID);
+        DB.insertPass(title, login, password, url, comment, date, colorPass, uuID);
     }
 
     public String generateID(){

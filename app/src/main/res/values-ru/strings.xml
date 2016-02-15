@@ -60,37 +60,6 @@
     <string name="max_lenght_text">"Длина пароля"</string>
     
     <string name="local_backup_descr">"Локальное резервное копирование"</string>
-    
-    <string-array name="sticker_color">
-        <item>"выбрать цвет стикера"</item>
-        <item>"серый"</item>
-        <item>"красный"</item>
-        <item>"фиалетовый"</item>
-        <item>"светло-зеленый"</item>
-        <item>"зеленый"</item>
-        <item>"светло-голубой"</item>
-        <item>"синий"</item>
-        <item>"желтый"</item>
-        <item>"оранжевый"</item>
-        <item>"розовый"</item>
-        <item>"темно-зеленый"</item>
-        <item>"коричневый"</item>
-    </string-array>
-
-    <string-array name="view_sticker_color">
-        <item>"серый"</item>
-        <item>"красный"</item>
-        <item>"фиалетовый"</item>
-        <item>"светло-зеленый"</item>
-        <item>"зеленый"</item>
-        <item>"светло-голубой"</item>
-        <item>"синий"</item>
-        <item>"желтый"</item>
-        <item>"оранжевый"</item>
-        <item>"розовый"</item>
-        <item>"темно-зеленый"</item>
-        <item>"коричневый"</item>
-    </string-array>
 
     <string name="about_dialog_title">"Изменить пароль к приложению"</string>
     <string name="dialog_old_text">"Введите старый пароль"</string>
@@ -114,17 +83,6 @@
     <string name="settings_ui_header">"Пользовательский интерфейс "</string>
     <string name="menu_add_item_title">"Добавить пароль"</string>
 
-    <string name="switcher_color_red">"красный"</string>
-    <string name="switcher_color_violet">"фиалетовый"</string>
-    <string name="switcher_color_lGreen">"св. зеленый"</string>
-    <string name="switcher_color_green">"зеленый"</string>
-    <string name="switcher_color_lBlue">"св. синий"</string>
-    <string name="switcher_color_blue">"синий"</string>
-    <string name="switcher_color_yellow">"желтый"</string>
-    <string name="switcher_color_orange">"оранжевый"</string>
-    <string name="switcher_color_grey">"серый"</string>
-    <string name="switcher_color_white">"Белый"</string>
-    <string name="switcher_color_black">"Черный"</string>
     <string name="view_float_item_title">"Сделать плавающей"</string>
     <string name="view_delete_item_title">"Удалить"</string>
     <string name="view_save_changes_item_title">"Сохранить изменения"</string>
@@ -270,5 +228,26 @@
     </string-array>
     <string name="menu_sort_title">Сортировать</string>
     <string name="string_more_apps">Больше приложений</string>
-    <string name="no_passwords">No passwords</string>
+    <string name="no_passwords">Нет паролей</string>
+    <string name="choose_color">Выберите цвет</string>
+    <string name="white">"Белый"</string>
+    <string name="red">"Красный"</string>
+    <string name="purple">"Пурпурный"</string>
+    <string name="green_light">"Светло-зеленый"</string>
+    <string name="green">"Зеленый"</string>
+    <string name="blue_light">"Светло-синий"</string>
+    <string name="blue">"Синий"</string>
+    <string name="yellow">"Желтый"</string>
+    <string name="orange">"Оранжевый"</string>
+    <string name="cyan">"Бирюзовый"</string>
+    <string name="pink">"Розовый"</string>
+    <string name="dark_green">"Темно-зеленый"</string>
+    <string name="amber">"Янтарный"</string>
+    <string name="black">"Черный"</string>
+    <string name="transparent">"Прозрачный"</string>
+    <string name="lime">"Лайм"</string>
+    <string name="indigo">"Индиго"</string>
+    <string name="dark_orange">"Темно-оранжевый"</string>
+    <string name="dark_purple">"Темно фиолетовый"</string>
+    <string name="teal">"Темно-зеленый"</string>
 </resources>

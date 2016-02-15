@@ -3,7 +3,6 @@ package com.cray.software.passwords.helpers;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.cray.software.passwords.R;
 import com.cray.software.passwords.interfaces.Constants;
 
 import java.util.ArrayList;
@@ -31,18 +30,22 @@ public class DataProvider {
         DataBase db = new DataBase(context);
         db.open();
         Cursor c = db.fetchAllPasswords();
+        ColorSetter cs = new ColorSetter(context);
         if (c != null && c.moveToFirst()) {
             do {
                 int colorCircle;
-                String colorDB = c.getString(c.getColumnIndex(Constants.COLUMN_TECHNICAL));
-                if (colorDB == null) colorCircle = context.getResources().getColor(R.color.colorSemiTrGrayDark);
-                else colorCircle = Integer.parseInt(colorDB);
+                try {
+                    colorCircle = c.getInt(c.getColumnIndex(Constants.COLUMN_TECHNICAL));
+                } catch (ClassCastException e) {
+                    String color = c.getString(c.getColumnIndex(Constants.COLUMN_TECHNICAL));
+                    colorCircle = Integer.parseInt(color);
+                }
                 String title = c.getString(c.getColumnIndex(Constants.COLUMN_TITLE));
                 title = Crypter.decrypt(title);
                 String date = c.getString(c.getColumnIndex(Constants.COLUMN_DATE));
                 date = Crypter.decrypt(date);
                 long id = c.getLong(c.getColumnIndex(Constants.COLUMN_ID));
-                list.add(new Password(title, date, id, colorCircle));
+                list.add(new Password(title, date, id, cs.getPasswordColor(colorCircle)));
             } while (c.moveToNext());
         }
         if (c != null) c.close();

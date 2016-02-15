@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.cray.software.passwords.dialogs.HelpOverflow;
@@ -43,6 +44,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements SyncListener, SimpleListener {
 
     private RecyclerView currentList;
+    private LinearLayout emptyItem;
 
     private ArrayList<Password> data;
 
@@ -70,6 +72,9 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
 
         currentList = (RecyclerView) findViewById(R.id.currentList);
         currentList.setLayoutManager(new LinearLayoutManager(this));
+
+        emptyItem = (LinearLayout) findViewById(R.id.emptyItem);
+        emptyItem.setVisibility(View.VISIBLE);
     }
 
     private boolean isListFirstTime() {
@@ -182,6 +187,14 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
         PasswordsRecyclerAdapter adapter = new PasswordsRecyclerAdapter(this, data);
         adapter.setEventListener(this);
         currentList.setAdapter(adapter);
+        int size = data.size();
+        if (size > 0){
+            currentList.setVisibility(View.VISIBLE);
+            emptyItem.setVisibility(View.GONE);
+        } else {
+            currentList.setVisibility(View.GONE);
+            emptyItem.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

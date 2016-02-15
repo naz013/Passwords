@@ -7,9 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -129,8 +127,6 @@ public class ViewListItem extends ActionBarActivity implements View.OnClickListe
 
         final int colorToCompare = Integer.parseInt(colorDB);
         cSetter = new ColorSetter(ViewListItem.this);
-        receivedColor = cSetter.colorCompareChooser(colorToCompare);
-        viewSetter(ab, viewActLayout, colorToCompare);
 
         title_enter = (EditText) findViewById(R.id.title_enter);
         login_enter = (EditText) findViewById(R.id.login_enter);
@@ -198,12 +194,12 @@ public class ViewListItem extends ActionBarActivity implements View.OnClickListe
         date_enter = (EditText) findViewById(R.id.date_enter);
         viewDate = (TextView) findViewById(R.id.viewDate);
 
-        title_decrypted = crypter.decrypt(title_str);
-        login_decrypted = crypter.decrypt(login_str);
-        pass_decrypted = crypter.decrypt(pass_str);
-        link_decrypted = crypter.decrypt(link_str);
-        comment_decrypted = crypter.decrypt(comment_str);
-        date_decrypted = crypter.decrypt(date_str);
+        title_decrypted = Crypter.decrypt(title_str);
+        login_decrypted = Crypter.decrypt(login_str);
+        pass_decrypted = Crypter.decrypt(pass_str);
+        link_decrypted = Crypter.decrypt(link_str);
+        comment_decrypted = Crypter.decrypt(comment_str);
+        date_decrypted = Crypter.decrypt(date_str);
         SpannableString content = new SpannableString(link_decrypted);
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
 
@@ -215,43 +211,17 @@ public class ViewListItem extends ActionBarActivity implements View.OnClickListe
 
         showColorRelLay = (RelativeLayout) findViewById(R.id.showColorRelLay);
         spinnerColor = (Spinner) findViewById(R.id.spinnerColor);
-        loadSpinner(colorDB);
+        //loadSpinner(colorDB);
 
         spinnerColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                if (position == 0) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrGrayDark));
-                } else if (position == 1) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrRed));
-                } else if (position == 2) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrViolet));
-                } else if (position == 3) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrLightCreen));
-                } else if (position == 4) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrGreen));
-                } else if (position == 5) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrLightBlue));
-                } else if (position == 6) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrBlue));
-                } else if (position == 7) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrYellow));
-                } else if (position == 8) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrOrange));
-                } else if (position == 9) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrPink));
-                } else if (position == 10) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrSand));
-                } else if (position == 11) {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrBrown));
-                } else {
-                    showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrGrayDark));
-                }
+                showColorRelLay.setBackgroundColor(cSetter.getPasswordColor(position));
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
-                showColorRelLay.setBackgroundColor(getResources().getColor(R.color.colorSemiTrGrayDark));
+                showColorRelLay.setBackgroundColor(cSetter.getPasswordColor(0));
             }
         });
 
@@ -314,10 +284,8 @@ public class ViewListItem extends ActionBarActivity implements View.OnClickListe
 
                     int colorToCompare = Integer.parseInt(colorDB);
                     cSetter = new ColorSetter(ViewListItem.this);
-                    receivedColor = cSetter.colorCompareChooser(colorToCompare);
-                    viewSetter(ab, viewActLayout, colorToCompare);
 
-                    loadSpinner(colorDB);
+                    //loadSpinner(colorDB);
 
                     Animation slide = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
                     editLayout.startAnimation(slide);
@@ -355,7 +323,7 @@ public class ViewListItem extends ActionBarActivity implements View.OnClickListe
         }
     }
 
-    private void loadSpinner(String colorDB){
+    private void loadSpinner(int color){
         int dbLoadColor;
         if (colorDB == null){
             dbLoadColor = getResources().getColor(R.color.colorLightCreen);
@@ -364,33 +332,6 @@ public class ViewListItem extends ActionBarActivity implements View.OnClickListe
         } else {
             dbLoadColor = Integer.parseInt(colorDB);
             showColorRelLay.setBackgroundColor(dbLoadColor);
-            if(dbLoadColor == getResources().getColor(R.color.colorSemiTrGrayDark)){
-                spinnerColor.setSelection(0);
-            } else if (dbLoadColor == getResources().getColor(R.color.colorSemiTrRed)){
-                spinnerColor.setSelection(1);
-            } else if (dbLoadColor == getResources().getColor(R.color.colorSemiTrViolet)){
-                spinnerColor.setSelection(2);
-            } else if (dbLoadColor == getResources().getColor(R.color.colorSemiTrLightCreen)){
-                spinnerColor.setSelection(3);
-            } else if (dbLoadColor == getResources().getColor(R.color.colorSemiTrGreen)){
-                spinnerColor.setSelection(4);
-            } else if (dbLoadColor == getResources().getColor(R.color.colorSemiTrLightBlue)){
-                spinnerColor.setSelection(5);
-            } else if (dbLoadColor == getResources().getColor(R.color.colorSemiTrBlue)){
-                spinnerColor.setSelection(6);
-            } else if (dbLoadColor == getResources().getColor(R.color.colorSemiTrYellow)){
-                spinnerColor.setSelection(7);
-            } else if (dbLoadColor == getResources().getColor(R.color.colorSemiTrOrange)){
-                spinnerColor.setSelection(8);
-            } else if (dbLoadColor == getResources().getColor(R.color.colorSemiTrPink)){
-                spinnerColor.setSelection(9);
-            }else if (dbLoadColor == getResources().getColor(R.color.colorSemiTrSand)){
-                spinnerColor.setSelection(10);
-            }else if (dbLoadColor == getResources().getColor(R.color.colorSemiTrBrown)){
-                spinnerColor.setSelection(11);
-            }else {
-                spinnerColor.setSelection(0);
-            }
         }
     }
 
@@ -437,18 +378,6 @@ public class ViewListItem extends ActionBarActivity implements View.OnClickListe
         return !ranBefore;
     }
 
-    private void viewSetter(ActionBar ab, View v, int colorToCompare){
-        cSetter = new ColorSetter(ViewListItem.this);
-        receivedColor = cSetter.colorCompareChooser(colorToCompare);
-        v.setBackgroundColor(colorToCompare);
-        ab.setBackgroundDrawable(new ColorDrawable(receivedColor));
-        ab.setDisplayShowTitleEnabled(false);
-        ab.setDisplayShowTitleEnabled(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(cSetter.colorDarkChooser(colorToCompare));
-        }
-    }
-
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item= menu.findItem(R.id.action_save);
@@ -471,34 +400,7 @@ public class ViewListItem extends ActionBarActivity implements View.OnClickListe
     private int spinnerColor(){
         int color;
         int spinnerPos = spinnerColor.getSelectedItemPosition();
-        if (spinnerPos == 0) {
-            color = getResources().getColor(R.color.colorSemiTrGrayDark);
-        } else if (spinnerPos == 1) {
-            color = getResources().getColor(R.color.colorSemiTrRed);
-        } else if (spinnerPos == 2) {
-            color = getResources().getColor(R.color.colorSemiTrViolet);
-        } else if (spinnerPos == 3) {
-            color = getResources().getColor(R.color.colorSemiTrLightCreen);
-        } else if (spinnerPos == 4) {
-            color = getResources().getColor(R.color.colorSemiTrGreen);
-        } else if (spinnerPos == 5) {
-            color = getResources().getColor(R.color.colorSemiTrLightBlue);
-        } else if (spinnerPos == 6) {
-            color = getResources().getColor(R.color.colorSemiTrBlue);
-        } else if (spinnerPos == 7) {
-            color = getResources().getColor(R.color.colorSemiTrYellow);
-        } else if (spinnerPos == 8) {
-            color = getResources().getColor(R.color.colorSemiTrOrange);
-        } else if (spinnerPos == 9) {
-            color = getResources().getColor(R.color.colorSemiTrPink);
-        } else if (spinnerPos == 10) {
-            color = getResources().getColor(R.color.colorSemiTrSand);
-        } else if (spinnerPos == 11) {
-            color = getResources().getColor(R.color.colorSemiTrBrown);
-        } else {
-            color = getResources().getColor(R.color.colorSemiTrGrayDark);
-        }
-        return color;
+        return 0;
     }
 
     @Override
@@ -562,18 +464,19 @@ public class ViewListItem extends ActionBarActivity implements View.OnClickListe
 
     private void saveChanges(String title, String login, String password, String url,
                              String comment, String date, int newColoring){
-        title_crypted = crypter.encrypt(title);
-        login_crypted = crypter.encrypt(login);
-        pass_crypted = crypter.encrypt(password);
-        link_crypted = crypter.encrypt(url);
-        comment_crypted = crypter.encrypt(comment);
-        date_crypted = crypter.encrypt(date);
+        title_crypted = Crypter.encrypt(title);
+        login_crypted = Crypter.encrypt(login);
+        pass_crypted = Crypter.encrypt(password);
+        link_crypted = Crypter.encrypt(url);
+        comment_crypted = Crypter.encrypt(comment);
+        date_crypted = Crypter.encrypt(date);
         if (changeCheck()) {
             DB.open();
-            DB.updatePass(itemSelected, title_crypted, login_crypted, pass_crypted, link_crypted, comment_crypted, date_crypted, newColor);
+            DB.updatePass(itemSelected, title_crypted, login_crypted, pass_crypted, link_crypted,
+                    comment_crypted, date_crypted, newColoring);
             DB.close();
             ab.setTitle(title);
-            viewSetter(ab, viewActLayout, newColoring);
+            //viewSetter(ab, viewActLayout, newColoring);
             editCheck.setChecked(false);
             new Thread(new Runnable() {
                 @Override

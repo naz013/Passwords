@@ -61,37 +61,6 @@
 
     <string name="local_backup_descr">Local backup</string>
 
-    <string-array name="sticker_color">
-        <item>choose sticker color</item>
-        <item>grey</item>
-        <item>red</item>
-        <item>violet</item>
-        <item>light green</item>
-        <item>green</item>
-        <item>light blue</item>
-        <item>blue</item>
-        <item>yellow</item>
-        <item>orange</item>
-        <item>pink</item>
-        <item>dark-green</item>
-        <item>brown</item>
-    </string-array>
-
-    <string-array name="view_sticker_color">
-        <item>grey</item>
-        <item>red</item>
-        <item>violet</item>
-        <item>light green</item>
-        <item>green</item>
-        <item>light blue</item>
-        <item>blue</item>
-        <item>yellow</item>
-        <item>orange</item>
-        <item>pink</item>
-        <item>dark-green</item>
-        <item>brown</item>
-    </string-array>
-
     <string name="about_dialog_title">Change app password</string>
     <string name="dialog_old_text">Enter old password</string>
     <string name="dialog_new_text">Enter new password</string>
@@ -114,17 +83,6 @@
     <string name="settings_ui_header">User Interface</string>
     <string name="menu_add_item_title">Add Password</string>
 
-    <string name="switcher_color_red">red</string>
-    <string name="switcher_color_violet">violet</string>
-    <string name="switcher_color_lGreen">l. green</string>
-    <string name="switcher_color_green">green</string>
-    <string name="switcher_color_lBlue">l. blue</string>
-    <string name="switcher_color_blue">blue</string>
-    <string name="switcher_color_yellow">yellow</string>
-    <string name="switcher_color_orange">orange</string>
-    <string name="switcher_color_grey">grey</string>
-    <string name="switcher_color_white">white</string>
-    <string name="switcher_color_black">black</string>
     <string name="view_float_item_title">Make floating</string>
     <string name="view_delete_item_title">Delete</string>
     <string name="view_save_changes_item_title">Save changes</string>
@@ -271,4 +229,26 @@
     <string name="string_more_apps">More applications</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="no_passwords">No passwords</string>
+    <string name="choose_color">Choose color</string>
+
+    <string name="white">White</string>
+    <string name="red">Red</string>
+    <string name="purple">Purple</string>
+    <string name="green_light">Light Green</string>
+    <string name="green">Green</string>
+    <string name="blue_light">Light Blue</string>
+    <string name="blue">Blue</string>
+    <string name="yellow">Yellow</string>
+    <string name="orange">Orange</string>
+    <string name="cyan">Cyan</string>
+    <string name="pink">Pink</string>
+    <string name="dark_green">Dark Green</string>
+    <string name="amber">Amber</string>
+    <string name="black">Black</string>
+    <string name="transparent">Transparent</string>
+    <string name="lime">Lime</string>
+    <string name="indigo">Indigo</string>
+    <string name="dark_orange">Dark orange</string>
+    <string name="dark_purple">Dark purple</string>
+    <string name="teal">Dark Green</string>
 </resources>

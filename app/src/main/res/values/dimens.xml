@@ -218,5 +218,6 @@
     <dimen name="restore_layout_button_p">5dp</dimen>
     <dimen name="check_box_text_size">18sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="drawable_circle_width">4dp</dimen>
 
 </resources>

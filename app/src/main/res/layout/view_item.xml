@@ -122,7 +122,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/add_spinner_height"
                         android:id="@+id/spinnerColor"
-                        android:entries="@array/view_sticker_color"
                         android:layout_marginLeft="25dp"/>
 
                     <RelativeLayout

@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.dialogs.DateFormatDialog;
-import com.cray.software.passwords.dialogs.ThemeColorDialog;
+import com.cray.software.passwords.dialogs.ThemerDialog;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.interfaces.Constants;
 
@@ -151,7 +151,7 @@ public class GeneralSettingsFragment extends Fragment implements View.OnClickLis
         switch (v.getId()) {
             case R.id.themeColor:
                 getActivity().getApplicationContext().startActivity(
-                        new Intent(getActivity().getApplicationContext(), ThemeColorDialog.class)
+                        new Intent(getActivity().getApplicationContext(), ThemerDialog.class)
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
             case R.id.backupFile:
