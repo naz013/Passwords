@@ -4,7 +4,6 @@
     <string name="app_name">Passwords PRO</string>
     <string name="app_name_free">Passwords</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
     <string name="enter_button">Start</string>
     <string name="repeat_pass">Confirm Password</string>
     <string name="enter_pass">Enter Password</string>
@@ -14,79 +13,27 @@
     <string name="item_password">Password:</string>
     <string name="item_link">Url:</string>
     <string name="item_comment">Comments:</string>
-    <string name="comment_stock_string">Comment</string>
     <string name="item_date">Date</string>
-    <string name="item_add">Save</string>
-    <string name="item_add_more">Add more</string>
-    <string name="item_form_clear_cancel">Clear/Cancel</string>
-    <string name="view_act_item_delete">Delete</string>
-    <string name="view_act_item_close">Clear/Cancel</string>
     <string name="view_act_item_close_in">Close</string>
-    <string name="view_act_item_edit"> - Edit</string>
     <string name="set_att_if_all_field_empty">Must not be empty!</string>
-    <string name="set_att_if_first_field_empty">First field is empty!</string>
-    <string name="set_att_if_second_field_empty">Second field is empty!</string>
-    <string name="set_att_if_one_of_field_empty">You not enter the password!</string>
-    <string name="set_att_if_fields_not_match">Different password!</string>
     <string name="set_att_if_inserted_not_match_saved">Not match!</string>
     <string name="show_pass_check">Show password</string>
     <string name="url_part">http://www.</string>
-    <string name="alert_butt_pos">yes</string>
-    <string name="alert_butt_neg">no</string>
-    <string name="alert_butt_can">Cancel</string>
     <string name="edit_title_is_empty">Must enter Title.</string>
     <string name="edit_login_is_empty">Must enter Login.</string>
     <string name="edit_pass_is_empty">Must enter Password.</string>
-    <string name="copy_button_view">C</string>
-    <string name="spinner_label">Choose an type</string>
-    <string name="options_button">For more</string>
-    <string name="cloud_button">Backup to cloud storage</string>
-    <string name="ui_opt_button">Quick Settings</string>
-    <string name="action_bar_settings_text">Settings</string>
-    <string name="empty_folder">Nothing to restore.</string>
     <string name="menu_about">About</string>
     <string name="menu_feedback">Send Feedback</string>
-    <string name="menu_exit">Exit</string>
 
     <string name="back_button_toast">Please, press again to exit</string>
-    <string name="db_empty">Nothing to backup or restore!</string>
-    <string name="db_name_null">Database Name must not be null</string>
-    <string name="alert_title">Delete </string>
-    <string name="alert_layout_checkbox_del">Also delete backup</string>
-    <string name="alert_layout_checkbox_ask">Never ask again</string>
-    <string name="alert_dialog_pos_button">YES</string>
-    <string name="alert_dialog_neg_button">NO</string>
-    <string name="list_item_undo_text">Tap to undo</string>
-    <string name="list_item_deleted_text">Item deleted</string>
-
-    <string name="local_backup_descr">Local backup</string>
 
     <string name="about_dialog_title">Change app password</string>
     <string name="dialog_old_text">Enter old password</string>
     <string name="dialog_new_text">Enter new password</string>
-    <string name="some_text">Password saving app.</string>
     <string name="change_pass_length">Length of password</string>
-    <string name="pass_length_text">Enter length of password</string>
-    <string name="lock_dialog">Enter password</string>
 
-    <string name="float_password_title">Password: </string>
-    <string name="float_login_title">Login:</string>
-    <string name="float_default_title">Password</string>
-    <string name="float_default_login">Login</string>
-    <string name="float_default_window_title">Passwords</string>
-    <string name="float_default_close_button_text">Close</string>
-    <string name="settings_app_security">App Security</string>
-    <string name="cloud_settings_header">Cloud Storage Settings</string>
-    <string name="other_settings_header">Other Settings</string>
     <string name="single_screen_forgot_password_title">Forgot password\?</string>
-    <string name="single_screen_alert_title">Restore password</string>
-    <string name="settings_ui_header">User Interface</string>
-    <string name="menu_add_item_title">Add Password</string>
 
-    <string name="view_float_item_title">Make floating</string>
-    <string name="view_delete_item_title">Delete</string>
-    <string name="view_save_changes_item_title">Save changes</string>
-    <string name="settings_add_cloud_choose_title">Choose Cloud Storage</string>
     <string name="restore_dialog_enter_keyword">Enter Keyword</string>
     <string name="restore_dialog_show_button">SHOW</string>
     <string name="received_pass_title">Your app Password</string>
@@ -99,46 +46,14 @@
     <string name="overflow_add_save_plus">or click to save this item and clean fields for another password</string>
     <string name="overflow_add_save">Click to save password…</string>
     <string name="overflow_add_fields">Fill necessary fields and…</string>
-    <string name="overflow_view_floating">Click to open floating window</string>
-    <string name="overflow_view_save_changes">Click to save changes.</string>
-    <string name="overflow_view_check">Check to edit password</string>
     <string name="overflow_list_explanation">Swipe element to left or right to delete it. \n \n Pull down to backup and restore previously saved passwords.</string>
 
-    <string name="copied_login">Copied login: </string>
-    <string name="copied_password">Copied password: </string>
     <string name="keyword_not_match">Keyword not match</string>
-    <string name="security_insert_keyword">Insert keyword</string>
     <string name="help_overlay_button_skip">Skip</string>
-    <string name="help_view_delete_item">Click to delete password.</string>
-    <string name="this_title_is_used">This title is also used!</string>
-    <string name="fragment_help">Help</string>
-    <string name="help_add_item_quest">How to add password?</string>
-    <string name="help_delete_item_quest">How to delete password?</string>
-    <string name="help_edit_item_quest">How to edit password?</string>
-    <string name="help_add_cloud_storage_quest">How to add cloud storage?</string>
-    <string name="help_logout_quest">How to logout from cloud storage?</string>
-    <string name="help_restore_key_quest">For what restore keyword is needed?</string>
-    <string name="help_sync_all_quest">How to sync all you passwords?</string>
+
     <string name="add_item_save_and_clean">Save this and clean form</string>
     <string name="add_item_save">Save</string>
-    <string name="help_use_quest">How use saved passwords?</string>
-    <string name="help_use_answer">To use saved passwords open it and click on login or password to copy it.</string>
-    <string name="help_cliick_to_copy">Click on login or password to copy it</string>
 
-    <string name="couldnt_launch_market">Could not launch market</string>
-    <string name="fragment_rate">Rate app</string>
-    <string name="dialog_cancel_button">Cancel</string>
-    <string name="dialog_save_button">Save</string>
-    <string name="dialog_not_licensed_title">NOT LICENSED</string>
-    <string name="dialog_not_licensed_message">This application is not licensed, please buy it from the play store.</string>
-    <string name="dialog_buy_button">Buy</string>
-    <string name="dialog_exit_button">Exit</string>
-    <string name="dialog_recheck_button">Re-Check</string>
-    <string name="dialog_licensed_title">LICENSED</string>
-    <string name="dialog_licensed_message">Thank You for installing PRO license.</string>
-    <string name="dialog_other_title">Other version</string>
-    <string name="dialog_other_text">You can\'t access to cloud while you have installed two version of application. You can open free version to make backup of data or delete it. </string>
-    <string name="dialog_other_open_button">Open</string>
     <string name="item_deleted">Deleted</string>
     <string name="gen_title">Password Generator</string>
     <string name="gen_symbols">Symbols</string>
@@ -162,23 +77,11 @@
     <string name="button_close">CLOSE</string>
     <string name="app_theme_explanation">Select application theme</string>
     <string name="app_theme_title">Theme color</string>
-    <string name="screen_orientation_title">Screen orientation</string>
-    <string name="system_messages_explanation">Check to enable system messages</string>
-    <string name="system_messages_title">System messages</string>
-    <string name="font_color_explanation">Select application font color</string>
-    <string name="font_color_title">Font color</string>
-    <string name="screen_auto">Auto</string>
-    <string name="screen_portrait">Portrait (Vertical)</string>
-    <string name="screen_landscape">Landscape (Horizontal)</string>
-    <string name="list_select_warming">Select one of item</string>
-    <string name="sync_start_message_title">Synchronization started</string>
-    <string name="please_wait_message">Please wait…</string>
     <string name="sync_finished_message">Synchronization finished</string>
     <string name="login_button">LOGIN</string>
     <string name="google_drive_title">Google Drive</string>
     <string name="logout_button">LOGOUT</string>
     <string name="loading_app_message">Application loading…</string>
-    <string name="no_restore_key">You don\'t have restore keyword!</string>
     <string name="rate_question">Would You like to rate this application?</string>
     <string name="button_never">NEVER</string>
     <string name="button_later">LATER</string>
@@ -201,12 +104,10 @@
     <string name="open_app_dialog_button">OPEN</string>
     <string name="other_version_message">Other version of this application founded</string>
     <string name="sync_action_title">Synchronize</string>
-    <string name="buy_dialog_title">Buy</string>
     <string name="buy_button">BUY</string>
     <string name="verify_message">Verifying application</string>
     <string name="buy_pro_title">Buy PRO</string>
     <string name="delete_password_message">Deleting password…</string>
-    <string name="main_title">Main</string>
 
     <array name="settings_list">
         <item>@string/interface_block</item>
@@ -220,14 +121,12 @@
         <item>US (01/15/2014)</item>
         <item>CN (2014–01–15)</item>
     </string-array>
-    <string name="max_lenght_text">Passwords length</string>
     <string name="menu_sort_title">Sort</string>
     <string name="sort_by_date_az">By date (A-Z)</string>
     <string name="sort_by_date_za">By date (Z-A)</string>
     <string name="sort_by_title_az">By title (A-Z)</string>
     <string name="sort_by_title_za">By title (Z-A)</string>
     <string name="string_more_apps">More applications</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="no_passwords">No passwords</string>
     <string name="choose_color">Choose color</string>
 
@@ -242,13 +141,16 @@
     <string name="orange">Orange</string>
     <string name="cyan">Cyan</string>
     <string name="pink">Pink</string>
-    <string name="dark_green">Dark Green</string>
     <string name="amber">Amber</string>
-    <string name="black">Black</string>
-    <string name="transparent">Transparent</string>
     <string name="lime">Lime</string>
     <string name="indigo">Indigo</string>
     <string name="dark_orange">Dark orange</string>
     <string name="dark_purple">Dark purple</string>
     <string name="teal">Dark Green</string>
+    <string name="you_dont_select_a_color">You don\'t select a color!</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="open_source_licenses">Open source licenses</string>
+    <string name="saved">Saved</string>
+    <string name="removed">Removed</string>
 </resources>

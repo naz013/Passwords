@@ -43,9 +43,21 @@ public class DataProvider {
                 String title = c.getString(c.getColumnIndex(Constants.COLUMN_TITLE));
                 title = Crypter.decrypt(title);
                 String date = c.getString(c.getColumnIndex(Constants.COLUMN_DATE));
+                String login = c.getString(c.getColumnIndex(Constants.COLUMN_LOGIN));
                 date = Crypter.decrypt(date);
+                login = Crypter.decrypt(login);
+                int length = login.length();
+                StringBuilder sb = new StringBuilder();
+                if (length > 5) {
+                    String sub = login.substring(0, 3);
+                    sb.append(sub);
+                    for (int i = 3; i < length; i++) {
+                        sb.append("*");
+                    }
+                    login = sb.toString();
+                }
                 long id = c.getLong(c.getColumnIndex(Constants.COLUMN_ID));
-                list.add(new Password(title, date, id, cs.getPasswordColor(colorCircle)));
+                list.add(new Password(title, date, id, cs.getPasswordColor(colorCircle), login));
             } while (c.moveToNext());
         }
         if (c != null) c.close();

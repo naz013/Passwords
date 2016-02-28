@@ -16,15 +16,20 @@ package com.cray.software.passwords.helpers;
  * limitations under the License.
  */
 public class Password {
-    private String title, date;
+    private String title, date, login;
     private long id;
     private int color;
 
-    public Password(String title, String date, long id, int color) {
+    public Password(String title, String date, long id, int color, String login) {
         this.title = title;
         this.date = date;
         this.id = id;
         this.color = color;
+        this.login = login;
+    }
+
+    public String getLogin() {
+        return login;
     }
 
     public int getColor() {

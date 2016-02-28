@@ -40,7 +40,6 @@
             android:text="@string/overflow_button_next"
             android:id="@+id/button"
             android:layout_marginBottom="@dimen/help_button_m_bottom"
-            android:background="@drawable/button_states"
             android:textColor="@color/colorBlack"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
@@ -107,7 +106,6 @@
             android:text="@string/overflow_button_next"
             android:id="@+id/addButton"
             android:layout_marginBottom="@dimen/help_button_m_bottom"
-            android:background="@drawable/button_states"
             android:textColor="@color/colorBlack"
             android:layout_alignParentBottom="true"
             android:textSize="@dimen/help_button_t_size"
@@ -153,87 +151,6 @@
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/viewHelp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:visibility="visible">
-        <TextView
-            android:layout_width="@dimen/help_main_tip_width"
-            android:layout_height="wrap_content"
-            android:background="@drawable/popup_w_arrow_up_right"
-            android:text="@string/overflow_view_save_changes"
-            android:gravity="center"
-            android:id="@+id/viewFloat"
-            android:textColor="@color/colorBlack"
-            android:layout_marginTop="@dimen/help_view_tip2_m_top"
-            android:layout_alignParentRight="true"
-            android:textSize="@dimen/help_tip_t_size"
-            android:visibility="visible"
-            android:layout_alignParentEnd="true" />
-        <TextView
-            android:layout_width="@dimen/help_main_tip_width"
-            android:layout_height="wrap_content"
-            android:background="@drawable/popup_w_arrow_up"
-            android:text="@string/help_view_delete_item"
-            android:gravity="center"
-            android:id="@+id/viewDelete"
-            android:textColor="@color/colorBlack"
-            android:layout_marginTop="@dimen/help_view_tip2_m_top"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/help_add_tip3_m_right"
-            android:textSize="@dimen/help_tip_t_size"
-            android:visibility="visible"
-            android:layout_alignParentEnd="true" />
-        <TextView
-            android:id="@+id/viewCopyHelp"
-            android:layout_width="@dimen/help_main_tip_width"
-            android:layout_height="wrap_content"
-            android:background="@drawable/dialog_button"
-            android:text="@string/help_cliick_to_copy"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/help_add_tip4_t_size"
-            android:visibility="visible"
-            android:padding="@dimen/help_add_tip4_p"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
-        <Button
-            android:layout_width="@dimen/help_main_tip_width"
-            android:layout_height="@dimen/help_button_height"
-            android:text="@string/overflow_button_next"
-            android:id="@+id/viewButton"
-            android:layout_marginBottom="@dimen/help_button_m_bottom"
-            android:background="@drawable/button_states"
-            android:textColor="@color/colorBlack"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:textSize="@dimen/help_button_t_size"
-            android:layout_centerHorizontal="true" />
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="@dimen/help_button_height"
-            android:text="@string/help_overlay_button_skip"
-            android:id="@+id/viewButtonSkip"
-            android:layout_marginBottom="@dimen/help_button_m_bottom"
-            android:background="@null"
-            android:textColor="@color/colorWhite"
-            android:layout_alignParentBottom="true"
-            android:textSize="@dimen/help_button_t_size"
-            android:layout_alignParentLeft="true"/>
-        <TextView
-            android:layout_width="@dimen/help_main_tip_width"
-            android:layout_height="wrap_content"
-            android:background="@drawable/popup_w_arrow_up"
-            android:text="@string/overflow_view_check"
-            android:textSize="@dimen/help_tip_t_size"
-            android:gravity="center"
-            android:id="@+id/viewMore"
-            android:textColor="@color/colorBlack"
-            android:layout_marginTop="@dimen/help_view_tip3_m_top"
-            android:visibility="visible"
-            android:layout_centerHorizontal="true"/>
-    </RelativeLayout>
-    <RelativeLayout
         android:id="@+id/listHelp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -245,7 +162,6 @@
             android:text="@string/view_act_item_close_in"
             android:id="@+id/listButton"
             android:layout_marginBottom="@dimen/help_button_m_bottom"
-            android:background="@drawable/button_states"
             android:textColor="@color/colorBlack"
             android:layout_alignParentBottom="true"
             android:textSize="@dimen/help_button_t_size"

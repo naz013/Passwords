@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.InputFilter;
@@ -20,6 +19,7 @@ import android.widget.Toast;
 
 import com.cray.software.passwords.dialogs.RestoreInsertMail;
 import com.cray.software.passwords.helpers.ColorSetter;
+import com.cray.software.passwords.helpers.Permissions;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.interfaces.Constants;
@@ -30,14 +30,13 @@ import java.io.UnsupportedEncodingException;
 
 public class SplashScreen extends Activity {
 
-    TextView textView, textView2, forgotPassword;
-    ImageView imageView;
-    LinearLayout splashBg, loadLayout, singleLayout, doubleLayout;
-    EditText loginPass, firstPass, secondPass;
-    Button loginButton, loginSaver;
-    Typeface typeface;
-    SharedPreferences appSettings, appUISettings;
-    SharedPrefs sPrefs;
+    private TextView forgotPassword;
+    private LinearLayout loadLayout;
+    private LinearLayout singleLayout;
+    private LinearLayout doubleLayout;
+    private EditText loginPass, firstPass, secondPass;
+    private SharedPreferences appSettings;
+    private SharedPrefs sPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +44,19 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.splash_layout);
         writePrefs();
         ColorSetter cs = new ColorSetter(SplashScreen.this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(cs.colorStatus());
+        if (Module.isLollipop()) {
+            getWindow().setStatusBarColor(cs.getColor(cs.colorPrimaryDark()));
         }
-        splashBg = (LinearLayout) findViewById(R.id.splashBg);
-        splashBg.setBackgroundColor(cs.colorSetter());
+        LinearLayout splashBg = (LinearLayout) findViewById(R.id.splashBg);
+        splashBg.setBackgroundColor(cs.getColor(cs.colorPrimary()));
 
-        typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
-        textView = (TextView) findViewById(R.id.textView);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+        TextView textView = (TextView) findViewById(R.id.textView);
         if (!Module.isPro()) textView.setText(getString(R.string.app_name_free));
         else textView.setText(getString(R.string.app_name));
         textView.setTypeface(typeface);
 
-        textView2 = (TextView) findViewById(R.id.textView2);
+        TextView textView2 = (TextView) findViewById(R.id.textView2);
         textView2.setTypeface(typeface);
 
         clearLayout();
@@ -82,7 +81,7 @@ public class SplashScreen extends Activity {
         firstPass.setFilters(FilterArray);
         secondPass.setFilters(FilterArray);
 
-        loginSaver = (Button) findViewById(R.id.loginSaver);
+        Button loginSaver = (Button) findViewById(R.id.loginSaver);
         loginSaver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,8 +100,6 @@ public class SplashScreen extends Activity {
 
         loginPass = (EditText) findViewById(R.id.loginPass);
 
-        int MODE = Context.MODE_MULTI_PROCESS;
-        appUISettings = getSharedPreferences(Constants.NEW_PREFERENCES, MODE);
         sPrefs = new SharedPrefs(getApplicationContext());
         int passLenghtInt = sPrefs.loadInt(Constants.NEW_PREFERENCES_EDIT_LENGHT);
 
@@ -147,7 +144,7 @@ public class SplashScreen extends Activity {
             }
         });
 
-        loginButton = (Button) findViewById(R.id.loginButton);
+        Button loginButton = (Button) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,7 +185,7 @@ public class SplashScreen extends Activity {
     }
 
     private void detachLoading(){
-        imageView = (ImageView) findViewById(R.id.imageView);
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setVisibility(View.GONE);
 
         loadLayout.setVisibility(View.GONE);
@@ -309,6 +306,15 @@ public class SplashScreen extends Activity {
             if (!sPrefs.isString(Constants.NEW_PREFERENCES_AUTO_BACKUP)){
                 sPrefs.saveBoolean(Constants.NEW_PREFERENCES_AUTO_BACKUP, false);
             }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!Permissions.checkPermission(SplashScreen.this, Permissions.READ_EXTERNAL,
+                Permissions.WRITE_EXTERNAL)) {
+            Permissions.requestPermission(SplashScreen.this, 102, Permissions.READ_EXTERNAL, Permissions.WRITE_EXTERNAL);
         }
     }
 }

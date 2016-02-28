@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.cray.software.passwords.interfaces.Constants;
 
@@ -65,9 +66,7 @@ public class DataBase {
 
     public DataBase open() throws SQLiteException {
         dbHelper = new DBHelper(mContext);
-
         db = dbHelper.getWritableDatabase();
-
         System.gc();
         return this;
     }
@@ -81,8 +80,7 @@ public class DataBase {
     }
 
     public void close() {
-        if( dbHelper != null )
-            dbHelper.close();
+        if (dbHelper != null) dbHelper.close();
     }
 
     public long insertPass (String title, String login, String password, String url,
@@ -97,7 +95,7 @@ public class DataBase {
         cv.put(COLUMN_DATE, date);
         cv.put(COLUMN_TECHNICAL, color);
         cv.put(COLUMN_PIC_SEL, uuID);
-        //Log.d(LOG_TAG, "data is inserted " + cv);
+        Log.d(Constants.LOG_TAG, "data is inserted " + cv);
         return db.insert(TABLE_NAME, null, cv);
     }
 
@@ -177,9 +175,9 @@ public class DataBase {
     }
 
     public void openGuard() throws SQLiteException {
-        if(isOpen()) return;
+        if (isOpen()) return;
         open();
-        if(isOpen()) return;
+        if (isOpen()) return;
         //Log.d(LOG_TAG, "open guard failed");
         throw new SQLiteException("Could not open database");
     }

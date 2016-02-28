@@ -4,7 +4,9 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -38,20 +40,20 @@ import java.util.Calendar;
 
 public class ManagePassword extends AppCompatActivity {
 
-    EditText title_enter, login_enter, password_enter, link_enter, comment_enter, date_enter;
-    CheckBox showPass;
-    Spinner spinnerColor;
-    ImageButton generateDialog;
-    RelativeLayout showColorRelLay;
-    Toolbar toolbar;
+    private EditText title_enter, login_enter, password_enter, link_enter, comment_enter, date_enter;
+    private Spinner spinnerColor;
+    private RelativeLayout showColorRelLay;
+    private Toolbar toolbar;
 
-    ColorSetter cSetter;
-    SyncHelper sHelpers = new SyncHelper(ManagePassword.this);
-    SharedPrefs prefs;
+    private ColorSetter cSetter;
+    private SyncHelper sHelpers = new SyncHelper(ManagePassword.this);
+    private SharedPrefs prefs;
 
-    int myYear = 0;
-    int myMonth = 0;
-    int myDay = 1;
+    private int myYear = 0;
+    private int myMonth = 0;
+    private int myDay = 1;
+
+    private long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +61,13 @@ public class ManagePassword extends AppCompatActivity {
         setContentView(R.layout.activity_manage_password);
         cSetter = new ColorSetter(ManagePassword.this);
         if (Module.isLollipop()) {
-            getWindow().setStatusBarColor(cSetter.colorStatus());
+            getWindow().setStatusBarColor(cSetter.getColor(cSetter.colorPrimaryDark()));
         }
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.activity_title);
+
+        id = getIntent().getLongExtra("itemId", 0);
 
         title_enter = (EditText) findViewById(R.id.title_enter);
 
@@ -93,7 +97,7 @@ public class ManagePassword extends AppCompatActivity {
             }
         });
 
-        generateDialog = (ImageButton) findViewById(R.id.generateDialog);
+        ImageButton generateDialog = (ImageButton) findViewById(R.id.generateDialog);
         generateDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +106,7 @@ public class ManagePassword extends AppCompatActivity {
             }
         });
 
-        showPass = (CheckBox) findViewById(R.id.showPass);
+        CheckBox showPass = (CheckBox) findViewById(R.id.showPass);
         showPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
@@ -125,7 +129,7 @@ public class ManagePassword extends AppCompatActivity {
                 getString(R.string.cyan), getString(R.string.pink),
                 getString(R.string.teal), getString(R.string.amber),
                 getString(R.string.dark_purple), getString(R.string.dark_orange),
-                getString(R.string.lime), getString(R.string.indigo)};
+                getString(R.string.lime), getString(R.string.indigo), getString(R.string.white)};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, items);
         spinnerColor.setAdapter(adapter);
         if (savedInstanceState != null) {
@@ -146,7 +150,7 @@ public class ManagePassword extends AppCompatActivity {
             }
         });
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             title_enter.setText(savedInstanceState.getString("title"));
             login_enter.setText(savedInstanceState.getString("login"));
             password_enter.setText(savedInstanceState.getString("pass"));
@@ -170,16 +174,36 @@ public class ManagePassword extends AppCompatActivity {
 
             prefs = new SharedPrefs(ManagePassword.this);
             int dateSwitchInd = prefs.loadInt(Constants.NEW_PREFERENCES_DATE_FORMAT);
-            //Log.d(LOG_TAG, "check ind: " + dateSwitchInd);
-            if(dateSwitchInd == 1){
+            if(dateSwitchInd == 1) {
                 date_enter.setText(dayStr + "." + monthStr + "." + String.valueOf(myYear));
-            }
-            else if(dateSwitchInd == 2){
+            } else if (dateSwitchInd == 2) {
                 date_enter.setText(monthStr + "/" + dayStr + "/" + String.valueOf(myYear));
-            }
-            else if(dateSwitchInd == 3){
+            } else if (dateSwitchInd == 3) {
                 date_enter.setText(String.valueOf(myYear) + "-" + monthStr + "-" + dayStr);
             }
+        }
+
+        if (id != 0) {
+            DataBase db = new DataBase(this);
+            db.open();
+            Cursor c = db.fetchPass(id);
+            if (c != null && c.moveToFirst()) {
+                String title = c.getString(c.getColumnIndex(Constants.COLUMN_TITLE));
+                String login = c.getString(c.getColumnIndex(Constants.COLUMN_LOGIN));
+                String password = c.getString(c.getColumnIndex(Constants.COLUMN_PASSWORD));
+                String url = c.getString(c.getColumnIndex(Constants.COLUMN_URL));
+                String comment = c.getString(c.getColumnIndex(Constants.COLUMN_COMMENT));
+                String date = c.getString(c.getColumnIndex(Constants.COLUMN_DATE));
+                int color = c.getInt(c.getColumnIndex(Constants.COLUMN_TECHNICAL));
+                title_enter.setText(Crypter.decrypt(title));
+                password_enter.setText(Crypter.decrypt(password));
+                login_enter.setText(Crypter.decrypt(login));
+                comment_enter.setText(Crypter.decrypt(comment));
+                date_enter.setText(Crypter.decrypt(date));
+                link_enter.setText(Crypter.decrypt(url));
+                spinnerColor.setSelection(color + 1);
+            }
+            db.close();
         }
 
         if (isFirstTime()) {
@@ -192,7 +216,6 @@ public class ManagePassword extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_CODE_PASS) {
             if (resultCode == RESULT_OK) {
-                //Use Data to get string
                 String string = data.getStringExtra("GENERATED_PASSWORD");
                 password_enter.setText(string);
             }
@@ -221,11 +244,11 @@ public class ManagePassword extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         ColorSetter cSetter = new ColorSetter(ManagePassword.this);
-        int colorPrimary = cSetter.colorSetter();
-        int colorDark = cSetter.colorStatus();
-        toolbar.setBackgroundColor(colorPrimary);
+        int colorPrimary = cSetter.colorPrimary();
+        int colorDark = cSetter.colorPrimaryDark();
+        toolbar.setBackgroundColor(cSetter.getColor(colorPrimary));
         if (Module.isLollipop()) {
-            getWindow().setStatusBarColor(colorDark);
+            getWindow().setStatusBarColor(cSetter.getColor(colorDark));
         }
     }
 
@@ -236,16 +259,12 @@ public class ManagePassword extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.save:
-                save();
-                finish();
+                if (save()) finish();
                 return true;
             case R.id.save_and_new:
-                save();
-
-                fieldClear();
-                String link_enter_str = link_enter.getText().toString();
-                if (link_enter_str.equals("")) {
-                    link_enter.setText("http://www.");
+                if (save()) {
+                    Snackbar.make(toolbar, R.string.saved, Snackbar.LENGTH_SHORT).show();
+                    fieldClear();
                 }
                 return true;
             default:
@@ -253,7 +272,7 @@ public class ManagePassword extends AppCompatActivity {
         }
     }
 
-    private void save() {
+    private boolean save() {
         String title = title_enter.getText().toString().trim();
         String login = login_enter.getText().toString().trim();
         String password = password_enter.getText().toString().trim();
@@ -261,7 +280,11 @@ public class ManagePassword extends AppCompatActivity {
         String comment = comment_enter.getText().toString().trim();
         String date = date_enter.getText().toString().trim();
         int color = spinnerColor.getSelectedItemPosition() - 1;
-        if (!emptyLogPassCheck()) return;
+        if (color < 0) {
+            Snackbar.make(toolbar, R.string.you_dont_select_a_color, Snackbar.LENGTH_SHORT).show();
+            return false;
+        }
+        if (checkEmpty()) return false;
         title = Crypter.encrypt(title);
         login = Crypter.encrypt(login);
         password = Crypter.encrypt(password);
@@ -270,14 +293,18 @@ public class ManagePassword extends AppCompatActivity {
         date = Crypter.encrypt(date);
         DataBase DB = new DataBase(ManagePassword.this);
         DB.open();
-        String uuID = sHelpers.generateID();
-        DB.insertPass(title, login, password, url, comment, date, color, uuID);
+        if (id != 0) {
+            DB.updatePass(id, title, login, password, url, comment, date, color);
+        } else {
+            String uuID = sHelpers.generateID();
+            DB.insertPass(title, login, password, url, comment, date, color, uuID);
+        }
         DB.close();
+        return true;
     }
 
     protected void onSaveInstanceState(Bundle saveInstance) {
         super.onSaveInstanceState(saveInstance);
-
         String title_str = title_enter.getText().toString();
         String login_str = login_enter.getText().toString();
         String pass_str = password_enter.getText().toString();
@@ -296,53 +323,31 @@ public class ManagePassword extends AppCompatActivity {
 
     public void fieldClear(){
         comment_enter.setText("");
-        link_enter.setText("http://www.");
+        String link_enter_str = link_enter.getText().toString();
+        if (link_enter_str.equals("")) {
+            link_enter.setText("http://www.");
+        }
         password_enter.setText("");
         login_enter.setText("");
         title_enter.setText("");
     }
 
-    public boolean emptyLogPassCheck (){
+    public boolean checkEmpty(){
         String title_str = title_enter.getText().toString().trim();
         String login_str = login_enter.getText().toString().trim();
         String pass_str = password_enter.getText().toString().trim();
-        if (title_str.equals("") && login_str.equals("") && pass_str.equals("")){
-            title_enter.setError(getResources().getString(R.string.edit_title_is_empty));
-            login_enter.setError(getResources().getString(R.string.edit_login_is_empty));
-            password_enter.setError(getResources().getString(R.string.edit_pass_is_empty));
+        if (title_str.equals("")) {
+            Snackbar.make(toolbar, R.string.edit_title_is_empty, Snackbar.LENGTH_SHORT).show();
+            return true;
+        } else if (login_str.equals("")) {
+            Snackbar.make(toolbar, R.string.edit_login_is_empty, Snackbar.LENGTH_SHORT).show();
+            return true;
+        } else if (pass_str.equals("")) {
+            Snackbar.make(toolbar, R.string.edit_pass_is_empty, Snackbar.LENGTH_SHORT).show();
             return true;
         }
-        else if (title_str.equals("") && login_str.equals("")){
-            title_enter.setError(getResources().getString(R.string.edit_title_is_empty));
-            login_enter.setError(getResources().getString(R.string.edit_login_is_empty));
-            return true;
-        }
-        else if (title_str.equals("") && pass_str.equals("")){
-            title_enter.setError(getResources().getString(R.string.edit_title_is_empty));
-            password_enter.setError(getResources().getString(R.string.edit_pass_is_empty));
-            return true;
-        }
-        else if (login_str.equals("") && pass_str.equals("")) {
-            login_enter.setError(getResources().getString(R.string.edit_login_is_empty));
-            password_enter.setError(getResources().getString(R.string.edit_pass_is_empty));
-            return true;
-        }
-        else if (title_str.equals("")){
-            title_enter.setError(getResources().getString(R.string.edit_title_is_empty));
-            return true;
-        }
-        else if (login_str.equals("")){
-            login_enter.setError(getResources().getString(R.string.edit_login_is_empty));
-            return true;
-        }
-        else if (pass_str.equals(""))
-        {
-            password_enter.setError(getResources().getString(R.string.edit_pass_is_empty));
-            return true;
-        }
-        else {
-            return false;
-        }
+
+        return false;
     }
 
     protected Dialog dateDialog() {
@@ -368,7 +373,6 @@ public class ManagePassword extends AppCompatActivity {
 
             prefs = new SharedPrefs(ManagePassword.this);
             int dateSwitchInd = prefs.loadInt(Constants.NEW_PREFERENCES_DATE_FORMAT);
-            //Log.d(LOG_TAG, "check ind: " + dateSwitchInd);
             if(dateSwitchInd == 1){
                 date_enter.setText(dayStr + "." + monthStr + "." + String.valueOf(myYear));
             }

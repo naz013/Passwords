@@ -3,7 +3,6 @@
     <string name="app_name">"Passwords PRO"</string>
     <string name="app_name_free">Passwords</string>
     <string name="action_settings">"Налаштування"</string>
-    <string name="hello_world">"Привіт світ!"</string>
     <string name="enter_button">"Почати"</string>
     <string name="repeat_pass">"Підтвердіть пароль"</string>
     <string name="enter_pass">"Введіть пароль"</string>
@@ -13,79 +12,27 @@
     <string name="item_password">"Пароль:"</string>
     <string name="item_link">"Url:"</string>
     <string name="item_comment">"Коментарі:"</string>
-    <string name="comment_stock_string">"Коментар"</string>
     <string name="item_date">"Дата:"</string>
-    <string name="item_add">"Зберегти"</string>
-    <string name="item_add_more">"Додати ще"</string>
-    <string name="item_form_clear_cancel">"Скасувати"</string>
-    <string name="view_act_item_delete">"Видалити"</string>
-    <string name="view_act_item_close">"Скасувати"</string>
     <string name="view_act_item_close_in">"Закрити"</string>
-    <string name="view_act_item_edit">" - Редагувати"</string>
     <string name="set_att_if_all_field_empty">"Не повинно бути пустим!"</string>
-    <string name="set_att_if_first_field_empty">"Перше поле порожнє!"</string>
-    <string name="set_att_if_second_field_empty">"Друге поле порожнє!"</string>
-    <string name="set_att_if_one_of_field_empty">"Ви не ввели пароль!"</string>
-    <string name="set_att_if_fields_not_match">"Різні пароль!"</string>
     <string name="set_att_if_inserted_not_match_saved">"Не співпадає!"</string>
     <string name="show_pass_check">"Відобразити пароль"</string>
     <string name="url_part">"http://www."</string>
-    <string name="alert_butt_pos">"так"</string>
-    <string name="alert_butt_neg">"ні"</string>
-    <string name="alert_butt_can">"Скасувати"</string>
     <string name="edit_title_is_empty">"Необхідно ввести заголовок."</string>
     <string name="edit_login_is_empty">"Необхідно ввести Логін."</string>
     <string name="edit_pass_is_empty">"Необхідно ввести пароль."</string>
-    <string name="copy_button_view">"С"</string>
-    <string name="spinner_label">"Виберіть тип"</string>
-    <string name="options_button">"Більше"</string>
-    <string name="cloud_button">"Резервне копіювання в хмаринці"</string>
-    <string name="ui_opt_button">"Швидкі налаштування"</string>
-    <string name="action_bar_settings_text">"Налаштування"</string>
-    <string name="empty_folder">"Нічого відновлювати."</string>
     <string name="menu_about">"Про програму"</string>
     <string name="menu_feedback">"Надіслати відгук"</string>
-    <string name="menu_exit">"Вихід"</string>
-    
+
     <string name="back_button_toast">"Будь ласка, натисніть ще раз, щоб вийти"</string>
-    <string name="db_empty">"Нічого резервувати або відновлювати!"</string>
-    <string name="db_name_null">"Ім'я бази даних не може бути порожнім"</string>
-    <string name="alert_title">"Видалити "</string>
-    <string name="alert_layout_checkbox_del">"Також видалити резервну копію"</string>
-    <string name="alert_layout_checkbox_ask">"Ніколи не питати"</string>
-    <string name="alert_dialog_pos_button">"ТАК"</string>
-    <string name="alert_dialog_neg_button">"НІ"</string>
-    <string name="list_item_undo_text">"Натисніть, щоб скасувати"</string>
-    <string name="list_item_deleted_text">" Видалений"</string>
-    
-    <string name="local_backup_descr">"Локальне резервне копіювання"</string>
 
     <string name="about_dialog_title">"Змінити пароль до програми"</string>
     <string name="dialog_old_text">"Введіть старий пароль"</string>
     <string name="dialog_new_text">"Введіть новий пароль"</string>
-    <string name="some_text">"Програма для зберігання паролів."</string>
     <string name="change_pass_length">"Довжина пароля"</string>
-    <string name="pass_length_text">"Введіть довжину пароля"</string>
-    <string name="lock_dialog">"Введіть пароль"</string>
 
-    <string name="float_password_title">"Пароль: "</string>
-    <string name="float_login_title">"Логін:"</string>
-    <string name="float_default_title">"Пароль "</string>
-    <string name="float_default_login">"Увійти"</string>
-    <string name="float_default_window_title">"Паролі"</string>
-    <string name="float_default_close_button_text">"Закрити"</string>
-    <string name="settings_app_security">"Безпека програми"</string>
-    <string name="cloud_settings_header">"Параметри зберігання в хмаринці"</string>
-    <string name="other_settings_header">"Інші налаштування"</string>
     <string name="single_screen_forgot_password_title">"Забули пароль \?"</string>
-    <string name="single_screen_alert_title">"Відновити пароль"</string>
-    <string name="settings_ui_header">"Інтерфейс Користувача"</string>
-    <string name="menu_add_item_title">"Додати пароль"</string>
 
-    <string name="view_float_item_title">"Відкрити плаваюче вікно"</string>
-    <string name="view_delete_item_title">"Видалити"</string>
-    <string name="view_save_changes_item_title">"Зберегти зміни"</string>
-    <string name="settings_add_cloud_choose_title">"Виберіть Хмарний Диск"</string>
     <string name="restore_dialog_enter_keyword">"Введіть ключове слово"</string>
     <string name="restore_dialog_show_button">"ПОКАЗАТИ"</string>
     <string name="received_pass_title">"Ваш пароль до програми"</string>
@@ -98,47 +45,14 @@
     <string name="overflow_add_save_plus">"або натисніть, щоб зберегти цей пункт і очистити форму для нового пароля"</string>
     <string name="overflow_add_save">"Натисніть, щоб зберегти пароль …"</string>
     <string name="overflow_add_fields">"Заповніть необхідні поля …"</string>
-    <string name="overflow_view_floating">"Натисніть, щоб відкрити плаваюче вікно"</string>
-    <string name="overflow_view_save_changes">"Натисніть, щоб зберегти зміни."</string>
-    <string name="overflow_view_check">"Відмітьте, щоб почати редагувати"</string>
     <string name="overflow_list_explanation">"Потягніть елемент вліво або вправо, щоб видалити його. \n \nПотягніть вниз, щоб синхронізувати і відновити раніше збережені паролі."</string>
 
-    <string name="copied_login">"Скопійовано Логін: "</string>
-    <string name="copied_password">"Скопійовано пароль: "</string>
     <string name="keyword_not_match">"Ключове слово не збігається"</string>
-    <string name="security_insert_keyword">"Введіть ключове слово"</string>
     <string name="help_overlay_button_skip">"Пропустити"</string>
-    <string name="help_view_delete_item">"Натисніть, щоб видалити пароль."</string>
-    <string name="this_title_is_used">"Цей заголовок вже використовується!"</string>
-    <string name="fragment_help">"Допомога"</string>
-    <string name="help_add_item_quest">"Як додати пароль?"</string>
-    <string name="help_delete_item_quest">"Як видалити пароль?"</string>
-    <string name="help_edit_item_quest">"Як редагувати пароль?"</string>
-    <string name="help_add_cloud_storage_quest">"Як додати хмарний диск?"</string>
-    <string name="help_logout_quest">"Як відключити хмарний диск?"</string>
-    <string name="help_restore_key_quest">"Для чого необхідне ключове слово?"</string>
-    <string name="help_sync_all_quest">"Як синхронізувати всі паролі?"</string>
 
     <string name="add_item_save_and_clean">"Зберегти цей і очистити поля"</string>
     <string name="add_item_save">"Зберегти"</string>
-    <string name="help_use_quest">"Як використати збережені паролі?"</string>
-    <string name="help_use_answer">"Для того, щоб використати пароль відкрийте потрібний і клікніть на логін або пароль щоб копіювати."</string>
-    <string name="help_cliick_to_copy">"Клікніть на логін чи пароль щоб копіювати"</string>
 
-    <string name="couldnt_launch_market">Не вдається запустити Play Market</string>
-    <string name="fragment_rate">Оцінити додаток</string>
-    <string name="dialog_cancel_button">Відхилити</string>
-    <string name="dialog_save_button">Зберегти</string>
-    <string name="dialog_not_licensed_title">НЕ ЛІЦЕНЗОВАНО</string>
-    <string name="dialog_not_licensed_message">Цей додаток не ліцензовано, будь ласка, купіть його на Play Market.</string>
-    <string name="dialog_buy_button">Купити</string>
-    <string name="dialog_exit_button">Вийти</string>
-    <string name="dialog_recheck_button">Перевірити</string>
-    <string name="dialog_licensed_title">ЛІЦЕНЗОВАНО</string>
-    <string name="dialog_licensed_message">Дякуємо за встановлення ПРО ліцензії.</string>
-    <string name="dialog_other_title">Інша версія</string>
-    <string name="dialog_other_text">Ви не можете під\'єднати хмарний диск поки у вас встановлено дві версії додатку. Ви можете відкрити безкоштовну версію додатку, щоб зробити резервну копію даних, або видалити її. </string>
-    <string name="dialog_other_open_button">Відкрити</string>
     <string name="item_deleted">Видалено</string>
     <string name="gen_title">Генератор пароля</string>
     <string name="gen_symbols">Символи</string>
@@ -163,23 +77,11 @@
     <string name="button_close">ЗАКРИТИ</string>
     <string name="app_theme_explanation">Виберіть тему для додатку</string>
     <string name="app_theme_title">Тема</string>
-    <string name="screen_orientation_title">Screen orientation</string>
-    <string name="system_messages_explanation">Відмітьте, щоб увімкнети системні повідомлення</string>
-    <string name="system_messages_title">Системні повідомлення</string>
-    <string name="font_color_explanation">Виберіть колір шрифта</string>
-    <string name="font_color_title">Колір шрифта</string>
-    <string name="screen_auto">Auto</string>
-    <string name="screen_portrait">Portrait (Vertical)</string>
-    <string name="screen_landscape">Landscape (Horizontal)</string>
-    <string name="list_select_warming">Виберіть один з пунктів</string>
-    <string name="sync_start_message_title">Синхронізацію розпочато</string>
-    <string name="please_wait_message">Будь ласка, зачекайте…</string>
     <string name="sync_finished_message">Синхронізацію завершено</string>
     <string name="login_button">УВІЙТИ</string>
     <string name="google_drive_title">Google Диск</string>
     <string name="logout_button">ВИЙТИ</string>
     <string name="loading_app_message">Додаток завантажеється…</string>
-    <string name="no_restore_key">Ви не маєте ключа відновлення!</string>
     <string name="rate_question">Чи не хотіли б Ви оцінити додаток?</string>
     <string name="button_never">НІКОЛИ</string>
     <string name="button_later">ПІЗНІШЕ</string>
@@ -202,12 +104,10 @@
     <string name="open_app_dialog_button">ВІДКРИТИ</string>
     <string name="other_version_message">Знайдено іншу версію даного додатку!</string>
     <string name="sync_action_title">Синхронізувати</string>
-    <string name="buy_dialog_title">Купити</string>
     <string name="buy_button">КУПИТИ</string>
     <string name="verify_message">Перевіряємо додаток</string>
     <string name="buy_pro_title">Купити PRO</string>
     <string name="delete_password_message">Видалення пароля…</string>
-    <string name="main_title">Головна</string>
 
     <array name="settings_list">
         <item>@string/interface_block</item>
@@ -221,7 +121,6 @@
         <item>Американський (01/15/2014)</item>
         <item>Китайський (2014–01–15)</item>
     </string-array>
-    <string name="max_lenght_text">Довжина пароля</string>
     <string name="menu_sort_title">Сортувати</string>
     <string name="sort_by_date_az">За датою (A-Z)</string>
     <string name="sort_by_date_za">За датою (Z-A)</string>
@@ -241,13 +140,16 @@
     <string name="orange">"Помаранчевий"</string>
     <string name="cyan">"Бірюзовий"</string>
     <string name="pink">"Рожевий"</string>
-    <string name="dark_green">"Темно-зелений"</string>
     <string name="amber">"Бурштиновий"</string>
-    <string name="black">"Чорний"</string>
-    <string name="transparent">"Прозорий"</string>
     <string name="lime">"Лайм"</string>
     <string name="indigo">"Індиго"</string>
     <string name="dark_orange">"Темно-оранжевий"</string>
     <string name="dark_purple">"Темно-фіолетовий"</string>
     <string name="teal">"Темно-зелений"</string>
+    <string name="you_dont_select_a_color">Ви не обрали колір!</string>
+    <string name="delete">Видалити</string>
+    <string name="edit">Змінити</string>
+    <string name="open_source_licenses">ПЗ з відкритим кодом</string>
+    <string name="saved">Збережено</string>
+    <string name="removed">Видалено</string>
 </resources>

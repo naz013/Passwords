@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.SharedPrefs;
@@ -33,11 +32,12 @@ public class ThemerDialog extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         cs = new ColorSetter(ThemerDialog.this);
         if (Module.isLollipop()) {
-            getWindow().setStatusBarColor(Utils.getColor(this, cs.colorPrimaryDark()));
+            getWindow().setStatusBarColor(cs.getColor(cs.colorPrimaryDark()));
         }
         setContentView(R.layout.theme_color_layout);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(cs.getColor(cs.colorPrimary()));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setNavigationIcon(R.drawable.ic_clear_white_24dp);
@@ -202,12 +202,12 @@ public class ThemerDialog extends AppCompatActivity {
                 break;
         }
         cs = new ColorSetter(ThemerDialog.this);
-        toolbar.setBackgroundColor(Utils.getColor(this, cs.colorPrimary()));
+        toolbar.setBackgroundColor(cs.getColor(cs.colorPrimary()));
         if (Module.isLollipop()) {
-            getWindow().setStatusBarColor(Utils.getColor(this, cs.colorPrimaryDark()));
+            getWindow().setStatusBarColor(cs.getColor(cs.colorPrimaryDark()));
         }
         mFab.setBackgroundTintList(Utils.getFabState(this, cs.colorAccent(), cs.colorPrimary()));
-        mFab.setRippleColor(Utils.getColor(this, cs.colorPrimary()));
+        mFab.setRippleColor(cs.getColor(cs.colorPrimary()));
     }
 
     private void setSelected(int radio) {

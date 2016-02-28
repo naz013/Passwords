@@ -1,47 +1,41 @@
 package com.cray.software.passwords.dialogs;
 
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.helpers.ColorSetter;
+import com.cray.software.passwords.interfaces.Module;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class ThanksDialog extends ActionBarActivity {
-
-    TextView textView;
-    ActionBar ab;
-    ColorSetter cSetter = new ColorSetter(ThanksDialog.this);
+public class ThanksDialog extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ColorSetter cSetter = new ColorSetter(ThanksDialog.this);
         setContentView(R.layout.help_layout);
-        cSetter = new ColorSetter(ThanksDialog.this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(cSetter.colorStatus());
-        }
-        ab = getSupportActionBar();
-        if (ab != null) {
-            ab.setDisplayShowHomeEnabled(true);
-            ab.setDisplayShowTitleEnabled(true);
-            ab.setHomeButtonEnabled(true);
-            ab.setDisplayUseLogoEnabled(true);
-            ab.setIcon(R.drawable.ic_security_white_24dp);
-            ab.setDisplayHomeAsUpEnabled(true);
-            ab.setTitle(R.string.license_settings_title);
-            viewSetter(ab);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(R.string.license_settings_title);
+
+        int colorPrimary = cSetter.colorPrimary();
+        int colorDark = cSetter.colorPrimaryDark();
+        toolbar.setBackgroundColor(cSetter.getColor(colorPrimary));
+        if (Module.isLollipop()) {
+            getWindow().setStatusBarColor(cSetter.getColor(colorDark));
         }
 
-        textView = (TextView) findViewById(R.id.textView);
+        TextView textView = (TextView) findViewById(R.id.textView);
         textView.setText(readFile());
     }
 
@@ -71,13 +65,6 @@ public class ThanksDialog extends ActionBarActivity {
             }
         }
         return sb.toString();
-    }
-
-    private void viewSetter(ActionBar ab){
-        cSetter = new ColorSetter(ThanksDialog.this);
-        ab.setBackgroundDrawable(new ColorDrawable(cSetter.colorSetter()));
-        ab.setDisplayShowTitleEnabled(false);
-        ab.setDisplayShowTitleEnabled(true);
     }
 
     @Override

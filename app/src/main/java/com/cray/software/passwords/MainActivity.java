@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +32,7 @@ import com.cray.software.passwords.helpers.PasswordsRecyclerAdapter;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.helpers.Utils;
 import com.cray.software.passwords.interfaces.Constants;
+import com.cray.software.passwords.interfaces.LCAMListener;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.interfaces.SimpleListener;
 import com.cray.software.passwords.interfaces.SyncListener;
@@ -74,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
         currentList.setLayoutManager(new LinearLayoutManager(this));
 
         emptyItem = (LinearLayout) findViewById(R.id.emptyItem);
-        emptyItem.setVisibility(View.VISIBLE);
     }
 
     private boolean isListFirstTime() {
@@ -171,11 +172,11 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
 
     private void viewSetter(){
         ColorSetter cSetter = new ColorSetter(MainActivity.this);
-        int colorPrimary = cSetter.colorSetter();
-        int colorDark = cSetter.colorStatus();
-        toolbar.setBackgroundColor(colorPrimary);
+        int colorPrimary = cSetter.colorPrimary();
+        int colorDark = cSetter.colorPrimaryDark();
+        toolbar.setBackgroundColor(cSetter.getColor(colorPrimary));
         if (Module.isLollipop()) {
-            getWindow().setStatusBarColor(colorDark);
+            getWindow().setStatusBarColor(cSetter.getColor(colorDark));
         }
         if (colorPrimary != 0 && colorDark != 0) {
             mFab.setBackgroundTintList(Utils.getFabState(this, colorPrimary, colorDark));
@@ -187,8 +188,7 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
         PasswordsRecyclerAdapter adapter = new PasswordsRecyclerAdapter(this, data);
         adapter.setEventListener(this);
         currentList.setAdapter(adapter);
-        int size = data.size();
-        if (size > 0){
+        if (data.size() > 0) {
             currentList.setVisibility(View.VISIBLE);
             emptyItem.setVisibility(View.GONE);
         } else {
@@ -276,15 +276,35 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
 
     @Override
     public void onItemClicked(int position, View view) {
+        edit(position);
+    }
+
+    void edit(int position) {
         long id = data.get(position).getId();
-        Intent intentId = new Intent(MainActivity.this, ViewListItem.class);
+        Intent intentId = new Intent(MainActivity.this, ManagePassword.class);
         intentId.putExtra("itemId", id);
         startActivity(intentId);
     }
 
-    @Override
-    public void onItemLongClicked(int position, View view) {
+    private void delete(int position) {
         long del = data.get(position).getId();
         new DeleteTask(MainActivity.this, this).execute(del);
+        Snackbar.make(mFab, R.string.removed, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemLongClicked(final int position, View view) {
+        final String[] items = {getString(R.string.edit), getString(R.string.delete)};
+        Utils.showLCAM(this, new LCAMListener() {
+            @Override
+            public void onAction(int item) {
+                if (item == 0) {
+                    edit(position);
+                }
+                if (item == 1) {
+                    delete(position);
+                }
+            }
+        }, items);
     }
 }

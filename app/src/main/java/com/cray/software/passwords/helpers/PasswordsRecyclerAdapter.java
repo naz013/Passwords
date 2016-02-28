@@ -45,17 +45,22 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<PasswordsRecy
     public class ViewHolder extends RecyclerView.ViewHolder implements
             View.OnLongClickListener, View.OnClickListener {
 
-        public TextView textView, dateView;
+        public TextView textView, dateView, loginView;
         public CardView itemCard;
 
         public ViewHolder(View v) {
             super(v);
             textView = (TextView) v.findViewById(R.id.textView);
             dateView = (TextView) v.findViewById(R.id.dateView);
+            loginView = (TextView) v.findViewById(R.id.loginView);
             itemCard = (CardView) v.findViewById(R.id.itemCard);
             if (Module.isLollipop()) {
-                itemCard.setCardElevation(3f);
+                itemCard.setCardElevation(5f);
             }
+
+            textView.setTypeface(typeface);
+            dateView.setTypeface(typeface);
+            loginView.setTypeface(typeface);
 
             v.setOnClickListener(this);
             v.setOnLongClickListener(this);
@@ -91,11 +96,9 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<PasswordsRecy
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Password item = list.get(position);
-
-        holder.textView.setTypeface(typeface);
-        holder.dateView.setTypeface(typeface);
         holder.textView.setText(item.getTitle());
         holder.dateView.setText(item.getDate());
+        holder.loginView.setText(item.getLogin());
         holder.itemCard.setCardBackgroundColor(item.getColor());
     }
 

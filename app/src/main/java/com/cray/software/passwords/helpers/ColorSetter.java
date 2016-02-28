@@ -3,6 +3,7 @@ package com.cray.software.passwords.helpers;
 import android.content.Context;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.interfaces.Constants;
@@ -11,7 +12,6 @@ import com.cray.software.passwords.interfaces.Module;
 public class ColorSetter {
 
     Context mContext;
-    SharedPrefs sPrefs;
 
     public ColorSetter(Context context){
         this.mContext = context;
@@ -52,127 +52,64 @@ public class ColorSetter {
     @ColorRes
     public int colorAccent(int code){
         int color;
-        boolean isDark = new SharedPrefs(mContext).loadBoolean(Constants.NEW_PREFERENCES_THEME);
-        if (isDark) {
-            switch (code) {
-                case 0:
-                    color = R.color.indigoAccent;
-                    break;
-                case 1:
-                    color = R.color.amberAccent;
-                    break;
-                case 2:
-                    color = R.color.pinkAccent;
-                    break;
-                case 3:
-                    color = R.color.purpleAccent;
-                    break;
-                case 4:
-                    color = R.color.yellowAccent;
-                    break;
-                case 5:
-                    color = R.color.redAccent;
-                    break;
-                case 6:
-                    color = R.color.redAccent;
-                    break;
-                case 7:
-                    color = R.color.greenAccent;
-                    break;
-                case 8:
-                    color = R.color.purpleDeepAccent;
-                    break;
-                case 9:
-                    color = R.color.blueLightAccent;
-                    break;
-                case 10:
-                    color = R.color.pinkAccent;
-                    break;
-                case 11:
-                    color = R.color.blueAccent;
-                    break;
-                default:
-                    if (Module.isPro()) {
-                        switch (code) {
-                            case 12:
-                                color = R.color.greenAccent;
-                                break;
-                            case 13:
-                                color = R.color.purpleAccent;
-                                break;
-                            case 14:
-                                color = R.color.redAccent;
-                                break;
-                            case 15:
-                                color = R.color.pinkAccent;
-                                break;
-                            default:
-                                color = R.color.redAccent;
-                                break;
-                        }
-                    } else color = R.color.redAccent;
-                    break;
-            }
-        } else {
-            switch (code) {
-                case 0:
-                    color = R.color.indigoAccent;
-                    break;
-                case 1:
-                    color = R.color.amberAccent;
-                    break;
-                case 2:
-                    color = R.color.purpleDeepAccent;
-                    break;
-                case 3:
-                    color = R.color.cyanAccent;
-                    break;
-                case 4:
-                    color = R.color.pinkAccent;
-                    break;
-                case 5:
-                    color = R.color.yellowAccent;
-                    break;
-                case 6:
-                    color = R.color.cyanAccent;
-                    break;
-                case 7:
-                    color = R.color.pinkAccent;
-                    break;
-                case 8:
-                    color = R.color.redAccent;
-                    break;
-                case 9:
-                    color = R.color.cyanAccent;
-                    break;
-                case 10:
-                    color = R.color.redAccent;
-                    break;
-                case 11:
-                    color = R.color.indigoAccent;
-                    break;
-                default:
-                    if (Module.isPro()) {
-                        switch (code) {
-                            case 12:
-                                color = R.color.greenLightAccent;
-                                break;
-                            case 13:
-                                color = R.color.purpleDeepAccent;
-                                break;
-                            case 14:
-                                color = R.color.purpleAccent;
-                                break;
-                            case 15:
-                                color = R.color.pinkAccent;
-                                break;
-                            default:
-                                color = R.color.yellowAccent;
-                                break;
-                        }
-                    } else color = R.color.yellowAccent;
-                    break;
-            }
+        switch (code) {
+            case 0:
+                color = R.color.indigoAccent;
+                break;
+            case 1:
+                color = R.color.amberAccent;
+                break;
+            case 2:
+                color = R.color.purpleDeepAccent;
+                break;
+            case 3:
+                color = R.color.cyanAccent;
+                break;
+            case 4:
+                color = R.color.pinkAccent;
+                break;
+            case 5:
+                color = R.color.yellowAccent;
+                break;
+            case 6:
+                color = R.color.cyanAccent;
+                break;
+            case 7:
+                color = R.color.pinkAccent;
+                break;
+            case 8:
+                color = R.color.redAccent;
+                break;
+            case 9:
+                color = R.color.cyanAccent;
+                break;
+            case 10:
+                color = R.color.redAccent;
+                break;
+            case 11:
+                color = R.color.indigoAccent;
+                break;
+            default:
+                if (Module.isPro()) {
+                    switch (code) {
+                        case 12:
+                            color = R.color.greenLightAccent;
+                            break;
+                        case 13:
+                            color = R.color.purpleDeepAccent;
+                            break;
+                        case 14:
+                            color = R.color.purpleAccent;
+                            break;
+                        case 15:
+                            color = R.color.pinkAccent;
+                            break;
+                        default:
+                            color = R.color.yellowAccent;
+                            break;
+                    }
+                } else color = R.color.yellowAccent;
+                break;
         }
         return color;
     }
@@ -221,6 +158,9 @@ public class ColorSetter {
                 break;
             case 11:
                 color = R.color.amberPrimary;
+                break;
+            case 16:
+                color = R.color.material_white;
                 break;
             default:
                 if (Module.isPro()){
@@ -339,99 +279,67 @@ public class ColorSetter {
         return getColor(colorPrimary(code));
     }
 
-    public int colorSetter(){
-        sPrefs = new SharedPrefs(mContext);
-        String loadedColor = sPrefs.loadPrefs(Constants.NEW_PREFERENCES_THEME);
-        int color;
-        switch (loadedColor) {
-            case "1":
-                color = getColor(R.color.colorRed);
+    /**
+     * Get color indicator by identifier.
+     * @param color color identifier.
+     * @return Drawable resource
+     */
+    @DrawableRes
+    public int getIndicator(int color){
+        int drawable;
+        switch (color) {
+            case 0:
+                drawable = R.drawable.drawable_red;
                 break;
-            case "2":
-                color = getColor(R.color.colorViolet);
+            case 1:
+                drawable = R.drawable.drawable_purple;
                 break;
-            case "3":
-                color = getColor(R.color.colorLightCreen);
+            case 2:
+                drawable = R.drawable.drawable_green_light;
                 break;
-            case "4":
-                color = getColor(R.color.colorGreen);
+            case 3:
+                drawable = R.drawable.drawable_green;
                 break;
-            case "5":
-                color = getColor(R.color.colorLightBlue);
+            case 4:
+                drawable = R.drawable.drawable_blue_light;
                 break;
-            case "6":
-                color = getColor(R.color.colorBlue);
+            case 5:
+                drawable = R.drawable.drawable_blue;
                 break;
-            case "7":
-                color = getColor(R.color.colorYellow);
+            case 6:
+                drawable = R.drawable.drawable_yellow;
                 break;
-            case "8":
-                color = getColor(R.color.colorOrange);
+            case 7:
+                drawable = R.drawable.drawable_orange;
                 break;
-            case "9":
-                color = getColor(R.color.colorGrey);
+            case 8:
+                drawable = R.drawable.drawable_cyan;
                 break;
-            case "10":
-                color = getColor(R.color.colorPink);
+            case 9:
+                drawable = R.drawable.drawable_pink;
                 break;
-            case "11":
-                color = getColor(R.color.colorSand);
+            case 10:
+                drawable = R.drawable.drawable_teal;
                 break;
-            case "12":
-                color = getColor(R.color.colorBrown);
+            case 11:
+                drawable = R.drawable.drawable_amber;
                 break;
-            default:
-                color = getColor(R.color.colorGreen);
+            case 12:
+                drawable = R.drawable.drawable_deep_purple;
                 break;
-        }
-        return color;
-    }
-
-    public int colorStatus(){
-        sPrefs = new SharedPrefs(mContext);
-        String loadedColor = sPrefs.loadPrefs(Constants.NEW_PREFERENCES_THEME);
-        int color;
-        switch (loadedColor) {
-            case "1":
-                color = getColor(R.color.colorRedDark);
+            case 13:
+                drawable = R.drawable.drawable_deep_orange;
                 break;
-            case "2":
-                color = getColor(R.color.colorVioletDark);
+            case 14:
+                drawable = R.drawable.drawable_lime;
                 break;
-            case "3":
-                color = getColor(R.color.colorLightCreenDark);
-                break;
-            case "4":
-                color = getColor(R.color.colorGreenDark);
-                break;
-            case "5":
-                color = getColor(R.color.colorLightBlueDark);
-                break;
-            case "6":
-                color = getColor(R.color.colorBlueDark);
-                break;
-            case "7":
-                color = getColor(R.color.colorYellowDark);
-                break;
-            case "8":
-                color = getColor(R.color.colorOrangeDark);
-                break;
-            case "9":
-                color = getColor(R.color.colorGreyDark);
-                break;
-            case "10":
-                color = getColor(R.color.colorPinkDark);
-                break;
-            case "11":
-                color = getColor(R.color.colorSandDark);
-                break;
-            case "12":
-                color = getColor(R.color.colorBrownDark);
+            case 15:
+                drawable = R.drawable.drawable_indigo;
                 break;
             default:
-                color = getColor(R.color.colorGreenDark);
+                drawable = R.drawable.drawable_cyan;
                 break;
         }
-        return color;
+        return drawable;
     }
 }

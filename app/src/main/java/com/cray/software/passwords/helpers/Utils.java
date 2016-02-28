@@ -1,6 +1,8 @@
 package com.cray.software.passwords.helpers;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -9,6 +11,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 
+import com.cray.software.passwords.interfaces.LCAMListener;
 import com.cray.software.passwords.interfaces.Module;
 
 /**
@@ -77,5 +80,23 @@ public class Utils {
         } catch (Resources.NotFoundException e) {
             return resource;
         }
+    }
+
+    /**
+     * Show long click action dialogue for lists.
+     * @param context application context.
+     * @param listener listener.
+     * @param actions list of actions.
+     */
+    public static void showLCAM(Context context, final LCAMListener listener, String... actions) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setItems(actions, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                dialog.dismiss();
+                if (listener != null) listener.onAction(item);
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

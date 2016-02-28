@@ -22,7 +22,7 @@ import java.io.File;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsFragment.OnHeadlineSelectedListener {
 
-    Toolbar toolbar;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,11 +113,11 @@ public class SettingsActivity extends AppCompatActivity implements SettingsFragm
     protected void onResume() {
         super.onResume();
         ColorSetter cSetter = new ColorSetter(SettingsActivity.this);
-        int colorPrimary = cSetter.colorSetter();
-        int colorDark = cSetter.colorStatus();
-        toolbar.setBackgroundColor(colorPrimary);
+        int colorPrimary = cSetter.colorPrimary();
+        int colorDark = cSetter.colorPrimaryDark();
+        toolbar.setBackgroundColor(cSetter.getColor(colorPrimary));
         if (Module.isLollipop()) {
-            getWindow().setStatusBarColor(colorDark);
+            getWindow().setStatusBarColor(cSetter.getColor(colorDark));
         }
     }
 

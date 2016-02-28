@@ -28,9 +28,8 @@ import java.util.UUID;
 
 public class SyncHelper {
 
-    Context sContext;
-
-    DataBase DB;
+    private Context sContext;
+    private DataBase DB;
 
     public SyncHelper(Context context){
         this.sContext = context;
@@ -49,7 +48,7 @@ public class SyncHelper {
                 String url = c.getString(c.getColumnIndex(Constants.COLUMN_URL));
                 String comment = c.getString(c.getColumnIndex(Constants.COLUMN_COMMENT));
                 String date = c.getString(c.getColumnIndex(Constants.COLUMN_DATE));
-                String color = c.getString(c.getColumnIndex(Constants.COLUMN_TECHNICAL));
+                int color = c.getInt(c.getColumnIndex(Constants.COLUMN_TECHNICAL));
                 String uuID = c.getString(c.getColumnIndex(Constants.COLUMN_PIC_SEL));
 
                 if (uuID == null) {
@@ -96,7 +95,7 @@ public class SyncHelper {
         if (isSdPresent()){
             DB = new DataBase(sContext);
             DB.open();
-            List<String> namesPass = new ArrayList<String>();
+            List<String> namesPass = new ArrayList<>();
             Cursor e = DB.fetchAllPasswords();
             while (e.moveToNext()) {
                 for (e.moveToFirst(); !e.isAfterLast(); e.moveToNext()) {

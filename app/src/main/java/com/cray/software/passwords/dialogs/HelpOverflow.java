@@ -9,7 +9,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,13 +16,12 @@ import com.cray.software.passwords.R;
 
 public class HelpOverflow extends Activity {
 
-    FrameLayout help_container;
-    Button button, addButton, viewButton, listButton, viewButtonSkip, addButtonSkip, buttonSkip;
-    TextView floatLeft, floatRight, floatSlideLeft, listItem;
-    TextView addStartElement, addFloatLeft, addFloatSlideLeft, addFloatRight;
-    TextView viewFloat, viewMore, viewDelete, viewCopyHelp;
-    Animation topAnimIn, topAnimOut;
-    RelativeLayout mainHelp, addHelp, viewHelp, listHelp;
+    private Button button;
+    private Button addButton;
+    private Button listButton;
+    private TextView floatLeft, floatRight, floatSlideLeft, listItem;
+    private TextView addStartElement, addFloatLeft, addFloatSlideLeft, addFloatRight;
+    private Animation topAnimIn, topAnimOut;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,17 +30,13 @@ public class HelpOverflow extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
         setContentView(R.layout.main_help_overflov);
 
-        help_container = (FrameLayout) findViewById(R.id.help_container);
-        mainHelp = (RelativeLayout) findViewById(R.id.mainHelp);
+        RelativeLayout mainHelp = (RelativeLayout) findViewById(R.id.mainHelp);
         mainHelp.setVisibility(View.GONE);
 
-        addHelp = (RelativeLayout) findViewById(R.id.addHelp);
+        RelativeLayout addHelp = (RelativeLayout) findViewById(R.id.addHelp);
         addHelp.setVisibility(View.GONE);
 
-        viewHelp = (RelativeLayout) findViewById(R.id.viewHelp);
-        viewHelp.setVisibility(View.GONE);
-
-        listHelp = (RelativeLayout) findViewById(R.id.listHelp);
+        RelativeLayout listHelp = (RelativeLayout) findViewById(R.id.listHelp);
         listHelp.setVisibility(View.GONE);
 
         Intent helpNumber = getIntent();
@@ -57,7 +51,7 @@ public class HelpOverflow extends Activity {
             floatSlideLeft = (TextView) findViewById(R.id.floatSlideLeft);
             floatSlideLeft.setVisibility(View.GONE);
 
-            buttonSkip = (Button) findViewById(R.id.buttonSkip);
+            Button buttonSkip = (Button) findViewById(R.id.buttonSkip);
             buttonSkip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -168,7 +162,7 @@ public class HelpOverflow extends Activity {
             addFloatRight = (TextView) findViewById(R.id.addFloatRight);
             addFloatRight.setVisibility(View.GONE);
 
-            addButtonSkip = (Button) findViewById(R.id.addButtonSkip);
+            Button addButtonSkip = (Button) findViewById(R.id.addButtonSkip);
             addButtonSkip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -285,145 +279,6 @@ public class HelpOverflow extends Activity {
                     topAnimIn = AnimationUtils.loadAnimation(HelpOverflow.this, R.anim.help_tip_top_in);
                     addButton.setVisibility(View.VISIBLE);
                     addButton.startAnimation(topAnimIn);
-                }
-            }, 900);
-        } else if (number == 3){
-            viewHelp.setVisibility(View.VISIBLE);
-            viewFloat = (TextView) findViewById(R.id.viewFloat);
-            viewFloat.setVisibility(View.GONE);
-            viewMore = (TextView) findViewById(R.id.viewMore);
-            viewMore.setVisibility(View.GONE);
-            viewDelete = (TextView) findViewById(R.id.viewDelete);
-            viewDelete.setVisibility(View.GONE);
-            viewCopyHelp = (TextView) findViewById(R.id.viewCopyHelp);
-            viewCopyHelp.setVisibility(View.GONE);
-
-            viewButtonSkip = (Button) findViewById(R.id.viewButtonSkip);
-            viewButtonSkip.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
-
-            viewButton = (Button) findViewById(R.id.viewButton);
-            viewButton.setVisibility(View.GONE);
-            viewButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (viewCopyHelp.getVisibility() == View.VISIBLE){
-                        new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                topAnimOut = AnimationUtils.loadAnimation(HelpOverflow.this, R.anim.help_tip_top_out);
-                                viewButton.setEnabled(false);
-                                viewCopyHelp.startAnimation(topAnimOut);
-                                viewCopyHelp.setVisibility(View.GONE);
-                            }
-                        }, 500);
-                        new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                topAnimIn = AnimationUtils.loadAnimation(HelpOverflow.this, R.anim.help_tip_top_in);
-                                viewMore.setVisibility(View.VISIBLE);
-                                viewMore.startAnimation(topAnimIn);
-                            }
-                        }, 900);
-                        new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                viewButton.setEnabled(true);
-                            }
-                        }, 1400);
-                    } else if (viewMore.getVisibility() == View.VISIBLE){
-                        new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                topAnimOut = AnimationUtils.loadAnimation(HelpOverflow.this, R.anim.help_tip_top_out);
-                                viewButton.setEnabled(false);
-                                viewMore.startAnimation(topAnimOut);
-                                viewMore.setVisibility(View.GONE);
-                            }
-                        }, 500);
-                        new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                topAnimIn = AnimationUtils.loadAnimation(HelpOverflow.this, R.anim.help_tip_top_in);
-                                viewFloat.setVisibility(View.VISIBLE);
-                                viewFloat.startAnimation(topAnimIn);
-                            }
-                        }, 900);
-                        new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                viewButton.setEnabled(true);
-                            }
-                        }, 1400);
-                    } else if(viewFloat.getVisibility() == View.VISIBLE){
-                        new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                topAnimOut = AnimationUtils.loadAnimation(HelpOverflow.this, R.anim.help_tip_top_out);
-                                viewFloat.startAnimation(topAnimOut);
-                                viewFloat.setVisibility(View.GONE);
-                            }
-                        }, 500);
-                        new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                topAnimIn = AnimationUtils.loadAnimation(HelpOverflow.this, R.anim.help_tip_top_in);
-                                viewDelete.setVisibility(View.VISIBLE);
-                                viewDelete.startAnimation(topAnimIn);
-                            }
-                        }, 900);
-                        new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                viewButton.setText(R.string.view_act_item_close_in);
-                                viewButton.setEnabled(true);
-                            }
-                        }, 1400);
-                    } else if (viewDelete.getVisibility() == View.VISIBLE){
-                        new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                topAnimOut = AnimationUtils.loadAnimation(HelpOverflow.this, R.anim.help_tip_top_out);
-                                viewDelete.startAnimation(topAnimOut);
-                                viewDelete.setVisibility(View.GONE);
-                            }
-                        }, 500);
-                        new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                topAnimOut = AnimationUtils.loadAnimation(HelpOverflow.this, R.anim.help_tip_top_out);
-                                viewButton.startAnimation(topAnimOut);
-                                viewButton.setVisibility(View.GONE);
-                            }
-                        }, 1000);
-                        new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                finish();
-                            }
-                        }, 1500);
-                    }
-                }
-            });
-            new android.os.Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    topAnimIn = AnimationUtils.loadAnimation(HelpOverflow.this, R.anim.help_tip_top_in);
-                    viewCopyHelp.setVisibility(View.VISIBLE);
-                    viewCopyHelp.startAnimation(topAnimIn);
-                }
-            }, 500);
-
-            new android.os.Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    topAnimIn = AnimationUtils.loadAnimation(HelpOverflow.this, R.anim.help_tip_top_in);
-                    viewButton.setVisibility(View.VISIBLE);
-                    viewButton.startAnimation(topAnimIn);
                 }
             }, 900);
         } else if (number == 4){
