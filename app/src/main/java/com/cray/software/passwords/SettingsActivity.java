@@ -28,13 +28,11 @@ public class SettingsActivity extends AppCompatActivity implements SettingsFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category_layout);
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.action_settings);
-
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null) {
                 return;
@@ -57,7 +55,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsFragm
     }
 
     public void onArticleSelected(int position) {
-        if (position == 0){
+        if (position == 0) {
             GeneralSettingsFragment newFragment = new GeneralSettingsFragment();
             Bundle args = new Bundle();
             newFragment.setArguments(args);
@@ -65,7 +63,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsFragm
             transaction.replace(R.id.fragment_container, newFragment);
             transaction.addToBackStack(null);
             transaction.commit();
-        } else if (position == 1){
+        } else if (position == 1) {
             SecuritySettingsFragment newFragment = new SecuritySettingsFragment();
             Bundle args = new Bundle();
             newFragment.setArguments(args);
@@ -73,7 +71,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsFragm
             transaction.replace(R.id.fragment_container, newFragment);
             transaction.addToBackStack(null);
             transaction.commit();
-        } else if (position == 2){
+        } else if (position == 2) {
             ExportSettingsFragment newFragment = new ExportSettingsFragment();
             Bundle args = new Bundle();
             newFragment.setArguments(args);
@@ -81,7 +79,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsFragm
             transaction.replace(R.id.fragment_container, newFragment);
             transaction.addToBackStack(null);
             transaction.commit();
-        } else if (position == 3){
+        } else if (position == 3) {
             OtherSettingsFragment newFragment = new OtherSettingsFragment();
             Bundle args = new Bundle();
             newFragment.setArguments(args);
@@ -92,17 +90,17 @@ public class SettingsActivity extends AppCompatActivity implements SettingsFragm
         }
     }
 
-    private void syncPrefs(){
+    private void syncPrefs() {
         SharedPrefs sPrefs = new SharedPrefs(SettingsActivity.this);
         boolean isSD = SyncHelper.isSdPresent();
-        if (isSD){
+        if (isSD) {
             File sdPath = Environment.getExternalStorageDirectory();
             File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.PREFS);
-            if (!sdPathDr.exists()){
+            if (!sdPathDr.exists()) {
                 sdPathDr.mkdirs();
             }
             File prefs = new File(sdPathDr + "/prefs.xml");
-            if (prefs.exists()){
+            if (prefs.exists()) {
                 prefs.delete();
             }
             sPrefs.saveSharedPreferencesToFile(prefs);

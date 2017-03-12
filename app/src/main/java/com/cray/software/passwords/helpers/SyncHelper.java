@@ -1,7 +1,6 @@
 package com.cray.software.passwords.helpers;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
@@ -28,195 +27,92 @@ import java.util.UUID;
 
 public class SyncHelper {
 
-    private Context sContext;
-    private DataBase DB;
+    private Context mContext;
 
     public SyncHelper(Context context){
-        this.sContext = context;
+        this.mContext = context;
     }
 
     public void exportPasswords() throws JSONException, IOException {
-        DB = new DataBase(sContext);
-        DB.open();
-        Cursor c = DB.fetchAllPasswords();
-        if (c != null && c.moveToFirst()){
-            do {
-                long id = c.getLong(c.getColumnIndex(Constants.COLUMN_ID));
-                String title = c.getString(c.getColumnIndex(Constants.COLUMN_TITLE));
-                String login = c.getString(c.getColumnIndex(Constants.COLUMN_LOGIN));
-                String password = c.getString(c.getColumnIndex(Constants.COLUMN_PASSWORD));
-                String url = c.getString(c.getColumnIndex(Constants.COLUMN_URL));
-                String comment = c.getString(c.getColumnIndex(Constants.COLUMN_COMMENT));
-                String date = c.getString(c.getColumnIndex(Constants.COLUMN_DATE));
-                int color = c.getInt(c.getColumnIndex(Constants.COLUMN_TECHNICAL));
-                String uuID = c.getString(c.getColumnIndex(Constants.COLUMN_PIC_SEL));
-
-                if (uuID == null) {
-                    uuID = generateID();
-                    DB.setUniqueId(id, uuID);
+        List<Password> list = DataProvider.getData(mContext);
+        for (Password password : list) {
+            String uuID = password.getUuId();
+            if (uuID == null) {
+                uuID = generateID();
+            }
+            JSONObject jObjectData = new JSONObject();
+            jObjectData.put(Constants.COLUMN_TITLE, password.getTitle());
+            jObjectData.put(Constants.COLUMN_LOGIN, password.getLogin());
+            jObjectData.put(Constants.COLUMN_PASSWORD, password.getPassword());
+            jObjectData.put(Constants.COLUMN_URL, password.getUrl());
+            jObjectData.put(Constants.COLUMN_COMMENT, password.getComment());
+            jObjectData.put(Constants.COLUMN_DATE, password.getDate());
+            jObjectData.put(Constants.COLUMN_TECHNICAL, password.getColor());
+            jObjectData.put(Constants.COLUMN_PIC_SEL, uuID);
+            if (isSdPresent()) {
+                File sdPath = Environment.getExternalStorageDirectory();
+                File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD);
+                if (!sdPathDr.exists()) {
+                    sdPathDr.mkdirs();
                 }
-
-                JSONObject jObjectData = new JSONObject();
-                jObjectData.put(Constants.COLUMN_ID, id);
-                jObjectData.put(Constants.COLUMN_TITLE, title);
-                jObjectData.put(Constants.COLUMN_LOGIN, login);
-                jObjectData.put(Constants.COLUMN_PASSWORD, password);
-                jObjectData.put(Constants.COLUMN_URL, url);
-                jObjectData.put(Constants.COLUMN_COMMENT, comment);
-                jObjectData.put(Constants.COLUMN_DATE, date);
-                jObjectData.put(Constants.COLUMN_TECHNICAL, color);
-                jObjectData.put(Constants.COLUMN_PIC_SEL, uuID);
-
-                if (isSdPresent()) {
-                    File sdPath = Environment.getExternalStorageDirectory();
-                    File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD);
-                    if (!sdPathDr.exists()) {
-                        sdPathDr.mkdirs();
-                    }
-                    String exportFileName = uuID + Constants.FILE_EXTENSION;
-
-                    File file = new File(sdPathDr, exportFileName);
-                    if (file.exists()) {
-                        file.delete();
-                    }
-                    FileWriter fw = new FileWriter(file);
-                    fw.write(jObjectData.toString());
-                    fw.close();
-                } else Log.i("reminder-info", "Couldn't find external storage!");
-            } while (c.moveToNext());
+                String exportFileName = uuID + Constants.FILE_EXTENSION;
+                File file = new File(sdPathDr, exportFileName);
+                if (file.exists()) {
+                    file.delete();
+                }
+                FileWriter fw = new FileWriter(file);
+                fw.write(jObjectData.toString());
+                fw.close();
+            } else Log.i("reminder-info", "Couldn't find external storage!");
         }
-        if (c != null) {
-            c.close();
-        }
-        DB.close();
     }
 
     public void importPasswordFromJSON() throws IOException, JSONException {
         if (isSdPresent()){
-            DB = new DataBase(sContext);
-            DB.open();
             List<String> namesPass = new ArrayList<>();
-            Cursor e = DB.fetchAllPasswords();
-            while (e.moveToNext()) {
-                for (e.moveToFirst(); !e.isAfterLast(); e.moveToNext()) {
-                    namesPass.add(e.getString(e.getColumnIndex(Constants.COLUMN_PIC_SEL)));
-                }
+            for (Password item : DataProvider.getData(mContext)) {
+                namesPass.add(item.getUuId());
             }
-            e.close();
             File sdPath = Environment.getExternalStorageDirectory();
             File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD);
-            File[] files = sdPathDr.listFiles();
-            if (files != null) {
-                int f = files.length;
-                if (f > 0) {
-                    for (File file1 : files) {
-                        String fileName = file1.getName();
-                        int pos = fileName.lastIndexOf(".");
-                        String fileLoc = sdPathDr + "/" + fileName;
-                        String fileNameS = fileName.substring(0, pos);
-                        if (!namesPass.contains(fileNameS)) {
-                            FileInputStream stream = new FileInputStream(fileLoc);
-                            Writer writer = new StringWriter();
-                            char[] buffer = new char[1024];
-                            try {
-                                BufferedReader reader = new BufferedReader(
-                                        new InputStreamReader(stream, "UTF-8")
-                                );
-                                int n;
-                                while ((n = reader.read(buffer)) != -1) {
-                                    writer.write(buffer, 0, n);
-                                }
-                            } finally {
-                                stream.close();
-                            }
-                            String jsonText = writer.toString();
-                            JSONObject jsonObj = new JSONObject(jsonText);
-                            importObject(jsonObj);
-                        }
-                    }
-                }
-            }
-            namesPass.clear();
-            Cursor eD = DB.fetchAllPasswords();
-            while (eD.moveToNext()) {
-                for (eD.moveToFirst(); !eD.isAfterLast(); eD.moveToNext()) {
-                    namesPass.add(eD.getString(eD.getColumnIndex(Constants.COLUMN_PIC_SEL)));
-                }
-            }
-            eD.close();
+            importFromFolder(sdPathDr, namesPass);
             File sdPathD = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD_DBX_TMP);
-            File[] filesD = sdPathD.listFiles();
-            if (filesD != null) {
-                int fD = filesD.length;
-                if (fD > 0) {
-                    for (File file1 : filesD) {
-                        String fileName = file1.getName();
-                        int pos = fileName.lastIndexOf(".");
-                        String fileLoc = sdPathD + "/" + fileName;
-                        String fileNameS = fileName.substring(0, pos);
-                        if (!namesPass.contains(fileNameS)) {
-                            FileInputStream stream = new FileInputStream(fileLoc);
-                            Writer writer = new StringWriter();
-                            char[] buffer = new char[1024];
-                            try {
-                                BufferedReader reader = new BufferedReader(
-                                        new InputStreamReader(stream, "UTF-8")
-                                );
-                                int n;
-                                while ((n = reader.read(buffer)) != -1) {
-                                    writer.write(buffer, 0, n);
-                                }
-                            } finally {
-                                stream.close();
-                            }
-                            String jsonText = writer.toString();
-                            JSONObject jsonObj = new JSONObject(jsonText);
-                            importObject(jsonObj);
-                        }
-                    }
-                }
-            }
-            namesPass.clear();
-            Cursor eG = DB.fetchAllPasswords();
-            while (eG.moveToNext()) {
-                for (eG.moveToFirst(); !eG.isAfterLast(); eG.moveToNext()) {
-                    namesPass.add(eG.getString(eG.getColumnIndex(Constants.COLUMN_PIC_SEL)));
-                }
-            }
-            eG.close();
+            importFromFolder(sdPathD, namesPass);
             File sdPathG = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD_GDX_TMP);
-            File[] filesG = sdPathG.listFiles();
-            if (filesG != null) {
-                int fG = filesG.length;
-                if (fG > 0) {
-                    for (File file1 : filesG) {
-                        String fileName = file1.getName();
-                        int pos = fileName.lastIndexOf(".");
-                        String fileLoc = filesG + "/" + fileName;
-                        String fileNameS = fileName.substring(0, pos);
-                        if (!namesPass.contains(fileNameS)) {
-                            FileInputStream stream = new FileInputStream(fileLoc);
-                            Writer writer = new StringWriter();
-                            char[] buffer = new char[1024];
-                            try {
-                                BufferedReader reader = new BufferedReader(
-                                        new InputStreamReader(stream, "UTF-8")
-                                );
-                                int n;
-                                while ((n = reader.read(buffer)) != -1) {
-                                    writer.write(buffer, 0, n);
-                                }
-                            } finally {
-                                stream.close();
+            importFromFolder(sdPathG, namesPass);
+        }
+    }
+
+    private void importFromFolder(File folder, List<String> names) throws IOException, JSONException {
+        File[] files = folder.listFiles();
+        if (files != null) {
+            int f = files.length;
+            if (f > 0) {
+                for (File file1 : files) {
+                    String fileName = file1.getName();
+                    int pos = fileName.lastIndexOf(".");
+                    String fileLoc = folder + "/" + fileName;
+                    String fileNameS = fileName.substring(0, pos);
+                    if (!names.contains(fileNameS)) {
+                        names.add(fileNameS);
+                        FileInputStream stream = new FileInputStream(fileLoc);
+                        Writer writer = new StringWriter();
+                        char[] buffer = new char[1024];
+                        try {
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+                            int n;
+                            while ((n = reader.read(buffer)) != -1) {
+                                writer.write(buffer, 0, n);
                             }
-                            String jsonText = writer.toString();
-                            JSONObject jsonObj = new JSONObject(jsonText);
-                            importObject(jsonObj);
+                        } finally {
+                            stream.close();
                         }
+                        String jsonText = writer.toString();
+                        JSONObject jsonObj = new JSONObject(jsonText);
+                        importObject(jsonObj);
                     }
                 }
             }
-            DB.close();
         }
     }
 
@@ -249,7 +145,9 @@ public class SyncHelper {
         if (jsonObj.has(Constants.COLUMN_TECHNICAL)) {
             try {
                 String color = jsonObj.getString(Constants.COLUMN_TECHNICAL);
-                if (color != null) colorPass = Integer.parseInt(color);
+                if (color != null) {
+                    colorPass = Integer.parseInt(color);
+                }
             } catch (ClassCastException e) {
                 colorPass = jsonObj.getInt(Constants.COLUMN_TECHNICAL);
             }
@@ -258,8 +156,7 @@ public class SyncHelper {
         if (!jsonObj.isNull(Constants.COLUMN_PIC_SEL)) {
             uuID = jsonObj.getString(Constants.COLUMN_PIC_SEL);
         }
-        DB = new DataBase(sContext);
-        DB.insertPass(title, login, password, url, comment, date, colorPass, uuID);
+        DataProvider.savePassword(mContext, new Password(title, date, login, comment, url, 0, colorPass, password, uuID));
     }
 
     public String generateID(){

@@ -22,7 +22,6 @@ public class Constants {
     public static final String NEW_PREFERENCES = "new_settings";
     public static final String NEW_PREFERENCES_THEME = "color_state";
     public static final String NEW_PREFERENCES_CHECKBOX = "delete_backup_state";
-    public static final String NEW_PREFERENCES_DATE_FORMAT = "date_format_state";
     public static final String NEW_PREFERENCES_EDIT_LENGHT = "edit_lenght_state";
     public static final String NEW_PREFERENCES_EDIT_OLD_LENGHT = "edit_old_lenght_state";
     public static final String NEW_PREFERENCES_RESTORE_MAIL = "restore_key_state";

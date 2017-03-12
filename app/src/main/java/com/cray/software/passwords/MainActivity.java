@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
         if (!ranBefore) {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("RanListBefore", true);
-            editor.commit();
+            editor.apply();
         }
         return !ranBefore;
     }
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
                 final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
                 emailIntent.setType("plain/text");
                 emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"feedback.cray@gmail.com"});
-                if (Module.isPro()){
+                if (Module.isPro()) {
                     emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Passwords PRO");
                 } else {
                     emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Passwords");
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
         alert.show();
     }
 
-    private void viewSetter(){
+    private void viewSetter() {
         ColorSetter cSetter = new ColorSetter(MainActivity.this);
         int colorPrimary = cSetter.colorPrimary();
         int colorDark = cSetter.colorPrimaryDark();
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
         }
     }
 
-    public void loaderAdapter(){
+    public void loaderAdapter() {
         data = DataProvider.getData(this);
         PasswordsRecyclerAdapter adapter = new PasswordsRecyclerAdapter(this, data);
         adapter.setEventListener(this);
@@ -221,16 +221,17 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
 
         showRate();
         if (Module.isPro()) {
-            if (prefs.loadBoolean(Constants.NEW_PREFERENCES_AUTO_BACKUP))
+            if (prefs.loadBoolean(Constants.NEW_PREFERENCES_AUTO_BACKUP)) {
                 new BackupTask(MainActivity.this).execute();
-
-            if (prefs.loadBoolean(Constants.NEW_PREFERENCES_AUTO_SYNC))
+            }
+            if (prefs.loadBoolean(Constants.NEW_PREFERENCES_AUTO_SYNC)) {
                 new SyncTask(MainActivity.this, null).execute();
+            }
         }
     }
-    private void showRate(){
-        SharedPrefs sPrefs = new SharedPrefs(MainActivity.this);
 
+    private void showRate() {
+        SharedPrefs sPrefs = new SharedPrefs(MainActivity.this);
         if (sPrefs.isString(Constants.NEW_PREFERENCES_RATE_SHOW)) {
             if (!sPrefs.loadBoolean(Constants.NEW_PREFERENCES_RATE_SHOW)) {
                 int counts = sPrefs.loadInt(Constants.NEW_PREFERENCES_APP_RUNS_COUNT);
@@ -247,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
         }
     }
 
-    private void delayedThreads(){
+    private void delayedThreads() {
         new DelayedTask(MainActivity.this).execute();
     }
 

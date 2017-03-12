@@ -1,5 +1,7 @@
 package com.cray.software.passwords.helpers;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Copyright 2016 Nazar Suhovich
  * <p/>
@@ -15,36 +17,128 @@ package com.cray.software.passwords.helpers;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class Password {
-    private String title, date, login;
-    private long id;
-    private int color;
 
-    public Password(String title, String date, long id, int color, String login) {
+public class Password {
+
+    @SerializedName("title")
+    private String title;
+    @SerializedName("date")
+    private String date;
+    @SerializedName("login")
+    private String login;
+    @SerializedName("comment")
+    private String comment;
+    @SerializedName("url")
+    private String url;
+    @SerializedName("password")
+    private String password;
+    @SerializedName("id")
+    private long id;
+    @SerializedName("color")
+    private int color;
+    @SerializedName("uuId")
+    private String uuId;
+
+    public Password(String title, String date, String login, String comment, String url, long id, int color,
+                    String password, String uuId) {
         this.title = title;
         this.date = date;
+        this.login = login;
+        this.comment = comment;
+        this.url = url;
         this.id = id;
         this.color = color;
-        this.login = login;
+        this.password = password;
+        this.uuId = uuId;
     }
 
-    public String getLogin() {
-        return login;
+    public void encrypt() {
+        title = Crypter.encrypt(title);
+        date = Crypter.encrypt(date);
+        login = Crypter.encrypt(login);
+        comment = Crypter.encrypt(comment);
+        url = Crypter.encrypt(url);
+        password = Crypter.encrypt(password);
     }
 
-    public int getColor() {
-        return color;
+    public void decrypt() {
+        title = Crypter.decrypt(title);
+        date = Crypter.decrypt(date);
+        login = Crypter.decrypt(login);
+        comment = Crypter.decrypt(comment);
+        url = Crypter.decrypt(url);
+        password = Crypter.decrypt(password);
     }
 
-    public long getId() {
-        return id;
+    public String getUuId() {
+        return uuId;
+    }
+
+    public void setUuId(String uuId) {
+        this.uuId = uuId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDate() {
         return date;
     }
 
-    public String getTitle() {
-        return title;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }

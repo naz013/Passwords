@@ -30,38 +30,64 @@ public class DataProvider {
         DataBase db = new DataBase(context);
         db.open();
         Cursor c = db.fetchAllPasswords();
-        ColorSetter cs = new ColorSetter(context);
         if (c != null && c.moveToFirst()) {
             do {
-                int colorCircle;
-                try {
-                    colorCircle = c.getInt(c.getColumnIndex(Constants.COLUMN_TECHNICAL));
-                } catch (ClassCastException e) {
-                    String color = c.getString(c.getColumnIndex(Constants.COLUMN_TECHNICAL));
-                    colorCircle = Integer.parseInt(color);
-                }
-                String title = c.getString(c.getColumnIndex(Constants.COLUMN_TITLE));
-                title = Crypter.decrypt(title);
-                String date = c.getString(c.getColumnIndex(Constants.COLUMN_DATE));
-                String login = c.getString(c.getColumnIndex(Constants.COLUMN_LOGIN));
-                date = Crypter.decrypt(date);
-                login = Crypter.decrypt(login);
-                int length = login.length();
-                StringBuilder sb = new StringBuilder();
-                if (length > 5) {
-                    String sub = login.substring(0, 3);
-                    sb.append(sub);
-                    for (int i = 3; i < length; i++) {
-                        sb.append("*");
-                    }
-                    login = sb.toString();
-                }
-                long id = c.getLong(c.getColumnIndex(Constants.COLUMN_ID));
-                list.add(new Password(title, date, id, cs.getPasswordColor(colorCircle), login));
+                list.add(getFromCursor(c));
             } while (c.moveToNext());
+            c.close();
         }
-        if (c != null) c.close();
         db.close();
         return list;
+    }
+
+    public static void savePassword(Context context, Password password) {
+        DataBase db  = new DataBase(context);
+        db.open();
+        if (password.getId() != 0) {
+            db.updatePass(password);
+        } else {
+            db.insertPass(password);
+        }
+        db.close();
+    }
+
+    public static Password getPassword(Context context, long id) {
+        DataBase db = new DataBase(context);
+        db.open();
+        Cursor c = db.fetchPass(id);
+        Password password = null;
+        if (c != null && c.moveToFirst()) {
+            password = getFromCursor(c);
+            c.close();
+        }
+        db.close();
+        return password;
+    }
+
+    public static String getStarred(String login) {
+        int length = login.length();
+        StringBuilder sb = new StringBuilder();
+        if (length > 5) {
+            String sub = login.substring(0, 3);
+            sb.append(sub);
+            for (int i = 3; i < length; i++) {
+                sb.append("*");
+            }
+            login = sb.toString();
+        }
+        return login;
+    }
+
+    private static Password getFromCursor(Cursor c) {
+        String title = c.getString(c.getColumnIndex(Constants.COLUMN_TITLE));
+        String login = c.getString(c.getColumnIndex(Constants.COLUMN_LOGIN));
+        String password = c.getString(c.getColumnIndex(Constants.COLUMN_PASSWORD));
+        String url = c.getString(c.getColumnIndex(Constants.COLUMN_URL));
+        String comment = c.getString(c.getColumnIndex(Constants.COLUMN_COMMENT));
+        String date = c.getString(c.getColumnIndex(Constants.COLUMN_DATE));
+        String uuId = c.getString(c.getColumnIndex(Constants.COLUMN_PIC_SEL));
+        int color = c.getInt(c.getColumnIndex(Constants.COLUMN_TECHNICAL));
+        long id = c.getLong(c.getColumnIndex(Constants.COLUMN_ID));
+        return new Password(title, date, login, comment, url, id, color, password, uuId);
     }
 }

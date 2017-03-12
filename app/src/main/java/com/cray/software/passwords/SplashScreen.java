@@ -64,7 +64,7 @@ public class SplashScreen extends Activity {
         checkKeys();
     }
 
-    private void attachDouble(){
+    private void attachDouble() {
         detachLoading();
 
         doubleLayout = (LinearLayout) findViewById(R.id.doubleLayout);
@@ -92,7 +92,7 @@ public class SplashScreen extends Activity {
         });
     }
 
-    private void attachSingle(){
+    private void attachSingle() {
         detachLoading();
 
         singleLayout = (LinearLayout) findViewById(R.id.singleLayout);
@@ -160,7 +160,7 @@ public class SplashScreen extends Activity {
         });
     }
 
-    public void forgotPassword(){
+    public void forgotPassword() {
         Intent intent = new Intent(getApplicationContext(), RestoreInsertMail.class);
         startActivity(intent);
     }
@@ -184,14 +184,14 @@ public class SplashScreen extends Activity {
         }
     }
 
-    private void detachLoading(){
+    private void detachLoading() {
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setVisibility(View.GONE);
 
         loadLayout.setVisibility(View.GONE);
     }
 
-    private void clearLayout(){
+    private void clearLayout() {
         loadLayout = (LinearLayout) findViewById(R.id.loadLayout);
         loadLayout.setVisibility(View.VISIBLE);
 
@@ -202,19 +202,19 @@ public class SplashScreen extends Activity {
         doubleLayout.setVisibility(View.GONE);
     }
 
-    private void writePrefs(){
+    private void writePrefs() {
         checkPrefs();
 
         sPrefs = new SharedPrefs(SplashScreen.this);
         boolean isSD = SyncHelper.isSdPresent();
-        if (isSD){
+        if (isSD) {
             File sdPath = Environment.getExternalStorageDirectory();
             File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.PREFS);
-            if (!sdPathDr.exists()){
+            if (!sdPathDr.exists()) {
                 sdPathDr.mkdirs();
             }
             File prefs = new File(sdPathDr + "/prefs.xml");
-            if (prefs.exists()){
+            if (prefs.exists()) {
                 sPrefs.loadSharedPreferencesFromFile(prefs);
             } else {
                 sPrefs.saveSharedPreferencesToFile(prefs);
@@ -222,9 +222,9 @@ public class SplashScreen extends Activity {
         }
     }
 
-    private void checkKeys(){
+    private void checkKeys() {
         File settings = new File("/data/data/" + getPackageName() + "/shared_prefs/" + Constants.NEW_APP_PREFS + ".xml");
-        if (settings.exists()){
+        if (settings.exists()) {
             sPrefs = new SharedPrefs(SplashScreen.this);
             boolean loadedStr = sPrefs.isPassString();
             if (loadedStr) {
@@ -241,16 +241,16 @@ public class SplashScreen extends Activity {
         }
     }
 
-    public void firstLogin(String firstStr, String secondStr){
-        if(firstStr.equals("") & secondStr.equals("")){
+    public void firstLogin(String firstStr, String secondStr) {
+        if (firstStr.equals("") & secondStr.equals("")) {
             firstPass.setHint(R.string.set_att_if_all_field_empty);
             secondPass.setHint(R.string.set_att_if_all_field_empty);
         } else {
-            if (firstStr.matches("")){
+            if (firstStr.matches("")) {
                 firstPass.setHint(R.string.set_att_if_all_field_empty);
                 secondPass.setText("");
             } else {
-                if (secondStr.matches("")){
+                if (secondStr.matches("")) {
                     secondPass.setHint(R.string.set_att_if_all_field_empty);
                     firstPass.setText("");
                 } else {
@@ -268,7 +268,8 @@ public class SplashScreen extends Activity {
                         secondPass.setText("");
                     }
                 }
-            }}
+            }
+        }
     }
 
     void savePass(String insertedPass) throws UnsupportedEncodingException {
@@ -279,31 +280,28 @@ public class SplashScreen extends Activity {
         sPrefs.savePassPrefs(passEncrypted);
     }
 
-    private void checkPrefs(){
+    private void checkPrefs() {
         sPrefs = new SharedPrefs(SplashScreen.this);
-        if (!sPrefs.isString(Constants.NEW_PREFERENCES_THEME)){
+        if (!sPrefs.isString(Constants.NEW_PREFERENCES_THEME)) {
             sPrefs.savePrefs(Constants.NEW_PREFERENCES_THEME, "6");
         }
-        if (!sPrefs.isString(Constants.NEW_PREFERENCES_SCREEN)){
+        if (!sPrefs.isString(Constants.NEW_PREFERENCES_SCREEN)) {
             sPrefs.savePrefs(Constants.NEW_PREFERENCES_SCREEN, Constants.SCREEN_AUTO);
         }
-        if (!sPrefs.isString(Constants.NEW_PREFERENCES_DATE_FORMAT)){
-            sPrefs.saveInt(Constants.NEW_PREFERENCES_DATE_FORMAT, Constants.DATE_EU);
-        }
-        if (!sPrefs.isString(Constants.NEW_PREFERENCES_EDIT_LENGHT)){
+        if (!sPrefs.isString(Constants.NEW_PREFERENCES_EDIT_LENGHT)) {
             sPrefs.saveInt(Constants.NEW_PREFERENCES_EDIT_LENGHT, 4);
         }
-        if (!sPrefs.isString(Constants.NEW_PREFERENCES_EDIT_OLD_LENGHT)){
+        if (!sPrefs.isString(Constants.NEW_PREFERENCES_EDIT_OLD_LENGHT)) {
             sPrefs.saveInt(Constants.NEW_PREFERENCES_EDIT_OLD_LENGHT, 4);
         }
-        if (!sPrefs.isString(Constants.NEW_PREFERENCES_CHECKBOX)){
+        if (!sPrefs.isString(Constants.NEW_PREFERENCES_CHECKBOX)) {
             sPrefs.saveBoolean(Constants.NEW_PREFERENCES_CHECKBOX, false);
         }
-        if (Module.isPro()){
-            if (!sPrefs.isString(Constants.NEW_PREFERENCES_AUTO_SYNC)){
+        if (Module.isPro()) {
+            if (!sPrefs.isString(Constants.NEW_PREFERENCES_AUTO_SYNC)) {
                 sPrefs.saveBoolean(Constants.NEW_PREFERENCES_AUTO_SYNC, false);
             }
-            if (!sPrefs.isString(Constants.NEW_PREFERENCES_AUTO_BACKUP)){
+            if (!sPrefs.isString(Constants.NEW_PREFERENCES_AUTO_BACKUP)) {
                 sPrefs.saveBoolean(Constants.NEW_PREFERENCES_AUTO_BACKUP, false);
             }
         }

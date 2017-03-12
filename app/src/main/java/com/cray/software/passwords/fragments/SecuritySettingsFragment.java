@@ -20,34 +20,26 @@ import com.cray.software.passwords.interfaces.Constants;
 
 public class SecuritySettingsFragment extends Fragment implements View.OnClickListener {
 
-    TextView changePassword, passLengthText, keyword;
-    RelativeLayout passLength;
-    SharedPrefs sPrefs;
-    ActionBar ab;
+    private TextView passLengthText;
+    private SharedPrefs sPrefs;
+    private ActionBar ab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View rootView =  inflater.inflate(R.layout.security_settings_layout, container, false);
-
-        ab = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        if (ab != null){
+        View rootView = inflater.inflate(R.layout.security_settings_layout, container, false);
+        ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (ab != null) {
             ab.setTitle(R.string.security_block);
         }
-
-        changePassword = (TextView) rootView.findViewById(R.id.changePassword);
+        TextView changePassword = (TextView) rootView.findViewById(R.id.changePassword);
         changePassword.setOnClickListener(this);
-
-        keyword = (TextView) rootView.findViewById(R.id.keyword);
+        TextView keyword = (TextView) rootView.findViewById(R.id.keyword);
         keyword.setOnClickListener(this);
-
-        passLength = (RelativeLayout) rootView.findViewById(R.id.passLength);
+        RelativeLayout passLength = (RelativeLayout) rootView.findViewById(R.id.passLength);
         passLength.setOnClickListener(this);
-
         sPrefs = new SharedPrefs(getActivity());
         passLengthText = (TextView) rootView.findViewById(R.id.passLengthText);
         passLengthText.setText(String.valueOf(sPrefs.loadInt(Constants.NEW_PREFERENCES_EDIT_LENGHT)));
-
         return rootView;
     }
 
@@ -61,8 +53,8 @@ public class SecuritySettingsFragment extends Fragment implements View.OnClickLi
     @Override
     public void onDetach() {
         super.onDetach();
-        ab = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        if (ab != null){
+        ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (ab != null) {
             ab.setTitle(R.string.action_settings);
         }
     }

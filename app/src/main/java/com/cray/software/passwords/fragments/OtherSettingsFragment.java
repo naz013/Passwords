@@ -17,18 +17,15 @@ import com.cray.software.passwords.dialogs.ThanksDialog;
 
 public class OtherSettingsFragment extends Fragment {
 
-    ActionBar ab;
+    private ActionBar ab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View rootView =  inflater.inflate(R.layout.other_settings_layout, container, false);
-
-        ab = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        if (ab != null){
+        View rootView = inflater.inflate(R.layout.other_settings_layout, container, false);
+        ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (ab != null) {
             ab.setTitle(R.string.other_settings);
         }
-
         TextView about = (TextView) rootView.findViewById(R.id.about);
         about.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +36,6 @@ public class OtherSettingsFragment extends Fragment {
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
-
         TextView rateApp = (TextView) rootView.findViewById(R.id.rateApp);
         rateApp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +46,6 @@ public class OtherSettingsFragment extends Fragment {
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
-
         TextView thanks = (TextView) rootView.findViewById(R.id.thanks);
         thanks.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,15 +56,14 @@ public class OtherSettingsFragment extends Fragment {
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
-
         return rootView;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        ab = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        if (ab != null){
+        ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (ab != null) {
             ab.setTitle(R.string.action_settings);
         }
     }

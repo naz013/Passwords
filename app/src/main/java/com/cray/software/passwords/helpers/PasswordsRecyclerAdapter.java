@@ -84,12 +84,7 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<PasswordsRecy
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // create a new view
-        View itemLayoutView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_card, parent, false);
-
-        // create ViewHolder
-
+        View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_card, parent, false);
         return new ViewHolder(itemLayoutView);
     }
 

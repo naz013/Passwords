@@ -21,45 +21,35 @@ import com.cray.software.passwords.interfaces.Module;
 
 public class ExportSettingsFragment extends Fragment implements View.OnClickListener {
 
-    RelativeLayout autoBackup, autoSync;
-    CheckBox autoBackupCheck, autoSyncCheck;
-    TextView clouds;
-    SharedPrefs sPrefs;
-    ActionBar ab;
+    private CheckBox autoBackupCheck, autoSyncCheck;
+    private SharedPrefs sPrefs;
+    private ActionBar ab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View rootView =  inflater.inflate(R.layout.export_settings_layout, container, false);
-
+        View rootView = inflater.inflate(R.layout.export_settings_layout, container, false);
         ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (ab != null){
+        if (ab != null) {
             ab.setTitle(R.string.export_settings_block);
         }
-
-        clouds = (TextView) rootView.findViewById(R.id.clouds);
+        TextView clouds = (TextView) rootView.findViewById(R.id.clouds);
         clouds.setOnClickListener(this);
-
-        autoBackup = (RelativeLayout) rootView.findViewById(R.id.autoBackup);
+        RelativeLayout autoBackup = (RelativeLayout) rootView.findViewById(R.id.autoBackup);
         autoBackup.setOnClickListener(this);
-
         autoBackupCheck = (CheckBox) rootView.findViewById(R.id.autoBackupCheck);
         sPrefs = new SharedPrefs(getActivity().getApplicationContext());
         autoBackupCheck.setChecked(sPrefs.loadBoolean(Constants.NEW_PREFERENCES_AUTO_BACKUP));
-
-        autoSync = (RelativeLayout) rootView.findViewById(R.id.autoSync);
+        RelativeLayout autoSync = (RelativeLayout) rootView.findViewById(R.id.autoSync);
         autoSync.setOnClickListener(this);
-
         autoSyncCheck = (CheckBox) rootView.findViewById(R.id.autoSyncCheck);
         sPrefs = new SharedPrefs(getActivity().getApplicationContext());
         autoSyncCheck.setChecked(sPrefs.loadBoolean(Constants.NEW_PREFERENCES_AUTO_SYNC));
-
         return rootView;
     }
 
-    private void autoBackupChange (){
+    private void autoBackupChange() {
         sPrefs = new SharedPrefs(getActivity().getApplicationContext());
-        if (autoBackupCheck.isChecked()){
+        if (autoBackupCheck.isChecked()) {
             sPrefs.saveBoolean(Constants.NEW_PREFERENCES_AUTO_BACKUP, false);
             autoBackupCheck.setChecked(false);
         } else {
@@ -68,9 +58,9 @@ public class ExportSettingsFragment extends Fragment implements View.OnClickList
         }
     }
 
-    private void autoSyncChange (){
+    private void autoSyncChange() {
         sPrefs = new SharedPrefs(getActivity().getApplicationContext());
-        if (autoSyncCheck.isChecked()){
+        if (autoSyncCheck.isChecked()) {
             sPrefs.saveBoolean(Constants.NEW_PREFERENCES_AUTO_SYNC, false);
             autoSyncCheck.setChecked(false);
         } else {
@@ -82,8 +72,8 @@ public class ExportSettingsFragment extends Fragment implements View.OnClickList
     @Override
     public void onDetach() {
         super.onDetach();
-        ab = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        if (ab != null){
+        ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (ab != null) {
             ab.setTitle(R.string.action_settings);
         }
     }
@@ -92,7 +82,7 @@ public class ExportSettingsFragment extends Fragment implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.autoBackup:
-                if (!Module.isPro()){
+                if (!Module.isPro()) {
                     getActivity().startActivity(new Intent(getActivity(), ProMarket.class)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 } else {
@@ -100,7 +90,7 @@ public class ExportSettingsFragment extends Fragment implements View.OnClickList
                 }
                 break;
             case R.id.autoSync:
-                if (!Module.isPro()){
+                if (!Module.isPro()) {
                     getActivity().startActivity(new Intent(getActivity(), ProMarket.class)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 } else {

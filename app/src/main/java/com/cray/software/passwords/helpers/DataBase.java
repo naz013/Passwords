@@ -7,7 +7,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.cray.software.passwords.interfaces.Constants;
 
@@ -56,8 +55,6 @@ public class DataBase {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         }
-
-
     }
 
     public DataBase(Context c) {
@@ -71,7 +68,7 @@ public class DataBase {
         return this;
     }
 
-    public boolean isOpen () {
+    public boolean isOpen() {
         return db != null && db.isOpen();
     }
 
@@ -83,20 +80,31 @@ public class DataBase {
         if (dbHelper != null) dbHelper.close();
     }
 
-    public long insertPass (String title, String login, String password, String url,
-                            String comment, String date, int color, String uuID) {
+    public long insertPass(Password password) {
         openGuard();
         ContentValues cv = new ContentValues();
-        cv.put(COLUMN_TITLE, title);
-        cv.put(COLUMN_LOGIN, login);
-        cv.put(COLUMN_PASSWORD, password);
-        cv.put(COLUMN_URL, url);
-        cv.put(COLUMN_COMMENT, comment);
-        cv.put(COLUMN_DATE, date);
-        cv.put(COLUMN_TECHNICAL, color);
-        cv.put(COLUMN_PIC_SEL, uuID);
-        Log.d(Constants.LOG_TAG, "data is inserted " + cv);
+        cv.put(COLUMN_TITLE, password.getTitle());
+        cv.put(COLUMN_LOGIN, password.getLogin());
+        cv.put(COLUMN_PASSWORD, password.getPassword());
+        cv.put(COLUMN_URL, password.getUrl());
+        cv.put(COLUMN_COMMENT, password.getComment());
+        cv.put(COLUMN_DATE, password.getDate());
+        cv.put(COLUMN_TECHNICAL, password.getColor());
+        cv.put(COLUMN_PIC_SEL, password.getUuId());
         return db.insert(TABLE_NAME, null, cv);
+    }
+
+    public boolean updatePass(Password password) {
+        openGuard();
+        ContentValues args = new ContentValues();
+        args.put(COLUMN_TITLE, password.getTitle());
+        args.put(COLUMN_LOGIN, password.getLogin());
+        args.put(COLUMN_PASSWORD, password.getPassword());
+        args.put(COLUMN_URL, password.getUrl());
+        args.put(COLUMN_COMMENT, password.getComment());
+        args.put(COLUMN_DATE, password.getDate());
+        args.put(COLUMN_TECHNICAL, password.getColor());
+        return db.update(TABLE_NAME, args, COLUMN_ID + "=" + password.getId(), null) > 0;
     }
 
     public boolean deletePass(long rowId) {
@@ -109,13 +117,13 @@ public class DataBase {
         SharedPrefs prefs = new SharedPrefs(mContext);
         String orderPrefs = prefs.loadPrefs(Constants.NEW_PREFERENCES_ORDER_BY);
         String order = null;
-        if (orderPrefs.matches(Constants.ORDER_DATE_A_Z)){
+        if (orderPrefs.matches(Constants.ORDER_DATE_A_Z)) {
             order = COLUMN_DATE + " ASC";
-        } else if (orderPrefs.matches(Constants.ORDER_DATE_Z_A)){
+        } else if (orderPrefs.matches(Constants.ORDER_DATE_Z_A)) {
             order = COLUMN_DATE + " DESC";
-        } else if (orderPrefs.matches(Constants.ORDER_TITLE_A_Z)){
+        } else if (orderPrefs.matches(Constants.ORDER_TITLE_A_Z)) {
             order = COLUMN_TITLE + " ASC";
-        } else if (orderPrefs.matches(Constants.ORDER_TITLE_Z_A)){
+        } else if (orderPrefs.matches(Constants.ORDER_TITLE_Z_A)) {
             order = COLUMN_TITLE + " DESC";
         }
         return db.query(TABLE_NAME, null, null, null, null, null, order);
@@ -126,16 +134,6 @@ public class DataBase {
         ContentValues args = new ContentValues();
         args.put(COLUMN_PIC_SEL, id);
         return db.update(TABLE_NAME, args, COLUMN_ID + "=" + rowId, null) > 0;
-    }
-
-    public Cursor fetchAllNames() throws SQLException {
-        openGuard();
-        return db.query(TABLE_NAME, new String[] {COLUMN_ID, COLUMN_TITLE, COLUMN_TECHNICAL}, null, null, null, null, null);
-    }
-
-    public Cursor fetchOnlyName(long rowId) throws SQLException {
-        openGuard();
-        return db.query(TABLE_NAME, new String[] {COLUMN_TITLE}, COLUMN_ID + "=" + rowId, null, null, null, null, null);
     }
 
     public int getCountPass() throws SQLException {
@@ -149,36 +147,17 @@ public class DataBase {
 
     public Cursor fetchPass(long rowId) throws SQLException {
         openGuard();
-        Cursor mCursor = db.query(TABLE_NAME, new String[] {COLUMN_ID, COLUMN_TITLE, COLUMN_LOGIN,
-                COLUMN_PASSWORD, COLUMN_URL, COLUMN_COMMENT, COLUMN_DATE, COLUMN_TECHNICAL, COLUMN_PIC_SEL},
-                COLUMN_ID + "=" + rowId, null, null, null, null, null);
-        //Log.d(LOG_TAG, "cursor received");
+        Cursor mCursor = db.query(TABLE_NAME, null, COLUMN_ID + "=" + rowId, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
         }
         return mCursor;
-
-    }
-
-    public boolean updatePass(long rowId, String title, String login, String password, String link,
-                              String comment, String date, int color) {
-        openGuard();
-        ContentValues args = new ContentValues();
-        args.put(COLUMN_TITLE, title);
-        args.put(COLUMN_LOGIN, login);
-        args.put(COLUMN_PASSWORD, password);
-        args.put(COLUMN_URL, link);
-        args.put(COLUMN_COMMENT, comment);
-        args.put(COLUMN_DATE, date);
-        args.put(COLUMN_TECHNICAL, color);
-        return db.update(TABLE_NAME, args, COLUMN_ID + "=" + rowId, null) > 0;
     }
 
     public void openGuard() throws SQLiteException {
         if (isOpen()) return;
         open();
         if (isOpen()) return;
-        //Log.d(LOG_TAG, "open guard failed");
         throw new SQLiteException("Could not open database");
     }
 }
