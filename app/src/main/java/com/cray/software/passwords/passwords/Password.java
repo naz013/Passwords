@@ -1,5 +1,6 @@
-package com.cray.software.passwords.helpers;
+package com.cray.software.passwords.passwords;
 
+import com.cray.software.passwords.helpers.Crypter;
 import com.google.gson.annotations.SerializedName;
 
 /**

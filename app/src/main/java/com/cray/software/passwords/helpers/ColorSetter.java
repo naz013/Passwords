@@ -108,7 +108,9 @@ public class ColorSetter {
                             color = R.color.yellowAccent;
                             break;
                     }
-                } else color = R.color.yellowAccent;
+                } else {
+                    color = R.color.yellowAccent;
+                }
                 break;
         }
         return color;
@@ -253,7 +255,9 @@ public class ColorSetter {
                             color = R.color.cyanPrimaryDark;
                             break;
                     }
-                } else color = R.color.cyanPrimaryDark;
+                } else {
+                    color = R.color.cyanPrimaryDark;
+                }
                 break;
         }
         return color;

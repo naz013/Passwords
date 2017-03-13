@@ -11,7 +11,9 @@ android {
         versionCode 27
         versionName '1.4'
     }
-
+    dataBinding {
+        enabled = true
+    }
     signingConfigs {
         freeApp {
             storeFile file("passwords.jks")

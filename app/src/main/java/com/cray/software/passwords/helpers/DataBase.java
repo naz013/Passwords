@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.cray.software.passwords.interfaces.Constants;
+import com.cray.software.passwords.passwords.Password;
 
 public class DataBase {
     public static final String DB_NAME = "appdb";

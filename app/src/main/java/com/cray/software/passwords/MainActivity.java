@@ -26,9 +26,6 @@ import com.cray.software.passwords.dialogs.ProMarket;
 import com.cray.software.passwords.dialogs.RateDialog;
 import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.DataBase;
-import com.cray.software.passwords.helpers.DataProvider;
-import com.cray.software.passwords.helpers.Password;
-import com.cray.software.passwords.helpers.PasswordsRecyclerAdapter;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.helpers.Utils;
 import com.cray.software.passwords.interfaces.Constants;
@@ -36,19 +33,22 @@ import com.cray.software.passwords.interfaces.LCAMListener;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.interfaces.SimpleListener;
 import com.cray.software.passwords.interfaces.SyncListener;
+import com.cray.software.passwords.passwords.DataProvider;
+import com.cray.software.passwords.passwords.PasswordListInterface;
+import com.cray.software.passwords.passwords.PasswordsRecyclerAdapter;
 import com.cray.software.passwords.tasks.BackupTask;
 import com.cray.software.passwords.tasks.DelayedTask;
 import com.cray.software.passwords.tasks.DeleteTask;
 import com.cray.software.passwords.tasks.SyncTask;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SyncListener, SimpleListener {
 
     private RecyclerView currentList;
     private LinearLayout emptyItem;
 
-    private ArrayList<Password> data;
+    private List<PasswordListInterface> data;
 
     private FloatingActionButton mFab;
     private Toolbar toolbar;

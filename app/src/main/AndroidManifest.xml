@@ -42,14 +42,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".dialogs.DateFormatDialog"
-            android:configChanges="keyboardHidden|orientation"
-            android:theme="@style/HomeWhite.Dialog">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".dialogs.PassChangeDialog"
             android:configChanges="keyboardHidden|orientation"
             android:theme="@style/HomeWhite.Dialog">

@@ -153,4 +153,7 @@
     <string name="open_source_licenses">Open source licenses</string>
     <string name="saved">Saved</string>
     <string name="removed">Removed</string>
+    <string name="yes">Yes</string>
+    <string name="delete_this_password">Delete this password?</string>
+    <string name="no">No</string>
 </resources>

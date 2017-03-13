@@ -1,4 +1,4 @@
-package com.cray.software.passwords.helpers;
+package com.cray.software.passwords.passwords;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -10,10 +10,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cray.software.passwords.R;
+import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.interfaces.SimpleListener;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Copyright 2016 Nazar Suhovich
@@ -32,14 +33,18 @@ import java.util.ArrayList;
  */
 public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<PasswordsRecyclerAdapter.ViewHolder>{
 
-    private ArrayList<Password> list;
+    public static final int PASSWORD = 0;
+    public static final int NOTE = 1;
+
+    private List<PasswordListInterface> list;
     private Typeface typeface;
     private SimpleListener mEventListener;
+    private ColorSetter mColor;
 
-    public PasswordsRecyclerAdapter(Context context, ArrayList<Password> list) {
+    public PasswordsRecyclerAdapter(Context context, List<PasswordListInterface> list) {
         this.list = list;
-        typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
-        setHasStableIds(true);
+        this.mColor = new ColorSetter(context);
+        this.typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements
@@ -90,11 +95,11 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<PasswordsRecy
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final Password item = list.get(position);
+        PasswordListInterface item = list.get(position);
         holder.textView.setText(item.getTitle());
         holder.dateView.setText(item.getDate());
         holder.loginView.setText(item.getLogin());
-        holder.itemCard.setCardBackgroundColor(item.getColor());
+        holder.itemCard.setCardBackgroundColor(mColor.getColor(mColor.colorPrimary(item.getColor())));
     }
 
     @Override

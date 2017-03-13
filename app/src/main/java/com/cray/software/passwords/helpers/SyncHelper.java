@@ -7,6 +7,8 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.cray.software.passwords.interfaces.Constants;
+import com.cray.software.passwords.passwords.DataProvider;
+import com.cray.software.passwords.passwords.Password;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +36,7 @@ public class SyncHelper {
     }
 
     public void exportPasswords() throws JSONException, IOException {
-        List<Password> list = DataProvider.getData(mContext);
+        List<Password> list = DataProvider.getOriginalData(mContext);
         for (Password password : list) {
             String uuID = password.getUuId();
             if (uuID == null) {
@@ -70,7 +72,7 @@ public class SyncHelper {
     public void importPasswordFromJSON() throws IOException, JSONException {
         if (isSdPresent()){
             List<String> namesPass = new ArrayList<>();
-            for (Password item : DataProvider.getData(mContext)) {
+            for (Password item : DataProvider.getOriginalData(mContext)) {
                 namesPass.add(item.getUuId());
             }
             File sdPath = Environment.getExternalStorageDirectory();
@@ -159,7 +161,7 @@ public class SyncHelper {
         DataProvider.savePassword(mContext, new Password(title, date, login, comment, url, 0, colorPass, password, uuID));
     }
 
-    public String generateID(){
+    public static String generateID(){
         return UUID.randomUUID().toString();
     }
 

@@ -1,11 +1,13 @@
-package com.cray.software.passwords.helpers;
+package com.cray.software.passwords.passwords;
 
 import android.content.Context;
 import android.database.Cursor;
 
+import com.cray.software.passwords.helpers.DataBase;
 import com.cray.software.passwords.interfaces.Constants;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Copyright 2016 Nazar Suhovich
@@ -25,8 +27,23 @@ import java.util.ArrayList;
 public class DataProvider {
     public static final String TAG = "LOG_TAG";
 
-    public static ArrayList<Password> getData(Context context) {
-        ArrayList<Password> list = new ArrayList<>();
+    public static List<PasswordListInterface> getData(Context context) {
+        List<PasswordListInterface> list = new ArrayList<>();
+        DataBase db = new DataBase(context);
+        db.open();
+        Cursor c = db.fetchAllPasswords();
+        if (c != null && c.moveToFirst()) {
+            do {
+                list.add(new PasswordInterfaceImpl(getFromCursor(c)));
+            } while (c.moveToNext());
+            c.close();
+        }
+        db.close();
+        return list;
+    }
+
+    public static List<Password> getOriginalData(Context context) {
+        List<Password> list = new ArrayList<>();
         DataBase db = new DataBase(context);
         db.open();
         Cursor c = db.fetchAllPasswords();
@@ -64,10 +81,17 @@ public class DataProvider {
         return password;
     }
 
+    public static void deletePassword(Context context, Password password) {
+        DataBase db = new DataBase(context);
+        db.open();
+        db.deletePass(password.getId());
+        db.close();
+    }
+
     public static String getStarred(String login) {
         int length = login.length();
         StringBuilder sb = new StringBuilder();
-        if (length > 5) {
+        if (length > 3) {
             String sub = login.substring(0, 3);
             sb.append(sub);
             for (int i = 3; i < length; i++) {
