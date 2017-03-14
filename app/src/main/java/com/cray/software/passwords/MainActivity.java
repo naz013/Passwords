@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,7 +24,6 @@ import com.cray.software.passwords.dialogs.ProMarket;
 import com.cray.software.passwords.dialogs.RateDialog;
 import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.SharedPrefs;
-import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.helpers.Utils;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.LCAMListener;
@@ -40,7 +38,6 @@ import com.cray.software.passwords.tasks.DelayedTask;
 import com.cray.software.passwords.tasks.DeleteTask;
 import com.cray.software.passwords.tasks.SyncTask;
 
-import java.io.File;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SyncListener, SimpleListener {
@@ -58,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        writePrefs();
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -76,24 +72,6 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
         currentList = (RecyclerView) findViewById(R.id.currentList);
         currentList.setLayoutManager(new LinearLayoutManager(this));
         emptyItem = (LinearLayout) findViewById(R.id.emptyItem);
-    }
-
-    private void writePrefs() {
-        boolean isSD = SyncHelper.isSdPresent();
-        if (isSD) {
-            File sdPath = Environment.getExternalStorageDirectory();
-            File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.PREFS);
-            if (!sdPathDr.exists()) {
-                sdPathDr.mkdirs();
-            }
-            File prefs = new File(sdPathDr + "/prefs.xml");
-            SharedPrefs sPrefs = new SharedPrefs(this);
-            if (prefs.exists()) {
-                sPrefs.loadSharedPreferencesFromFile(prefs);
-            } else {
-                sPrefs.saveSharedPreferencesToFile(prefs);
-            }
-        }
     }
 
     @Override

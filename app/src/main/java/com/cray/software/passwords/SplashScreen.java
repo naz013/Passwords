@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 
 import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.SharedPrefs;
+import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.login.ActivityLogin;
@@ -22,6 +24,11 @@ public class SplashScreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            writePrefs();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         sPrefs = new SharedPrefs(SplashScreen.this);
         ColorSetter cs = new ColorSetter(SplashScreen.this);
         if (Module.isLollipop()) {
@@ -29,6 +36,24 @@ public class SplashScreen extends Activity {
         }
         checkPrefs();
         checkKeys();
+    }
+
+    private void writePrefs() throws Exception {
+        boolean isSD = SyncHelper.isSdPresent();
+        if (isSD) {
+            File sdPath = Environment.getExternalStorageDirectory();
+            File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.PREFS);
+            if (!sdPathDr.exists()) {
+                sdPathDr.mkdirs();
+            }
+            File prefs = new File(sdPathDr + "/prefs.xml");
+            SharedPrefs sPrefs = new SharedPrefs(this);
+            if (prefs.exists()) {
+                sPrefs.loadSharedPreferencesFromFile(prefs);
+            } else {
+                sPrefs.saveSharedPreferencesToFile(prefs);
+            }
+        }
     }
 
     private void attachDouble() {
