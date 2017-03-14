@@ -15,26 +15,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.cray.software.passwords.dialogs.RestoreInsertMail;
 import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.Permissions;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
+import com.cray.software.passwords.login.ActivityLogin;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 
 public class SplashScreen extends Activity {
 
-    private TextView forgotPassword;
     private LinearLayout loadLayout;
-    private LinearLayout singleLayout;
     private LinearLayout doubleLayout;
-    private EditText loginPass, firstPass, secondPass;
+    private EditText firstPass, secondPass;
     private SharedPreferences appSettings;
     private SharedPrefs sPrefs;
 
@@ -94,94 +91,8 @@ public class SplashScreen extends Activity {
 
     private void attachSingle() {
         detachLoading();
-
-        singleLayout = (LinearLayout) findViewById(R.id.singleLayout);
-        singleLayout.setVisibility(View.VISIBLE);
-
-        loginPass = (EditText) findViewById(R.id.loginPass);
-
-        sPrefs = new SharedPrefs(getApplicationContext());
-        int passLenghtInt = sPrefs.loadInt(Constants.NEW_PREFERENCES_EDIT_LENGHT);
-
-        appSettings = getSharedPreferences(Constants.NEW_APP_PREFS, Context.MODE_PRIVATE);
-        String loadedPass = appSettings.getString(Constants.NEW_APP_PREFERENCES_LOGIN, "").trim();
-        String passDecrypted = null;
-        byte[] byte_pass = Base64.decode(loadedPass, Base64.DEFAULT);
-        try {
-            passDecrypted = new String(byte_pass, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        int loadPassLength = 0;
-        if (passDecrypted != null) {
-            loadPassLength = passDecrypted.length();
-        }
-
-        loginPass = (EditText) findViewById(R.id.loginPass);
-
-        if (passLenghtInt == loadPassLength) {
-            InputFilter[] FilterArray = new InputFilter[1];
-            FilterArray[0] = new InputFilter.LengthFilter(passLenghtInt);
-            loginPass.setFilters(FilterArray);
-        } else {
-            InputFilter[] FilterArray = new InputFilter[1];
-            FilterArray[0] = new InputFilter.LengthFilter(loadPassLength);
-            loginPass.setFilters(FilterArray);
-        }
-
-        forgotPassword = (TextView) findViewById(R.id.forgotPassword);
-        forgotPassword.setVisibility(View.GONE);
-        forgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sPrefs = new SharedPrefs(SplashScreen.this);
-                boolean isKey = sPrefs.isString(Constants.NEW_PREFERENCES_RESTORE_MAIL);
-                if (isKey) {
-                    forgotPassword();
-                } else {
-                    Toast.makeText(SplashScreen.this, getString(R.string.not_have_restore_keyword), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        Button loginButton = (Button) findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                appSettings = getSharedPreferences(Constants.NEW_APP_PREFS, Context.MODE_PRIVATE);
-                String loadedPass = appSettings.getString(Constants.NEW_APP_PREFERENCES_LOGIN, "");
-                String loginPassStr = loginPass.getText().toString().trim();
-                try {
-                    loginApp(loadedPass, loginPassStr);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void forgotPassword() {
-        Intent intent = new Intent(getApplicationContext(), RestoreInsertMail.class);
-        startActivity(intent);
-    }
-
-    public void loginApp(String loadedPass, String loginPassStr) throws UnsupportedEncodingException {
-        String passDecrypted;
-        byte[] byte_pass = Base64.decode(loadedPass, Base64.DEFAULT);
-        passDecrypted = new String(byte_pass, "UTF-8");
-        if (loginPassStr.matches("")) {
-            loginPass.setError(getResources().getString(R.string.set_att_if_all_field_empty));
-        } else {
-            if (loginPassStr.equals(passDecrypted)) {
-                Intent intentMain = new Intent(this, MainActivity.class);
-                startActivity(intentMain);
-                finish();
-            } else {
-                loginPass.setText("");
-                loginPass.setError(getResources().getString(R.string.set_att_if_inserted_not_match_saved));
-                forgotPassword.setVisibility(View.VISIBLE);
-            }
-        }
+        startActivity(new Intent(this, ActivityLogin.class));
+        finish();
     }
 
     private void detachLoading() {
@@ -195,7 +106,7 @@ public class SplashScreen extends Activity {
         loadLayout = (LinearLayout) findViewById(R.id.loadLayout);
         loadLayout.setVisibility(View.VISIBLE);
 
-        singleLayout = (LinearLayout) findViewById(R.id.singleLayout);
+        LinearLayout singleLayout = (LinearLayout) findViewById(R.id.singleLayout);
         singleLayout.setVisibility(View.GONE);
 
         doubleLayout = (LinearLayout) findViewById(R.id.doubleLayout);

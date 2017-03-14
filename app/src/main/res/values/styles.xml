@@ -5,6 +5,11 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimaryDark">@color/material_grey</item>
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
+
     <style name="MyTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
     </style>

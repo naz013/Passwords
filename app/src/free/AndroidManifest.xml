@@ -18,7 +18,7 @@
 
         <activity
             android:name="com.cray.software.passwords.SplashScreen"
-            android:label="@string/app_name_free" android:theme="@style/HomeWhite.NoAction">
+            android:label="@string/app_name_free" android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
