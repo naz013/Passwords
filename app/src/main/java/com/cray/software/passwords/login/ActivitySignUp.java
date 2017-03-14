@@ -16,10 +16,12 @@ import com.bumptech.glide.Glide;
 import com.cray.software.passwords.MainActivity;
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.databinding.ActivitySignUpBinding;
+import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.Crypter;
 import com.cray.software.passwords.helpers.Permissions;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.interfaces.Constants;
+import com.cray.software.passwords.interfaces.Module;
 
 public class ActivitySignUp extends AppCompatActivity {
 
@@ -31,6 +33,10 @@ public class ActivitySignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
+        ColorSetter cs = new ColorSetter(this);
+        if (Module.isLollipop()) {
+            getWindow().setStatusBarColor(cs.getColor(R.color.colorGrayDark));
+        }
         prefs = new SharedPrefs(this);
         setFilter();
         binding.secondPass.setOnEditorActionListener(new TextView.OnEditorActionListener() {

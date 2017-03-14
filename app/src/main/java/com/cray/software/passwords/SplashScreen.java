@@ -29,10 +29,10 @@ public class SplashScreen extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        sPrefs = new SharedPrefs(SplashScreen.this);
-        ColorSetter cs = new ColorSetter(SplashScreen.this);
+        sPrefs = new SharedPrefs(this);
+        ColorSetter cs = new ColorSetter(this);
         if (Module.isLollipop()) {
-            getWindow().setStatusBarColor(cs.getColor(cs.colorPrimaryDark()));
+            getWindow().setStatusBarColor(cs.getColor(R.color.colorGrayDark));
         }
         checkPrefs();
         checkKeys();
@@ -86,7 +86,7 @@ public class SplashScreen extends Activity {
     private void checkPrefs() {
         sPrefs = new SharedPrefs(SplashScreen.this);
         if (!sPrefs.isString(Constants.NEW_PREFERENCES_THEME)) {
-            sPrefs.savePrefs(Constants.NEW_PREFERENCES_THEME, "6");
+            sPrefs.saveInt(Constants.NEW_PREFERENCES_THEME, 3);
         }
         if (!sPrefs.isString(Constants.NEW_PREFERENCES_SCREEN)) {
             sPrefs.savePrefs(Constants.NEW_PREFERENCES_SCREEN, Constants.SCREEN_AUTO);
