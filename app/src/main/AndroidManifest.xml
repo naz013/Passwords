@@ -122,14 +122,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".dialogs.HelpOverflow"
-            android:configChanges="keyboardHidden|orientation"
-            android:theme="@style/Transparent">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -162,6 +154,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".login.ActivityLogin" />
+        <activity android:name=".login.ActivitySignUp"></activity>
     </application>
 
 </manifest>

@@ -82,7 +82,7 @@ public class SharedPrefs {
         prefs = pContext.getSharedPreferences(Constants.NEW_APP_PREFS, Context.MODE_PRIVATE);
         android.content.SharedPreferences.Editor uiEd = prefs.edit();
         uiEd.putString(Constants.NEW_APP_PREFERENCES_LOGIN, value);
-        uiEd.commit();
+        uiEd.apply();
     }
 
     public String loadPassPrefs(){

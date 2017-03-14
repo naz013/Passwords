@@ -4,9 +4,9 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,12 +21,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.cray.software.passwords.dialogs.HelpOverflow;
 import com.cray.software.passwords.dialogs.ProMarket;
 import com.cray.software.passwords.dialogs.RateDialog;
 import com.cray.software.passwords.helpers.ColorSetter;
-import com.cray.software.passwords.helpers.DataBase;
 import com.cray.software.passwords.helpers.SharedPrefs;
+import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.helpers.Utils;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.LCAMListener;
@@ -41,9 +40,12 @@ import com.cray.software.passwords.tasks.DelayedTask;
 import com.cray.software.passwords.tasks.DeleteTask;
 import com.cray.software.passwords.tasks.SyncTask;
 
+import java.io.File;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SyncListener, SimpleListener {
+
+    private static final int MENU_ITEM_PRO = 12;
 
     private RecyclerView currentList;
     private LinearLayout emptyItem;
@@ -56,13 +58,13 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        writePrefs();
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         if (Module.isPro()) toolbar.setTitle(getString(R.string.app_name));
         else toolbar.setTitle(getString(R.string.app_name_free));
-
         mFab = (FloatingActionButton) findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,25 +73,28 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
                 startActivity(intentMain);
             }
         });
-
         currentList = (RecyclerView) findViewById(R.id.currentList);
         currentList.setLayoutManager(new LinearLayoutManager(this));
-
         emptyItem = (LinearLayout) findViewById(R.id.emptyItem);
     }
 
-    private boolean isListFirstTime() {
-        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-        boolean ranBefore = preferences.getBoolean("RanListBefore", false);
-        if (!ranBefore) {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("RanListBefore", true);
-            editor.apply();
+    private void writePrefs() {
+        boolean isSD = SyncHelper.isSdPresent();
+        if (isSD) {
+            File sdPath = Environment.getExternalStorageDirectory();
+            File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.PREFS);
+            if (!sdPathDr.exists()) {
+                sdPathDr.mkdirs();
+            }
+            File prefs = new File(sdPathDr + "/prefs.xml");
+            SharedPrefs sPrefs = new SharedPrefs(this);
+            if (prefs.exists()) {
+                sPrefs.loadSharedPreferencesFromFile(prefs);
+            } else {
+                sPrefs.saveSharedPreferencesToFile(prefs);
+            }
         }
-        return !ranBefore;
     }
-
-    public static final int MENU_ITEM_PRO = 12;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -200,26 +205,15 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPrefs prefs = new SharedPrefs(MainActivity.this);
-
         viewSetter();
         loaderAdapter();
-
-        DataBase db = new DataBase(MainActivity.this);
-        db.open();
-        int count = db.getCountPass();
-        if (count > 0) {
-            if (isListFirstTime()) {
-                Intent overflow = new Intent(MainActivity.this, HelpOverflow.class);
-                overflow.putExtra("fromActivity", 4);
-                startActivity(overflow);
-            }
-        }
-        db.close();
-
         delayedThreads();
-
         showRate();
+        autoBackup();
+    }
+
+    private void autoBackup() {
+        SharedPrefs prefs = new SharedPrefs(MainActivity.this);
         if (Module.isPro()) {
             if (prefs.loadBoolean(Constants.NEW_PREFERENCES_AUTO_BACKUP)) {
                 new BackupTask(MainActivity.this).execute();

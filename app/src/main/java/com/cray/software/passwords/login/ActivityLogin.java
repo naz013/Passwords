@@ -1,9 +1,8 @@
 package com.cray.software.passwords.login;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
@@ -21,6 +20,7 @@ import com.cray.software.passwords.R;
 import com.cray.software.passwords.databinding.ActivityLoginBinding;
 import com.cray.software.passwords.dialogs.RestoreInsertMail;
 import com.cray.software.passwords.helpers.Crypter;
+import com.cray.software.passwords.helpers.Permissions;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.interfaces.Constants;
 
@@ -29,14 +29,12 @@ public class ActivityLogin extends AppCompatActivity {
     private ActivityLoginBinding binding;
 
     private SharedPrefs prefs;
-    private SharedPreferences appSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         prefs = new SharedPrefs(this);
-        appSettings = getSharedPreferences(Constants.NEW_APP_PREFS, Context.MODE_PRIVATE);
         setFilter();
         binding.forgotPassword.setVisibility(View.INVISIBLE);
         binding.forgotPassword.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +63,24 @@ public class ActivityLogin extends AppCompatActivity {
             }
         });
         loadPhoto();
+        setFont();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!Permissions.checkPermission(this, Permissions.READ_EXTERNAL,
+                Permissions.WRITE_EXTERNAL)) {
+            Permissions.requestPermission(this, 102, Permissions.READ_EXTERNAL, Permissions.WRITE_EXTERNAL);
+        }
+    }
+
+    private void setFont() {
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+        binding.loginButton.setTypeface(typeface);
+        binding.loginPass.setTypeface(typeface);
+        binding.forgotPassword.setTypeface(typeface);
+        binding.textView.setTypeface(typeface);
     }
 
     private void loadPhoto() {
@@ -75,7 +91,7 @@ public class ActivityLogin extends AppCompatActivity {
 
     private void setFilter() {
         int passLengthInt = prefs.loadInt(Constants.NEW_PREFERENCES_EDIT_LENGHT);
-        String loadedPass = appSettings.getString(Constants.NEW_APP_PREFERENCES_LOGIN, "").trim();
+        String loadedPass = prefs.loadPassPrefs();
         loadedPass = Crypter.decrypt(loadedPass);
         int loadPassLength = 0;
         if (loadedPass != null) {
@@ -93,18 +109,16 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     private void tryLogin() {
-        appSettings = getSharedPreferences(Constants.NEW_APP_PREFS, Context.MODE_PRIVATE);
-        String loadedPass = appSettings.getString(Constants.NEW_APP_PREFERENCES_LOGIN, "");
+        String loadedPass = prefs.loadPassPrefs();
         String loginPassStr = binding.loginPass.getText().toString().trim();
-        loginApp(loadedPass, loginPassStr);
+        loginApp(Crypter.decrypt(loadedPass), loginPassStr);
     }
 
     public void loginApp(String loadedPass, String loginPassStr) {
-        String passDecrypted = Crypter.decrypt(loadedPass);
         if (TextUtils.isEmpty(loginPassStr)) {
             binding.loginPass.setError(getResources().getString(R.string.set_att_if_all_field_empty));
         } else {
-            if (loginPassStr.equals(passDecrypted)) {
+            if (loginPassStr.equals(loadedPass)) {
                 Intent intentMain = new Intent(this, MainActivity.class);
                 startActivity(intentMain);
                 finish();
