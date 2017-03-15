@@ -1,8 +1,8 @@
-package com.cray.software.passwords.passwords;
+package com.cray.software.passwords.notes;
 
 import com.cray.software.passwords.helpers.Crypter;
-import com.cray.software.passwords.helpers.DataProvider;
 import com.cray.software.passwords.helpers.TImeUtils;
+import com.cray.software.passwords.passwords.PasswordsRecyclerAdapter;
 
 /**
  * Copyright 2017 Nazar Suhovich
@@ -20,41 +20,41 @@ import com.cray.software.passwords.helpers.TImeUtils;
  * limitations under the License.
  */
 
-public class PasswordInterfaceImpl implements PasswordListInterface {
+public class NoteInterfaceImpl implements NoteListInterface {
 
-    private Password mPassword;
+    private NoteItem mNote;
 
-    public PasswordInterfaceImpl(Password password) {
-        this.mPassword = password;
+    public NoteInterfaceImpl(NoteItem noteItem) {
+        this.mNote = noteItem;
     }
 
     @Override
     public int getColor() {
-        return mPassword.getColor();
+        return mNote.getColor();
     }
 
     @Override
     public long getId() {
-        return mPassword.getId();
+        return mNote.getId();
     }
 
     @Override
     public int getViewType() {
-        return PasswordsRecyclerAdapter.PASSWORD;
+        return PasswordsRecyclerAdapter.NOTE;
     }
 
     @Override
-    public String getTitle() {
-        return Crypter.decrypt(mPassword.getTitle());
-    }
-
-    @Override
-    public String getLogin() {
-        return DataProvider.getStarred(Crypter.decrypt(mPassword.getLogin()));
+    public String getSummary() {
+        return Crypter.decrypt(mNote.getSummary());
     }
 
     @Override
     public String getDate() {
-        return TImeUtils.getDateFromGmt(Crypter.decrypt(mPassword.getDate()));
+        return TImeUtils.getDateFromGmt(Crypter.decrypt(mNote.getDate()));
+    }
+
+    @Override
+    public byte[] getImage() {
+        return mNote.getImage();
     }
 }

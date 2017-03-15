@@ -26,7 +26,7 @@ import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.helpers.TImeUtils;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
-import com.cray.software.passwords.passwords.DataProvider;
+import com.cray.software.passwords.helpers.DataProvider;
 import com.cray.software.passwords.passwords.Password;
 import com.cray.software.passwords.views.ColorPickerView;
 
@@ -54,7 +54,7 @@ public class ManagePassword extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        id = getIntent().getLongExtra("itemId", 0);
+        id = getIntent().getLongExtra(Constants.INTENT_ID, 0);
 
         binding.loginEnter.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         binding.commentEnter.setOnKeyListener(new View.OnKeyListener() {

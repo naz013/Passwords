@@ -1,15 +1,6 @@
 package com.cray.software.passwords.interfaces;
 
 public class Constants {
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_TITLE = "title_enter";
-    public static final String COLUMN_LOGIN = "login_enter";
-    public static final String COLUMN_PASSWORD = "password_enter";
-    public static final String COLUMN_URL = "link_enter";
-    public static final String COLUMN_COMMENT = "comment_enter";
-    public static final String COLUMN_DATE = "date_enter";
-    public static final String COLUMN_PIC_SEL = "selected_pic";
-    public static final String COLUMN_TECHNICAL = "technical_col";
 
     public static final String DRIVE_USER_NONE = "none";
     public static final String DIR_SD = "backup";
@@ -36,10 +27,6 @@ public class Constants {
     public static final String ORDER_TITLE_A_Z = "title_az";
     public static final String ORDER_TITLE_Z_A = "title_za";
 
-    public static final int DATE_EU = 1;
-    public static final int DATE_US = 2;
-    public static final int DATE_CN = 3;
-
     public static final String SCREEN_AUTO = "auto";
 
     public static final String NEW_APP_PREFERENCES_LOGIN = "login_pass";
@@ -54,4 +41,6 @@ public class Constants {
     public static final int AUTO_FILE = 200;
     public static final String FILE_NAME = ".xml";
     public static final String FILE_EXTENSION = ".pasx";
+
+    public static final String INTENT_ID = "intent_id";
 }

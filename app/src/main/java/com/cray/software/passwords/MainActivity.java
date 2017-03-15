@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.cray.software.passwords.dialogs.ProMarket;
 import com.cray.software.passwords.dialogs.RateDialog;
 import com.cray.software.passwords.helpers.ColorSetter;
+import com.cray.software.passwords.helpers.DataProvider;
+import com.cray.software.passwords.helpers.ListInterface;
 import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.helpers.Utils;
 import com.cray.software.passwords.interfaces.Constants;
@@ -30,11 +32,11 @@ import com.cray.software.passwords.interfaces.LCAMListener;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.interfaces.SimpleListener;
 import com.cray.software.passwords.interfaces.SyncListener;
-import com.cray.software.passwords.passwords.DataProvider;
 import com.cray.software.passwords.passwords.PasswordListInterface;
 import com.cray.software.passwords.passwords.PasswordsRecyclerAdapter;
 import com.cray.software.passwords.tasks.BackupTask;
 import com.cray.software.passwords.tasks.DelayedTask;
+import com.cray.software.passwords.tasks.DeleteNoteTask;
 import com.cray.software.passwords.tasks.DeleteTask;
 import com.cray.software.passwords.tasks.SyncTask;
 
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
     private RecyclerView currentList;
     private LinearLayout emptyItem;
 
-    private List<PasswordListInterface> data;
+    private List<ListInterface> data;
 
     private FloatingActionButton mFab;
     private Toolbar toolbar;
@@ -221,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
     }
 
     private void delayedThreads() {
-        new DelayedTask(MainActivity.this).execute();
+        new DelayedTask(this).execute();
     }
 
     private boolean doubleBackToExitPressedOnce = false;
@@ -243,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
     }
 
     @Override
-    public void EndExecution(boolean result) {
+    public void endExecution(boolean result) {
         loaderAdapter();
     }
 
@@ -253,16 +255,37 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
     }
 
     void edit(int position) {
-        long id = data.get(position).getId();
-        Intent intentId = new Intent(MainActivity.this, ManagePassword.class);
-        intentId.putExtra("itemId", id);
-        startActivity(intentId);
+        ListInterface item = data.get(position);
+        long id = item.getId();
+        if (item instanceof PasswordListInterface) {
+            Intent intentId = new Intent(this, ManagePassword.class);
+            intentId.putExtra(Constants.INTENT_ID, id);
+            startActivity(intentId);
+        } else {
+            Intent intentId = new Intent(this, ManagePassword.class);
+            intentId.putExtra(Constants.INTENT_ID, id);
+            startActivity(intentId);
+        }
     }
 
     private void delete(int position) {
+        ListInterface item = data.get(position);
         long del = data.get(position).getId();
-        new DeleteTask(MainActivity.this, this).execute(del);
-        Snackbar.make(mFab, R.string.removed, Snackbar.LENGTH_SHORT).show();
+        if (item instanceof PasswordListInterface) {
+            new DeleteTask(this, new SyncListener() {
+                @Override
+                public void endExecution(boolean result) {
+                    Snackbar.make(mFab, R.string.removed, Snackbar.LENGTH_SHORT).show();
+                }
+            }).execute(del);
+        } else {
+            new DeleteNoteTask(this, new SyncListener() {
+                @Override
+                public void endExecution(boolean result) {
+                    Snackbar.make(mFab, R.string.removed, Snackbar.LENGTH_SHORT).show();
+                }
+            }).execute(del);
+        }
     }
 
     @Override

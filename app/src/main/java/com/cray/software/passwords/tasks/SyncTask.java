@@ -10,7 +10,6 @@ import android.os.Build;
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.cloud.DropboxHelper;
 import com.cray.software.passwords.cloud.GDriveHelper;
-import com.cray.software.passwords.helpers.DataBase;
 import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.interfaces.SyncListener;
@@ -21,10 +20,9 @@ import java.io.IOException;
 
 public class SyncTask extends AsyncTask<Void, Void, Boolean> {
 
-    Context tContext;
-    NotificationManager mNotifyMgr;
-    Notification.Builder builder;
-    DataBase DB;
+    private Context tContext;
+    private NotificationManager mNotifyMgr;
+    private Notification.Builder builder;
     private SyncListener mListener;
 
     public SyncTask(Context context, SyncListener mListener){
@@ -47,17 +45,13 @@ public class SyncTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        DB = new DataBase(tContext);
-        DB.open();
         SyncHelper sHelp = new SyncHelper(tContext);
         DropboxHelper dbx = new DropboxHelper(tContext);
         GDriveHelper gdx = new GDriveHelper(tContext);
-        if (DB.getCountPass() > 0) {
-            try {
-                sHelp.exportPasswords();
-            } catch (JSONException | IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            sHelp.exportPasswords();
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
         }
 
         boolean isConnected = SyncHelper.isConnected(tContext);
@@ -83,9 +77,6 @@ public class SyncTask extends AsyncTask<Void, Void, Boolean> {
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-
-        DB.close();
-
         return true;
     }
 
@@ -95,13 +86,15 @@ public class SyncTask extends AsyncTask<Void, Void, Boolean> {
         super.onPostExecute(aVoid);
         builder.setContentTitle(tContext.getString(R.string.sync_finished_message));
         builder.setSmallIcon(R.drawable.ic_done_white_24dp);
-        if (new Module().isPro()){
+        if (Module.isPro()){
             builder.setContentText(tContext.getString(R.string.app_name));
-        } else builder.setContentText(tContext.getString(R.string.app_name_free));
+        } else {
+            builder.setContentText(tContext.getString(R.string.app_name_free));
+        }
         builder.setWhen(System.currentTimeMillis());
         mNotifyMgr.notify(2, builder.build());
         if (mListener != null) {
-            mListener.EndExecution(aVoid);
+            mListener.endExecution(aVoid);
         }
     }
 }

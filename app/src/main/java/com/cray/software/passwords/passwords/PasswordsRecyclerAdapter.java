@@ -4,15 +4,22 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.cray.software.passwords.R;
+import com.cray.software.passwords.databinding.NoteListItemBinding;
 import com.cray.software.passwords.helpers.ColorSetter;
+import com.cray.software.passwords.helpers.ListInterface;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.interfaces.SimpleListener;
+import com.cray.software.passwords.notes.NoteHolder;
+import com.cray.software.passwords.notes.NoteListInterface;
 
 import java.util.List;
 
@@ -31,20 +38,24 @@ import java.util.List;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<PasswordsRecyclerAdapter.ViewHolder>{
+public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     public static final int PASSWORD = 0;
     public static final int NOTE = 1;
 
-    private List<PasswordListInterface> list;
+    private List<ListInterface> list;
     private Typeface typeface;
     private SimpleListener mEventListener;
     private ColorSetter mColor;
 
-    public PasswordsRecyclerAdapter(Context context, List<PasswordListInterface> list) {
+    public PasswordsRecyclerAdapter(Context context, List<ListInterface> list) {
         this.list = list;
         this.mColor = new ColorSetter(context);
         this.typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
+    }
+
+    public ListInterface getItem(int position) {
+        return list.get(position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements
@@ -88,28 +99,69 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<PasswordsRecy
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_card, parent, false);
-        return new ViewHolder(itemLayoutView);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        if (viewType == PASSWORD) {
+            View itemLayoutView = inflater.inflate(R.layout.list_item_card, parent, false);
+            return new ViewHolder(itemLayoutView);
+        } else {
+            return new NoteHolder(NoteListItemBinding.inflate(inflater, parent, false).getRoot(), mEventListener);
+        }
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
-        PasswordListInterface item = list.get(position);
-        holder.textView.setText(item.getTitle());
-        holder.dateView.setText(item.getDate());
-        holder.loginView.setText(item.getLogin());
-        holder.itemCard.setCardBackgroundColor(mColor.getColor(mColor.colorPrimary(item.getColor())));
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        if (holder instanceof ViewHolder) {
+            ViewHolder h = (ViewHolder) holder;
+            PasswordListInterface item = (PasswordListInterface) getItem(position);
+            h.textView.setText(item.getTitle());
+            h.dateView.setText(item.getDate());
+            h.loginView.setText(item.getLogin());
+            h.itemCard.setCardBackgroundColor(mColor.getColor(mColor.colorPrimary(item.getColor())));
+        } else if (holder instanceof NoteHolder) {
+            NoteHolder h = (NoteHolder) holder;
+            NoteListInterface item = (NoteListInterface) getItem(position);
+            loadNote(h.binding.note, item.getSummary());
+            loadNoteCard(h.binding.card, item.getColor());
+            setImage(h.binding.noteImage, item.getImage());
+        }
+    }
+
+    private void loadNote(TextView textView, String summary) {
+        if (TextUtils.isEmpty(summary)) {
+            textView.setVisibility(View.GONE);
+            return;
+        }
+        if (summary.length() > 500) {
+            String substring = summary.substring(0, 500);
+            summary = substring + "...";
+        }
+        textView.setText(summary);
+    }
+
+    private void loadNoteCard(CardView cardView, int color) {
+        cardView.setCardBackgroundColor(mColor.getColor(mColor.colorPrimary(color)));
+        if (Module.isLollipop()) {
+            cardView.setCardElevation(4f);
+        }
+    }
+
+    private void setImage(ImageView imageView, byte[] image) {
+        Glide.with(imageView.getContext().getApplicationContext())
+                .load(image)
+                .crossFade()
+                .override(768, 500)
+                .into(imageView);
     }
 
     @Override
     public int getItemViewType(int position) {
-        return 0;
+        return getItem(position).getViewType();
     }
 
     @Override
     public long getItemId(int position) {
-        return list.get(position).getId();
+        return getItem(position).getId();
     }
 
     @Override

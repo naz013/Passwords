@@ -7,7 +7,6 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.cray.software.passwords.interfaces.Constants;
-import com.cray.software.passwords.passwords.DataProvider;
 import com.cray.software.passwords.passwords.Password;
 
 import org.json.JSONException;
@@ -43,14 +42,14 @@ public class SyncHelper {
                 uuID = generateID();
             }
             JSONObject jObjectData = new JSONObject();
-            jObjectData.put(Constants.COLUMN_TITLE, password.getTitle());
-            jObjectData.put(Constants.COLUMN_LOGIN, password.getLogin());
-            jObjectData.put(Constants.COLUMN_PASSWORD, password.getPassword());
-            jObjectData.put(Constants.COLUMN_URL, password.getUrl());
-            jObjectData.put(Constants.COLUMN_COMMENT, password.getComment());
-            jObjectData.put(Constants.COLUMN_DATE, password.getDate());
-            jObjectData.put(Constants.COLUMN_TECHNICAL, password.getColor());
-            jObjectData.put(Constants.COLUMN_PIC_SEL, uuID);
+            jObjectData.put(DataBase.COLUMN_TITLE, password.getTitle());
+            jObjectData.put(DataBase.COLUMN_LOGIN, password.getLogin());
+            jObjectData.put(DataBase.COLUMN_PASSWORD, password.getPassword());
+            jObjectData.put(DataBase.COLUMN_URL, password.getUrl());
+            jObjectData.put(DataBase.COLUMN_COMMENT, password.getComment());
+            jObjectData.put(DataBase.COLUMN_DATE, password.getDate());
+            jObjectData.put(DataBase.COLUMN_TECHNICAL, password.getColor());
+            jObjectData.put(DataBase.COLUMN_PIC_SEL, uuID);
             if (isSdPresent()) {
                 File sdPath = Environment.getExternalStorageDirectory();
                 File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD);
@@ -120,43 +119,43 @@ public class SyncHelper {
 
     private void importObject(JSONObject jsonObj) throws JSONException {
         String title = null;
-        if (!jsonObj.isNull(Constants.COLUMN_TITLE)) {
-            title = jsonObj.getString(Constants.COLUMN_TITLE);
+        if (!jsonObj.isNull(DataBase.COLUMN_TITLE)) {
+            title = jsonObj.getString(DataBase.COLUMN_TITLE);
         }
         String login = null;
-        if (!jsonObj.isNull(Constants.COLUMN_LOGIN)) {
-            login = jsonObj.getString(Constants.COLUMN_LOGIN);
+        if (!jsonObj.isNull(DataBase.COLUMN_LOGIN)) {
+            login = jsonObj.getString(DataBase.COLUMN_LOGIN);
         }
         String password = null;
-        if (!jsonObj.isNull(Constants.COLUMN_PASSWORD)) {
-            password = jsonObj.getString(Constants.COLUMN_PASSWORD);
+        if (!jsonObj.isNull(DataBase.COLUMN_PASSWORD)) {
+            password = jsonObj.getString(DataBase.COLUMN_PASSWORD);
         }
         String url = null;
-        if (!jsonObj.isNull(Constants.COLUMN_URL)) {
-            url = jsonObj.getString(Constants.COLUMN_URL);
+        if (!jsonObj.isNull(DataBase.COLUMN_URL)) {
+            url = jsonObj.getString(DataBase.COLUMN_URL);
         }
         String comment = null;
-        if (!jsonObj.isNull(Constants.COLUMN_COMMENT)) {
-            comment = jsonObj.getString(Constants.COLUMN_COMMENT);
+        if (!jsonObj.isNull(DataBase.COLUMN_COMMENT)) {
+            comment = jsonObj.getString(DataBase.COLUMN_COMMENT);
         }
         String date = null;
-        if (!jsonObj.isNull(Constants.COLUMN_DATE)) {
-            date = jsonObj.getString(Constants.COLUMN_DATE);
+        if (!jsonObj.isNull(DataBase.COLUMN_DATE)) {
+            date = jsonObj.getString(DataBase.COLUMN_DATE);
         }
         int colorPass = 0;
-        if (jsonObj.has(Constants.COLUMN_TECHNICAL)) {
+        if (jsonObj.has(DataBase.COLUMN_TECHNICAL)) {
             try {
-                String color = jsonObj.getString(Constants.COLUMN_TECHNICAL);
+                String color = jsonObj.getString(DataBase.COLUMN_TECHNICAL);
                 if (color != null) {
                     colorPass = Integer.parseInt(color);
                 }
             } catch (ClassCastException e) {
-                colorPass = jsonObj.getInt(Constants.COLUMN_TECHNICAL);
+                colorPass = jsonObj.getInt(DataBase.COLUMN_TECHNICAL);
             }
         }
         String uuID = null;
-        if (!jsonObj.isNull(Constants.COLUMN_PIC_SEL)) {
-            uuID = jsonObj.getString(Constants.COLUMN_PIC_SEL);
+        if (!jsonObj.isNull(DataBase.COLUMN_PIC_SEL)) {
+            uuID = jsonObj.getString(DataBase.COLUMN_PIC_SEL);
         }
         DataProvider.savePassword(mContext, new Password(title, date, login, comment, url, 0, colorPass, password, uuID));
     }

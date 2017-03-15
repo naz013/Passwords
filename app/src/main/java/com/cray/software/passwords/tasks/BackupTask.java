@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 
 import com.cray.software.passwords.cloud.DropboxHelper;
 import com.cray.software.passwords.cloud.GDriveHelper;
-import com.cray.software.passwords.helpers.DataBase;
 import com.cray.software.passwords.helpers.SyncHelper;
 
 import org.json.JSONException;
@@ -14,8 +13,7 @@ import java.io.IOException;
 
 public class BackupTask extends AsyncTask<Void, Void, Boolean> {
 
-    Context tContext;
-    DataBase DB;
+    private Context tContext;
 
     public BackupTask(Context context){
         this.tContext = context;
@@ -23,15 +21,11 @@ public class BackupTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        DB = new DataBase(tContext);
-        DB.open();
         SyncHelper sHelp = new SyncHelper(tContext);
-        if (DB.getCountPass() > 0) {
-            try {
-                sHelp.exportPasswords();
-            } catch (JSONException | IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            sHelp.exportPasswords();
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
         }
 
         boolean isConnected = SyncHelper.isConnected(tContext);
@@ -46,9 +40,6 @@ public class BackupTask extends AsyncTask<Void, Void, Boolean> {
                 e.printStackTrace();
             }
         }
-
-        DB.close();
-
         return true;
     }
 
