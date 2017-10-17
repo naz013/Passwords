@@ -2,7 +2,6 @@ package com.cray.software.passwords;
 
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,10 +24,8 @@ import com.cray.software.passwords.dialogs.RateDialog;
 import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.DataProvider;
 import com.cray.software.passwords.helpers.ListInterface;
-import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.helpers.Utils;
 import com.cray.software.passwords.interfaces.Constants;
-import com.cray.software.passwords.interfaces.LCAMListener;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.interfaces.SimpleListener;
 import com.cray.software.passwords.interfaces.SyncListener;
@@ -39,6 +36,7 @@ import com.cray.software.passwords.tasks.DelayedTask;
 import com.cray.software.passwords.tasks.DeleteNoteTask;
 import com.cray.software.passwords.tasks.DeleteTask;
 import com.cray.software.passwords.tasks.SyncTask;
+import com.cray.software.passwords.utils.Prefs;
 
 import java.util.List;
 
@@ -58,22 +56,19 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         if (Module.isPro()) toolbar.setTitle(getString(R.string.app_name));
         else toolbar.setTitle(getString(R.string.app_name_free));
-        mFab = (FloatingActionButton) findViewById(R.id.fab);
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentMain = new Intent(MainActivity.this, ManagePassword.class);
-                startActivity(intentMain);
-            }
+        mFab = findViewById(R.id.fab);
+        mFab.setOnClickListener(view -> {
+            Intent intentMain = new Intent(MainActivity.this, ManagePassword.class);
+            startActivity(intentMain);
         });
-        currentList = (RecyclerView) findViewById(R.id.currentList);
+        currentList = findViewById(R.id.currentList);
         currentList.setLayoutManager(new LinearLayoutManager(this));
-        emptyItem = (LinearLayout) findViewById(R.id.emptyItem);
+        emptyItem = findViewById(R.id.emptyItem);
     }
 
     @Override
@@ -135,21 +130,19 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
                 getString(R.string.sort_by_title_za)};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.menu_sort_title));
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                SharedPrefs prefs = new SharedPrefs(MainActivity.this);
-                if (item == 0) {
-                    prefs.savePrefs(Constants.NEW_PREFERENCES_ORDER_BY, Constants.ORDER_DATE_A_Z);
-                } else if (item == 1) {
-                    prefs.savePrefs(Constants.NEW_PREFERENCES_ORDER_BY, Constants.ORDER_DATE_Z_A);
-                } else if (item == 2) {
-                    prefs.savePrefs(Constants.NEW_PREFERENCES_ORDER_BY, Constants.ORDER_TITLE_A_Z);
-                } else if (item == 3) {
-                    prefs.savePrefs(Constants.NEW_PREFERENCES_ORDER_BY, Constants.ORDER_TITLE_Z_A);
-                }
-                dialog.dismiss();
-                loaderAdapter();
+        builder.setItems(items, (dialog, item) -> {
+            Prefs prefs = Prefs.getInstance(this);
+            if (item == 0) {
+                prefs.setOrderBy(Constants.ORDER_DATE_A_Z);
+            } else if (item == 1) {
+                prefs.setOrderBy(Constants.ORDER_DATE_Z_A);
+            } else if (item == 2) {
+                prefs.setOrderBy(Constants.ORDER_TITLE_A_Z);
+            } else if (item == 3) {
+                prefs.setOrderBy(Constants.ORDER_TITLE_Z_A);
             }
+            dialog.dismiss();
+            loaderAdapter();
         });
         AlertDialog alert = builder.create();
         alert.show();
@@ -193,32 +186,26 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
     }
 
     private void autoBackup() {
-        SharedPrefs prefs = new SharedPrefs(MainActivity.this);
         if (Module.isPro()) {
-            if (prefs.loadBoolean(Constants.NEW_PREFERENCES_AUTO_BACKUP)) {
+            if (Prefs.getInstance(this).isAutoBackupEnabled()) {
                 new BackupTask(MainActivity.this).execute();
             }
-            if (prefs.loadBoolean(Constants.NEW_PREFERENCES_AUTO_SYNC)) {
+            if (Prefs.getInstance(this).isAutoSyncEnabled()) {
                 new SyncTask(MainActivity.this, null).execute();
             }
         }
     }
 
     private void showRate() {
-        SharedPrefs sPrefs = new SharedPrefs(MainActivity.this);
-        if (sPrefs.isString(Constants.NEW_PREFERENCES_RATE_SHOW)) {
-            if (!sPrefs.loadBoolean(Constants.NEW_PREFERENCES_RATE_SHOW)) {
-                int counts = sPrefs.loadInt(Constants.NEW_PREFERENCES_APP_RUNS_COUNT);
-                if (counts < 10) {
-                    sPrefs.saveInt(Constants.NEW_PREFERENCES_APP_RUNS_COUNT, counts + 1);
-                } else {
-                    sPrefs.saveInt(Constants.NEW_PREFERENCES_APP_RUNS_COUNT, 0);
-                    startActivity(new Intent(MainActivity.this, RateDialog.class));
-                }
+        Prefs prefs = Prefs.getInstance(this);
+        if (!prefs.isRateShowed()) {
+            int counts = prefs.getRunsCount();
+            if (counts < 10) {
+                prefs.setRunsCount(counts + 1);
+            } else {
+                prefs.setRunsCount(0);
+                startActivity(new Intent(MainActivity.this, RateDialog.class));
             }
-        } else {
-            sPrefs.saveBoolean(Constants.NEW_PREFERENCES_RATE_SHOW, false);
-            sPrefs.saveInt(Constants.NEW_PREFERENCES_APP_RUNS_COUNT, 0);
         }
     }
 
@@ -236,12 +223,7 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
         }
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, getString(R.string.back_button_toast), Toast.LENGTH_SHORT).show();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
+        new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 
     @Override
@@ -272,34 +254,21 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
         ListInterface item = data.get(position);
         long del = data.get(position).getId();
         if (item instanceof PasswordListInterface) {
-            new DeleteTask(this, new SyncListener() {
-                @Override
-                public void endExecution(boolean result) {
-                    Snackbar.make(mFab, R.string.removed, Snackbar.LENGTH_SHORT).show();
-                }
-            }).execute(del);
+            new DeleteTask(this, result -> Snackbar.make(mFab, R.string.removed, Snackbar.LENGTH_SHORT).show()).execute(del);
         } else {
-            new DeleteNoteTask(this, new SyncListener() {
-                @Override
-                public void endExecution(boolean result) {
-                    Snackbar.make(mFab, R.string.removed, Snackbar.LENGTH_SHORT).show();
-                }
-            }).execute(del);
+            new DeleteNoteTask(this, result -> Snackbar.make(mFab, R.string.removed, Snackbar.LENGTH_SHORT).show()).execute(del);
         }
     }
 
     @Override
     public void onItemLongClicked(final int position, View view) {
         final String[] items = {getString(R.string.edit), getString(R.string.delete)};
-        Utils.showLCAM(this, new LCAMListener() {
-            @Override
-            public void onAction(int item) {
-                if (item == 0) {
-                    edit(position);
-                }
-                if (item == 1) {
-                    delete(position);
-                }
+        Utils.showLCAM(this, item -> {
+            if (item == 0) {
+                edit(position);
+            }
+            if (item == 1) {
+                delete(position);
             }
         }, items);
     }

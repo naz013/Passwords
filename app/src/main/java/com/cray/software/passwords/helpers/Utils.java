@@ -2,7 +2,6 @@ package com.cray.software.passwords.helpers;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -73,10 +72,8 @@ public class Utils {
     @ColorInt
     public static int getColor(Context context, @ColorRes int resource) {
         try {
-            if (Module.isMarshmallow())
-                return context.getResources().getColor(resource, null);
-            else
-                return context.getResources().getColor(resource);
+            if (Module.isMarshmallow()) return context.getResources().getColor(resource, null);
+            else return context.getResources().getColor(resource);
         } catch (Resources.NotFoundException e) {
             return resource;
         }
@@ -90,11 +87,9 @@ public class Utils {
      */
     public static void showLCAM(Context context, final LCAMListener listener, String... actions) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setItems(actions, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                dialog.dismiss();
-                if (listener != null) listener.onAction(item);
-            }
+        builder.setItems(actions, (dialog, item) -> {
+            dialog.dismiss();
+            if (listener != null) listener.onAction(item);
         });
         AlertDialog alert = builder.create();
         alert.show();

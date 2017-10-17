@@ -66,10 +66,10 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
 
         public ViewHolder(View v) {
             super(v);
-            textView = (TextView) v.findViewById(R.id.textView);
-            dateView = (TextView) v.findViewById(R.id.dateView);
-            loginView = (TextView) v.findViewById(R.id.loginView);
-            itemCard = (CardView) v.findViewById(R.id.itemCard);
+            textView = v.findViewById(R.id.textView);
+            dateView = v.findViewById(R.id.dateView);
+            loginView = v.findViewById(R.id.loginView);
+            itemCard = v.findViewById(R.id.itemCard);
             if (Module.isLollipop()) {
                 itemCard.setCardElevation(5f);
             }
@@ -149,8 +149,6 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
     private void setImage(ImageView imageView, byte[] image) {
         Glide.with(imageView.getContext().getApplicationContext())
                 .load(image)
-                .crossFade()
-                .override(768, 500)
                 .into(imageView);
     }
 

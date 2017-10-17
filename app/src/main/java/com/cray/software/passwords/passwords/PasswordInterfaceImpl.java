@@ -1,8 +1,8 @@
 package com.cray.software.passwords.passwords;
 
-import com.cray.software.passwords.helpers.Crypter;
 import com.cray.software.passwords.helpers.DataProvider;
 import com.cray.software.passwords.helpers.TImeUtils;
+import com.cray.software.passwords.utils.SuperUtil;
 
 /**
  * Copyright 2017 Nazar Suhovich
@@ -45,16 +45,16 @@ public class PasswordInterfaceImpl implements PasswordListInterface {
 
     @Override
     public String getTitle() {
-        return Crypter.decrypt(mPassword.getTitle());
+        return SuperUtil.decrypt(mPassword.getTitle());
     }
 
     @Override
     public String getLogin() {
-        return DataProvider.getStarred(Crypter.decrypt(mPassword.getLogin()));
+        return DataProvider.getStarred(SuperUtil.decrypt(mPassword.getLogin()));
     }
 
     @Override
     public String getDate() {
-        return TImeUtils.getDateFromGmt(Crypter.decrypt(mPassword.getDate()));
+        return TImeUtils.getDateFromGmt(SuperUtil.decrypt(mPassword.getDate()));
     }
 }

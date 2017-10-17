@@ -12,8 +12,7 @@ import android.widget.ListView;
 import com.cray.software.passwords.R;
 
 public class SettingsFragment extends ListFragment {
-    OnHeadlineSelectedListener mCallback;
-    ActionBar ab;
+    private OnHeadlineSelectedListener mCallback;
 
     public interface OnHeadlineSelectedListener {
         void onArticleSelected(int position);
@@ -46,14 +45,13 @@ public class SettingsFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         mCallback.onArticleSelected(position);
-
         getListView().setItemChecked(position, true);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        ab = getActivity().getActionBar();
+        ActionBar ab = getActivity().getActionBar();
         if (ab != null){
             ab.setTitle(R.string.action_settings);
         }

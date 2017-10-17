@@ -1,8 +1,8 @@
 package com.cray.software.passwords.notes;
 
-import com.cray.software.passwords.helpers.Crypter;
 import com.cray.software.passwords.helpers.TImeUtils;
 import com.cray.software.passwords.passwords.PasswordsRecyclerAdapter;
+import com.cray.software.passwords.utils.SuperUtil;
 
 /**
  * Copyright 2017 Nazar Suhovich
@@ -45,12 +45,12 @@ public class NoteInterfaceImpl implements NoteListInterface {
 
     @Override
     public String getSummary() {
-        return Crypter.decrypt(mNote.getSummary());
+        return SuperUtil.decrypt(mNote.getSummary());
     }
 
     @Override
     public String getDate() {
-        return TImeUtils.getDateFromGmt(Crypter.decrypt(mNote.getDate()));
+        return TImeUtils.getDateFromGmt(SuperUtil.decrypt(mNote.getDate()));
     }
 
     @Override

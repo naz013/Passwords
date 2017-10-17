@@ -8,29 +8,12 @@ public class Constants {
     public static final String DIR_SD_GDX_TMP = "gdrive_tmp";
     public static final String DIR_DBX = "Passwords/";
 
-    public static final String NEW_PREFERENCES_RATE_SHOW = "show_rate_state";
-    public static final String NEW_PREFERENCES_APP_RUNS_COUNT = "app_runs_state";
-    public static final String NEW_PREFERENCES = "new_settings";
-    public static final String NEW_PREFERENCES_THEME = "color_state";
-    public static final String NEW_PREFERENCES_CHECKBOX = "delete_backup_state";
-    public static final String NEW_PREFERENCES_EDIT_LENGHT = "edit_lenght_state";
-    public static final String NEW_PREFERENCES_EDIT_OLD_LENGHT = "edit_old_lenght_state";
-    public static final String NEW_PREFERENCES_RESTORE_MAIL = "restore_key_state";
-    public static final String NEW_PREFERENCES_AUTO_BACKUP = "auto_backup_state";
-    public static final String NEW_PREFERENCES_AUTO_SYNC = "auto_sunc_state";
-    public static final String NEW_PREFERENCES_DRIVE_USER = "email_drive_state";
-    public static final String NEW_PREFERENCES_SCREEN = "screen_state";
-    public static final String NEW_PREFERENCES_ORDER_BY = "order_by";
-
     public static final String ORDER_DATE_A_Z = "date_az";
     public static final String ORDER_DATE_Z_A = "date_za";
     public static final String ORDER_TITLE_A_Z = "title_az";
     public static final String ORDER_TITLE_Z_A = "title_za";
 
     public static final String SCREEN_AUTO = "auto";
-
-    public static final String NEW_APP_PREFERENCES_LOGIN = "login_pass";
-    public final static String NEW_APP_PREFS = "next_settings";
 
     public final static String PREFS = "settings_exp";
 

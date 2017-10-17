@@ -15,13 +15,11 @@ import com.cray.software.passwords.R;
 import com.cray.software.passwords.dialogs.ChangeKeyword;
 import com.cray.software.passwords.dialogs.PassChangeDialog;
 import com.cray.software.passwords.dialogs.PassLengthDialog;
-import com.cray.software.passwords.helpers.SharedPrefs;
-import com.cray.software.passwords.interfaces.Constants;
+import com.cray.software.passwords.utils.Prefs;
 
 public class SecuritySettingsFragment extends Fragment implements View.OnClickListener {
 
     private TextView passLengthText;
-    private SharedPrefs sPrefs;
     private ActionBar ab;
 
     @Override
@@ -31,23 +29,21 @@ public class SecuritySettingsFragment extends Fragment implements View.OnClickLi
         if (ab != null) {
             ab.setTitle(R.string.security_block);
         }
-        TextView changePassword = (TextView) rootView.findViewById(R.id.changePassword);
+        TextView changePassword = rootView.findViewById(R.id.changePassword);
         changePassword.setOnClickListener(this);
-        TextView keyword = (TextView) rootView.findViewById(R.id.keyword);
+        TextView keyword = rootView.findViewById(R.id.keyword);
         keyword.setOnClickListener(this);
-        RelativeLayout passLength = (RelativeLayout) rootView.findViewById(R.id.passLength);
+        RelativeLayout passLength = rootView.findViewById(R.id.passLength);
         passLength.setOnClickListener(this);
-        sPrefs = new SharedPrefs(getActivity());
-        passLengthText = (TextView) rootView.findViewById(R.id.passLengthText);
-        passLengthText.setText(String.valueOf(sPrefs.loadInt(Constants.NEW_PREFERENCES_EDIT_LENGHT)));
+        passLengthText = rootView.findViewById(R.id.passLengthText);
+        passLengthText.setText(String.valueOf(Prefs.getInstance(getActivity()).getPasswordLength()));
         return rootView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        sPrefs = new SharedPrefs(getActivity());
-        passLengthText.setText(String.valueOf(sPrefs.loadInt(Constants.NEW_PREFERENCES_EDIT_LENGHT)));
+        passLengthText.setText(String.valueOf(Prefs.getInstance(getActivity()).getPasswordLength()));
     }
 
     @Override
@@ -63,21 +59,15 @@ public class SecuritySettingsFragment extends Fragment implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.changePassword:
-                getActivity().getApplicationContext()
-                        .startActivity(new Intent(getActivity().getApplicationContext(),
-                                PassChangeDialog.class)
+                startActivity(new Intent(getActivity().getApplicationContext(), PassChangeDialog.class)
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
             case R.id.keyword:
-                getActivity().getApplicationContext()
-                        .startActivity(new Intent(getActivity().getApplicationContext(),
-                                ChangeKeyword.class)
+                startActivity(new Intent(getActivity().getApplicationContext(), ChangeKeyword.class)
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
             case R.id.passLength:
-                getActivity().getApplicationContext()
-                        .startActivity(new Intent(getActivity().getApplicationContext(),
-                                PassLengthDialog.class)
+                startActivity(new Intent(getActivity().getApplicationContext(), PassLengthDialog.class)
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
         }

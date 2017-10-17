@@ -66,7 +66,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".dialogs.RestoreRecivePassword"
+            android:name=".dialogs.RestoreReceivePassword"
             android:configChanges="keyboardHidden|orientation"
             android:theme="@style/HomeWhite.Dialog">
             <intent-filter>
@@ -128,21 +128,6 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="com.dropbox.client2.android.AuthActivity"
-            android:configChanges="orientation|keyboard"
-            android:launchMode="singleTask">
-            <intent-filter>
-
-                <!-- Change this to be db- followed by your app key -->
-                <data android:scheme="db-vuddd9g2725cmj0" />
-
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".MainActivity"
             android:theme="@style/HomeWhite.NoActionBar" />
         <activity android:name=".ManagePassword" />
@@ -154,7 +139,32 @@
             </intent-filter>
         </activity>
         <activity android:name=".login.ActivityLogin" />
-        <activity android:name=".login.ActivitySignUp"></activity>
+        <activity android:name=".login.ActivitySignUp" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <activity
+            android:name="com.dropbox.core.android.AuthActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask">
+            <intent-filter>
+
+                <data android:scheme="db-vuddd9g2725cmj0" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

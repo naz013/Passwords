@@ -15,14 +15,12 @@ import android.widget.RelativeLayout;
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.dialogs.ThemerDialog;
 import com.cray.software.passwords.helpers.ColorSetter;
-import com.cray.software.passwords.helpers.SharedPrefs;
-import com.cray.software.passwords.interfaces.Constants;
+import com.cray.software.passwords.utils.Prefs;
 
 public class GeneralSettingsFragment extends Fragment implements View.OnClickListener {
 
     private CheckBox backupFileCheck;
     private View themeColorSwitcher;
-    private SharedPrefs sPrefs;
     private ActionBar ab;
 
     @Override
@@ -33,26 +31,21 @@ public class GeneralSettingsFragment extends Fragment implements View.OnClickLis
             ab.setTitle(R.string.interface_block);
         }
         getActivity().getIntent().setAction("General attached");
-        RelativeLayout themeColor = (RelativeLayout) rootView.findViewById(R.id.themeColor);
+        RelativeLayout themeColor = rootView.findViewById(R.id.themeColor);
         themeColorSwitcher = rootView.findViewById(R.id.themeColorSwitcher);
         themeView();
         themeColor.setOnClickListener(this);
-        RelativeLayout backupFile = (RelativeLayout) rootView.findViewById(R.id.backupFile);
+        RelativeLayout backupFile = rootView.findViewById(R.id.backupFile);
         backupFile.setOnClickListener(this);
-        backupFileCheck = (CheckBox) rootView.findViewById(R.id.backupFileCheck);
-        backupFileCheck.setChecked(sPrefs.loadBoolean(Constants.NEW_PREFERENCES_CHECKBOX));
+        backupFileCheck = rootView.findViewById(R.id.backupFileCheck);
+        backupFileCheck.setChecked(Prefs.getInstance(getActivity()).isDeleteBackFileEnabled());
         return rootView;
     }
 
     private void setDeleteFileChange() {
-        sPrefs = new SharedPrefs(getActivity().getApplicationContext());
-        if (backupFileCheck.isChecked()) {
-            sPrefs.saveBoolean(Constants.NEW_PREFERENCES_CHECKBOX, false);
-            backupFileCheck.setChecked(false);
-        } else {
-            sPrefs.saveBoolean(Constants.NEW_PREFERENCES_CHECKBOX, true);
-            backupFileCheck.setChecked(true);
-        }
+        boolean b = backupFileCheck.isChecked();
+        Prefs.getInstance(getActivity()).setDeleteBackFileEnabled(!b);
+        backupFileCheck.setChecked(!b);
     }
 
     @Override
@@ -60,14 +53,11 @@ public class GeneralSettingsFragment extends Fragment implements View.OnClickLis
         super.onResume();
         String action = getActivity().getIntent().getAction();
         if (action == null || !action.equals("General attached")) {
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        getActivity().recreate();
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    }
+            new Handler().post(() -> {
+                try {
+                    getActivity().recreate();
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
             });
         } else {
@@ -77,10 +67,8 @@ public class GeneralSettingsFragment extends Fragment implements View.OnClickLis
     }
 
     private void themeView() {
-        sPrefs = new SharedPrefs(getActivity().getApplicationContext());
-        int loadedColor = sPrefs.loadInt(Constants.NEW_PREFERENCES_THEME);
-        themeColorSwitcher.setBackgroundResource(
-                new ColorSetter(getActivity()).getIndicator(loadedColor));
+        int loadedColor = Prefs.getInstance(getActivity()).getTheme();
+        themeColorSwitcher.setBackgroundResource(new ColorSetter(getActivity()).getIndicator(loadedColor));
     }
 
     @Override
@@ -96,8 +84,7 @@ public class GeneralSettingsFragment extends Fragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.themeColor:
-                getActivity().getApplicationContext().startActivity(
-                        new Intent(getActivity().getApplicationContext(), ThemerDialog.class)
+                startActivity(new Intent(getActivity().getApplicationContext(), ThemerDialog.class)
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
             case R.id.backupFile:

@@ -1,6 +1,6 @@
 package com.cray.software.passwords.passwords;
 
-import com.cray.software.passwords.helpers.Crypter;
+import com.cray.software.passwords.utils.SuperUtil;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -54,21 +54,21 @@ public class Password {
     }
 
     public void encrypt() {
-        title = Crypter.encrypt(title);
-        date = Crypter.encrypt(date);
-        login = Crypter.encrypt(login);
-        comment = Crypter.encrypt(comment);
-        url = Crypter.encrypt(url);
-        password = Crypter.encrypt(password);
+        title = SuperUtil.encrypt(title);
+        date = SuperUtil.encrypt(date);
+        login = SuperUtil.encrypt(login);
+        comment = SuperUtil.encrypt(comment);
+        url = SuperUtil.encrypt(url);
+        password = SuperUtil.encrypt(password);
     }
 
     public void decrypt() {
-        title = Crypter.decrypt(title);
-        date = Crypter.decrypt(date);
-        login = Crypter.decrypt(login);
-        comment = Crypter.decrypt(comment);
-        url = Crypter.decrypt(url);
-        password = Crypter.decrypt(password);
+        title = SuperUtil.decrypt(title);
+        date = SuperUtil.decrypt(date);
+        login = SuperUtil.decrypt(login);
+        comment = SuperUtil.decrypt(comment);
+        url = SuperUtil.decrypt(url);
+        password = SuperUtil.decrypt(password);
     }
 
     public String getUuId() {

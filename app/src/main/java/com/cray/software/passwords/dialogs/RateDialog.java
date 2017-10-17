@@ -1,24 +1,16 @@
 package com.cray.software.passwords.dialogs;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.cray.software.passwords.R;
-import com.cray.software.passwords.helpers.SharedPrefs;
-import com.cray.software.passwords.interfaces.Constants;
+import com.cray.software.passwords.utils.Prefs;
+import com.cray.software.passwords.utils.SuperUtil;
 
 public class RateDialog extends Activity {
-
-    Button buttonRate, rateLater, rateNever;
-    SharedPrefs sharedPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,46 +21,25 @@ public class RateDialog extends Activity {
 
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        sharedPrefs = new SharedPrefs(RateDialog.this);
-
-        buttonRate = (Button) findViewById(R.id.buttonRate);
-        buttonRate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sharedPrefs.saveBoolean(Constants.NEW_PREFERENCES_RATE_SHOW, true);
-                launchMarket();
-                finish();
-            }
+        Button buttonRate = findViewById(R.id.buttonRate);
+        buttonRate.setOnClickListener(v -> {
+            Prefs.getInstance(this).setRateShowed(true);
+            SuperUtil.launchMarket(this);
+            finish();
         });
 
-        rateLater = (Button) findViewById(R.id.rateLater);
-        rateLater.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sharedPrefs.saveBoolean(Constants.NEW_PREFERENCES_RATE_SHOW, false);
-                sharedPrefs.saveInt(Constants.NEW_PREFERENCES_APP_RUNS_COUNT, 0);
-                finish();
-            }
+        Button rateLater = findViewById(R.id.rateLater);
+        rateLater.setOnClickListener(v -> {
+            Prefs.getInstance(this).setRateShowed(false);
+            Prefs.getInstance(this).setRunsCount(0);
+            finish();
         });
 
-        rateNever = (Button) findViewById(R.id.rateNever);
-        rateNever.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sharedPrefs.saveBoolean(Constants.NEW_PREFERENCES_RATE_SHOW, true);
-                finish();
-            }
+        Button rateNever = findViewById(R.id.rateNever);
+        rateNever.setOnClickListener(v -> {
+            Prefs.getInstance(this).setRateShowed(true);
+            finish();
         });
-    }
-
-    private void launchMarket() {
-        Uri uri = Uri.parse("market://details?id=" + getPackageName());
-        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-        try {
-            startActivity(goToMarket);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(this, "Couldn't launch market", Toast.LENGTH_LONG).show();
-        }
     }
 
     @Override

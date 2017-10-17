@@ -6,15 +6,15 @@ import android.os.AsyncTask;
 import android.os.Environment;
 
 import com.cray.software.passwords.R;
-import com.cray.software.passwords.cloud.DropboxHelper;
-import com.cray.software.passwords.cloud.GDriveHelper;
+import com.cray.software.passwords.cloud.Dropbox;
+import com.cray.software.passwords.cloud.Google;
 import com.cray.software.passwords.helpers.DataProvider;
 import com.cray.software.passwords.helpers.PostDataBase;
-import com.cray.software.passwords.helpers.SharedPrefs;
-import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.SyncListener;
 import com.cray.software.passwords.notes.NoteItem;
+import com.cray.software.passwords.utils.Prefs;
+import com.cray.software.passwords.utils.SuperUtil;
 
 import java.io.File;
 
@@ -45,9 +45,8 @@ public class DeleteNoteTask extends AsyncTask<Long, Void, Boolean> {
             long del = params[0];
             NoteItem noteItem = DataProvider.getNote(mContext, del);
             DataProvider.deleteNote(mContext, noteItem);
-            SharedPrefs sPrefs = new SharedPrefs(mContext);
-            DropboxHelper dbx = new DropboxHelper(mContext);
-            if (sPrefs.loadBoolean(Constants.NEW_PREFERENCES_CHECKBOX)) {
+            Dropbox dbx = new Dropbox(mContext);
+            if (Prefs.getInstance(mContext).isDeleteBackFileEnabled()) {
                 File sdPath = Environment.getExternalStorageDirectory();
                 File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD + "/" + noteItem.getKey() + Constants.FILE_EXTENSION);
                 if (sdPathDr.exists()) {
@@ -57,7 +56,7 @@ public class DeleteNoteTask extends AsyncTask<Long, Void, Boolean> {
                 if (sdPathTmp.exists()) {
                     sdPathTmp.delete();
                 }
-                boolean isConnected = SyncHelper.isConnected(mContext);
+                boolean isConnected = SuperUtil.isConnected(mContext);
                 String dbxFile = ("/" + Constants.DIR_DBX + noteItem.getKey() + Constants.FILE_EXTENSION);
                 if (dbx.isLinked()) {
                     if (isConnected) {
@@ -74,11 +73,9 @@ public class DeleteNoteTask extends AsyncTask<Long, Void, Boolean> {
                     sdPathGd.delete();
                 }
 
-                GDriveHelper gdx = new GDriveHelper(mContext);
-                if (gdx.isLinked()){
-                    if (isConnected) {
-                        gdx.deleteFile(noteItem.getKey());
-                    }
+                Google google = Google.getInstance(mContext);
+                if (isConnected && google.getDrive() != null){
+                    google.getDrive().deleteFile(noteItem.getKey());
                 }
             }
         }

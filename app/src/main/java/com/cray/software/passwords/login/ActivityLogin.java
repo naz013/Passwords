@@ -7,31 +7,27 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cray.software.passwords.MainActivity;
 import com.cray.software.passwords.R;
-import com.cray.software.passwords.SplashScreen;
 import com.cray.software.passwords.databinding.ActivityLoginBinding;
 import com.cray.software.passwords.dialogs.RestoreInsertMail;
 import com.cray.software.passwords.helpers.ColorSetter;
-import com.cray.software.passwords.helpers.Crypter;
 import com.cray.software.passwords.helpers.Permissions;
-import com.cray.software.passwords.helpers.SharedPrefs;
-import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
+import com.cray.software.passwords.utils.Prefs;
+import com.cray.software.passwords.utils.SuperUtil;
 
 public class ActivityLogin extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
 
-    private SharedPrefs prefs;
+    private Prefs prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,34 +37,21 @@ public class ActivityLogin extends AppCompatActivity {
         if (Module.isLollipop()) {
             getWindow().setStatusBarColor(cs.getColor(R.color.colorGrayDark));
         }
-        prefs = new SharedPrefs(this);
+        prefs = Prefs.getInstance(this);
         setFilter();
         binding.forgotPassword.setVisibility(View.INVISIBLE);
-        binding.forgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tryRestore();
-            }
-        });
+        binding.forgotPassword.setOnClickListener(v -> tryRestore());
 
-        binding.loginPass.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_GO) {
-                    tryLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        Button loginButton = (Button) findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.loginPass.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_GO) {
                 tryLogin();
+                return true;
             }
+            return false;
         });
+
+        Button loginButton = findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(v -> tryLogin());
         loadPhoto();
         setFont();
     }
@@ -97,9 +80,9 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     private void setFilter() {
-        int passLengthInt = prefs.loadInt(Constants.NEW_PREFERENCES_EDIT_LENGHT);
+        int passLengthInt = prefs.getPasswordLength();
         String loadedPass = prefs.loadPassPrefs();
-        loadedPass = Crypter.decrypt(loadedPass);
+        loadedPass = SuperUtil.decrypt(loadedPass);
         int loadPassLength = 0;
         if (loadedPass != null) {
             loadPassLength = loadedPass.length();
@@ -118,7 +101,7 @@ public class ActivityLogin extends AppCompatActivity {
     private void tryLogin() {
         String loadedPass = prefs.loadPassPrefs();
         String loginPassStr = binding.loginPass.getText().toString().trim();
-        loginApp(Crypter.decrypt(loadedPass), loginPassStr);
+        loginApp(SuperUtil.decrypt(loadedPass), loginPassStr);
     }
 
     public void loginApp(String loadedPass, String loginPassStr) {
@@ -138,7 +121,7 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     private void tryRestore() {
-        boolean isKey = prefs.isString(Constants.NEW_PREFERENCES_RESTORE_MAIL);
+        boolean isKey = prefs.hasKey(Prefs.NEW_PREFERENCES_RESTORE_MAIL);
         if (isKey) {
             forgotPassword();
         } else {

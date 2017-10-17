@@ -11,10 +11,9 @@ import android.widget.LinearLayout;
 
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.helpers.ColorSetter;
-import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.helpers.Utils;
-import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
+import com.cray.software.passwords.utils.Prefs;
 
 public class ThemerDialog extends AppCompatActivity {
 
@@ -22,7 +21,6 @@ public class ThemerDialog extends AppCompatActivity {
             amber, orange, pink, teal, deepPurple, deepOrange, indigo, lime;
     private FloatingActionButton mFab;
 
-    private SharedPrefs sPrefs;
     private ColorSetter cs;
     private Toolbar toolbar;
     private int prevId;
@@ -36,42 +34,43 @@ public class ThemerDialog extends AppCompatActivity {
         }
         setContentView(R.layout.theme_color_layout);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(cs.getColor(cs.colorPrimary()));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setNavigationIcon(R.drawable.ic_clear_white_24dp);
         toolbar.setTitle(getString(R.string.app_theme_title));
 
-        red = (ImageButton) findViewById(R.id.red_checkbox);
-        purple = (ImageButton) findViewById(R.id.violet_checkbox);
-        green = (ImageButton) findViewById(R.id.green_checkbox);
-        greenLight = (ImageButton) findViewById(R.id.light_green_checkbox);
-        blue = (ImageButton) findViewById(R.id.blue_checkbox);
-        blueLight = (ImageButton) findViewById(R.id.light_blue_checkbox);
-        yellow = (ImageButton) findViewById(R.id.yellow_checkbox);
-        orange = (ImageButton) findViewById(R.id.orange_checkbox);
-        cyan = (ImageButton) findViewById(R.id.grey_checkbox);
-        pink = (ImageButton) findViewById(R.id.pink_checkbox);
-        teal = (ImageButton) findViewById(R.id.sand_checkbox);
-        amber = (ImageButton) findViewById(R.id.brown_checkbox);
+        red = findViewById(R.id.red_checkbox);
+        purple = findViewById(R.id.violet_checkbox);
+        green = findViewById(R.id.green_checkbox);
+        greenLight = findViewById(R.id.light_green_checkbox);
+        blue = findViewById(R.id.blue_checkbox);
+        blueLight = findViewById(R.id.light_blue_checkbox);
+        yellow = findViewById(R.id.yellow_checkbox);
+        orange = findViewById(R.id.orange_checkbox);
+        cyan = findViewById(R.id.grey_checkbox);
+        pink = findViewById(R.id.pink_checkbox);
+        teal = findViewById(R.id.sand_checkbox);
+        amber = findViewById(R.id.brown_checkbox);
 
-        deepPurple = (ImageButton) findViewById(R.id.deepPurple);
-        indigo = (ImageButton) findViewById(R.id.indigoCheckbox);
-        lime = (ImageButton) findViewById(R.id.limeCheckbox);
-        deepOrange = (ImageButton) findViewById(R.id.deepOrange);
+        deepPurple = findViewById(R.id.deepPurple);
+        indigo = findViewById(R.id.indigoCheckbox);
+        lime = findViewById(R.id.limeCheckbox);
+        deepOrange = findViewById(R.id.deepOrange);
 
-        LinearLayout themeGroupPro = (LinearLayout) findViewById(R.id.themeGroupPro);
+        LinearLayout themeGroupPro = findViewById(R.id.themeGroupPro);
         if (Module.isPro()) {
             themeGroupPro.setVisibility(View.VISIBLE);
-        } else themeGroupPro.setVisibility(View.GONE);
+        } else {
+            themeGroupPro.setVisibility(View.GONE);
+        }
 
         setOnClickListener(red, green, blue, yellow, greenLight, blueLight, cyan, purple,
                 amber, orange, pink, teal, deepPurple, deepOrange, indigo, lime);
-
         setUpRadio();
 
-        mFab = (FloatingActionButton) findViewById(R.id.fab);
+        mFab = findViewById(R.id.fab);
         mFab.setBackgroundTintList(Utils.getFabState(this, cs.colorAccent(), cs.colorPrimary()));
     }
 
@@ -81,16 +80,10 @@ public class ThemerDialog extends AppCompatActivity {
         }
     }
 
-    private View.OnClickListener listener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            themeColorSwitch(v.getId());
-        }
-    };
+    private View.OnClickListener listener = v -> themeColorSwitch(v.getId());
 
     private void setUpRadio(){
-        sPrefs = new SharedPrefs(ThemerDialog.this);
-        int loaded = sPrefs.loadInt(Constants.NEW_PREFERENCES_THEME);
+        int loaded = Prefs.getInstance(this).getTheme();
         switch (loaded) {
             case 0:
                 red.setSelected(true);
@@ -234,8 +227,7 @@ public class ThemerDialog extends AppCompatActivity {
     }
 
     private void saveColor(int code) {
-        sPrefs = new SharedPrefs(ThemerDialog.this);
-        sPrefs.saveInt(Constants.NEW_PREFERENCES_THEME, code);
+        Prefs.getInstance(this).setTheme(code);
     }
 
     @Override

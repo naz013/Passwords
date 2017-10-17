@@ -1,7 +1,6 @@
 package com.cray.software.passwords;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -14,20 +13,18 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.CompoundButton;
 
 import com.cray.software.passwords.databinding.ActivityManagePasswordBinding;
 import com.cray.software.passwords.databinding.DialogColorPickerLayoutBinding;
 import com.cray.software.passwords.dialogs.GeneratePassword;
 import com.cray.software.passwords.helpers.ColorSetter;
-import com.cray.software.passwords.helpers.Crypter;
+import com.cray.software.passwords.helpers.DataProvider;
 import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.helpers.TImeUtils;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
-import com.cray.software.passwords.helpers.DataProvider;
 import com.cray.software.passwords.passwords.Password;
+import com.cray.software.passwords.utils.SuperUtil;
 import com.cray.software.passwords.views.ColorPickerView;
 
 import java.util.Random;
@@ -57,30 +54,15 @@ public class ManagePassword extends AppCompatActivity {
         id = getIntent().getLongExtra(Constants.INTENT_ID, 0);
 
         binding.loginEnter.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        binding.commentEnter.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    return true;
-                }
-                return false;
-            }
-        });
-        binding.generateDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.commentEnter.setOnKeyListener((v, keyCode, event) -> event.getKeyCode() == KeyEvent.KEYCODE_ENTER);
+        binding.generateDialog.setOnClickListener(v ->
                 startActivityForResult(new Intent(ManagePassword.this, GeneratePassword.class),
-                        Constants.REQUEST_CODE_PASS);
-            }
-        });
-        binding.showPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                                         boolean isChecked) {
-                if (isChecked) {
-                    binding.passwordEnter.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                } else {
-                    binding.passwordEnter.setInputType(129);
-                }
+                Constants.REQUEST_CODE_PASS));
+        binding.showPass.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                binding.passwordEnter.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            } else {
+                binding.passwordEnter.setInputType(129);
             }
         });
         binding.showPass.setChecked(true);
@@ -101,11 +83,11 @@ public class ManagePassword extends AppCompatActivity {
     private void showPassword() {
         mPassword = DataProvider.getPassword(this, id);
         if (mPassword != null) {
-            binding.titleEnter.setText(Crypter.decrypt(mPassword.getTitle()));
-            binding.passwordEnter.setText(Crypter.decrypt(mPassword.getPassword()));
-            binding.loginEnter.setText(Crypter.decrypt(mPassword.getLogin()));
-            binding.commentEnter.setText(Crypter.decrypt(mPassword.getComment()));
-            binding.linkEnter.setText(Crypter.decrypt(mPassword.getUrl()));
+            binding.titleEnter.setText(SuperUtil.decrypt(mPassword.getTitle()));
+            binding.passwordEnter.setText(SuperUtil.decrypt(mPassword.getPassword()));
+            binding.loginEnter.setText(SuperUtil.decrypt(mPassword.getLogin()));
+            binding.commentEnter.setText(SuperUtil.decrypt(mPassword.getComment()));
+            binding.linkEnter.setText(SuperUtil.decrypt(mPassword.getUrl()));
             mColor = mPassword.getColor();
         }
     }
@@ -133,20 +115,12 @@ public class ManagePassword extends AppCompatActivity {
     private void deleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.delete_this_password);
-        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                DataProvider.deletePassword(ManagePassword.this, mPassword);
-                finish();
-            }
+        builder.setPositiveButton(R.string.yes, (dialog, which) -> {
+            dialog.dismiss();
+            DataProvider.deletePassword(ManagePassword.this, mPassword);
+            finish();
         });
-        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        builder.setNegativeButton(R.string.no, (dialog, which) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
         dialog.show();
     }
@@ -185,12 +159,12 @@ public class ManagePassword extends AppCompatActivity {
         String comment = binding.commentEnter.getText().toString().trim();
         String date = TImeUtils.getGmtStamp();
         if (checkEmpty()) return false;
-        title = Crypter.encrypt(title);
-        login = Crypter.encrypt(login);
-        password = Crypter.encrypt(password);
-        url = Crypter.encrypt(url);
-        comment = Crypter.encrypt(comment);
-        date = Crypter.encrypt(date);
+        title = SuperUtil.encrypt(title);
+        login = SuperUtil.encrypt(login);
+        password = SuperUtil.encrypt(password);
+        url = SuperUtil.encrypt(url);
+        comment = SuperUtil.encrypt(comment);
+        date = SuperUtil.encrypt(date);
         if (mPassword == null) {
             mPassword = new Password(title, date, login, comment, url, 0, mColor, password, SyncHelper.generateID());
         } else {
@@ -256,13 +230,10 @@ public class ManagePassword extends AppCompatActivity {
         view.setSelectedColor(mColor);
         builder.setView(binding.getRoot());
         final AlertDialog dialog = builder.create();
-        view.setListener(new ColorPickerView.OnColorListener() {
-            @Override
-            public void onColorSelect(int code) {
-                mColor = code;
-                updateBackground();
-                dialog.dismiss();
-            }
+        view.setListener(code -> {
+            mColor = code;
+            updateBackground();
+            dialog.dismiss();
         });
         dialog.show();
     }

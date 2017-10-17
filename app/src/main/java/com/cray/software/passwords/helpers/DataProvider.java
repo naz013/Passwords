@@ -7,7 +7,6 @@ import com.cray.software.passwords.notes.NoteInterfaceImpl;
 import com.cray.software.passwords.notes.NoteItem;
 import com.cray.software.passwords.passwords.Password;
 import com.cray.software.passwords.passwords.PasswordInterfaceImpl;
-import com.cray.software.passwords.passwords.PasswordListInterface;
 
 import java.util.ArrayList;
 import java.util.List;

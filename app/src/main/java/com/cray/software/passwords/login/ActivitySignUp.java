@@ -6,28 +6,22 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
-import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.cray.software.passwords.MainActivity;
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.databinding.ActivitySignUpBinding;
 import com.cray.software.passwords.helpers.ColorSetter;
-import com.cray.software.passwords.helpers.Crypter;
 import com.cray.software.passwords.helpers.Permissions;
-import com.cray.software.passwords.helpers.SharedPrefs;
-import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
+import com.cray.software.passwords.utils.Prefs;
+import com.cray.software.passwords.utils.SuperUtil;
 
 public class ActivitySignUp extends AppCompatActivity {
 
     private ActivitySignUpBinding binding;
-
-    private SharedPrefs prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,26 +31,17 @@ public class ActivitySignUp extends AppCompatActivity {
         if (Module.isLollipop()) {
             getWindow().setStatusBarColor(cs.getColor(R.color.colorGrayDark));
         }
-        prefs = new SharedPrefs(this);
         setFilter();
-        binding.secondPass.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_GO) {
-                    tryLogin();
-                    return true;
-                }
-                return false;
+        binding.secondPass.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_GO) {
+                tryLogin();
+                return true;
             }
+            return false;
         });
 
-        Button loginButton = (Button) findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tryLogin();
-            }
-        });
+        Button loginButton = findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(v -> tryLogin());
         loadPhoto();
         setFont();
     }
@@ -64,14 +49,13 @@ public class ActivitySignUp extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!Permissions.checkPermission(this, Permissions.READ_EXTERNAL,
-                Permissions.WRITE_EXTERNAL)) {
+        if (!Permissions.checkPermission(this, Permissions.READ_EXTERNAL, Permissions.WRITE_EXTERNAL)) {
             Permissions.requestPermission(this, 102, Permissions.READ_EXTERNAL, Permissions.WRITE_EXTERNAL);
         }
     }
 
     private void setFilter() {
-        int passLengthInt = prefs.loadInt(Constants.NEW_PREFERENCES_EDIT_LENGHT);
+        int passLengthInt = Prefs.getInstance(this).getPasswordLength();
         InputFilter[] FilterArray = new InputFilter[1];
         FilterArray[0] = new InputFilter.LengthFilter(passLengthInt);
         binding.firstPass.setFilters(FilterArray);
@@ -112,8 +96,7 @@ public class ActivitySignUp extends AppCompatActivity {
     }
 
     void savePass(String insertedPass) {
-        String passEncrypted = Crypter.encrypt(insertedPass);
-        prefs.savePassPrefs(passEncrypted);
+        Prefs.getInstance(this).savePassPrefs(SuperUtil.encrypt(insertedPass));
     }
 
     private void setFont() {

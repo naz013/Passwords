@@ -15,14 +15,12 @@ import android.widget.TextView;
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.dialogs.CloudDrives;
 import com.cray.software.passwords.dialogs.ProMarket;
-import com.cray.software.passwords.helpers.SharedPrefs;
-import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
+import com.cray.software.passwords.utils.Prefs;
 
 public class ExportSettingsFragment extends Fragment implements View.OnClickListener {
 
     private CheckBox autoBackupCheck, autoSyncCheck;
-    private SharedPrefs sPrefs;
     private ActionBar ab;
 
     @Override
@@ -32,41 +30,29 @@ public class ExportSettingsFragment extends Fragment implements View.OnClickList
         if (ab != null) {
             ab.setTitle(R.string.export_settings_block);
         }
-        TextView clouds = (TextView) rootView.findViewById(R.id.clouds);
+        TextView clouds = rootView.findViewById(R.id.clouds);
         clouds.setOnClickListener(this);
-        RelativeLayout autoBackup = (RelativeLayout) rootView.findViewById(R.id.autoBackup);
+        RelativeLayout autoBackup = rootView.findViewById(R.id.autoBackup);
         autoBackup.setOnClickListener(this);
-        autoBackupCheck = (CheckBox) rootView.findViewById(R.id.autoBackupCheck);
-        sPrefs = new SharedPrefs(getActivity().getApplicationContext());
-        autoBackupCheck.setChecked(sPrefs.loadBoolean(Constants.NEW_PREFERENCES_AUTO_BACKUP));
-        RelativeLayout autoSync = (RelativeLayout) rootView.findViewById(R.id.autoSync);
+        autoBackupCheck = rootView.findViewById(R.id.autoBackupCheck);
+        autoBackupCheck.setChecked(Prefs.getInstance(getActivity()).isAutoBackupEnabled());
+        RelativeLayout autoSync = rootView.findViewById(R.id.autoSync);
         autoSync.setOnClickListener(this);
-        autoSyncCheck = (CheckBox) rootView.findViewById(R.id.autoSyncCheck);
-        sPrefs = new SharedPrefs(getActivity().getApplicationContext());
-        autoSyncCheck.setChecked(sPrefs.loadBoolean(Constants.NEW_PREFERENCES_AUTO_SYNC));
+        autoSyncCheck = rootView.findViewById(R.id.autoSyncCheck);
+        autoSyncCheck.setChecked(Prefs.getInstance(getActivity()).isAutoSyncEnabled());
         return rootView;
     }
 
     private void autoBackupChange() {
-        sPrefs = new SharedPrefs(getActivity().getApplicationContext());
-        if (autoBackupCheck.isChecked()) {
-            sPrefs.saveBoolean(Constants.NEW_PREFERENCES_AUTO_BACKUP, false);
-            autoBackupCheck.setChecked(false);
-        } else {
-            sPrefs.saveBoolean(Constants.NEW_PREFERENCES_AUTO_BACKUP, true);
-            autoBackupCheck.setChecked(true);
-        }
+        boolean b = autoBackupCheck.isChecked();
+        Prefs.getInstance(getActivity()).setAutoBackupEnabled(!b);
+        autoBackupCheck.setChecked(!b);
     }
 
     private void autoSyncChange() {
-        sPrefs = new SharedPrefs(getActivity().getApplicationContext());
-        if (autoSyncCheck.isChecked()) {
-            sPrefs.saveBoolean(Constants.NEW_PREFERENCES_AUTO_SYNC, false);
-            autoSyncCheck.setChecked(false);
-        } else {
-            sPrefs.saveBoolean(Constants.NEW_PREFERENCES_AUTO_SYNC, true);
-            autoSyncCheck.setChecked(true);
-        }
+        boolean b = autoSyncCheck.isChecked();
+        Prefs.getInstance(getActivity()).setAutoSyncEnabled(!b);
+        autoSyncCheck.setChecked(!b);
     }
 
     @Override
@@ -83,23 +69,20 @@ public class ExportSettingsFragment extends Fragment implements View.OnClickList
         switch (v.getId()) {
             case R.id.autoBackup:
                 if (!Module.isPro()) {
-                    getActivity().startActivity(new Intent(getActivity(), ProMarket.class)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    startActivity(new Intent(getActivity(), ProMarket.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 } else {
                     autoBackupChange();
                 }
                 break;
             case R.id.autoSync:
                 if (!Module.isPro()) {
-                    getActivity().startActivity(new Intent(getActivity(), ProMarket.class)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    startActivity(new Intent(getActivity(), ProMarket.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 } else {
                     autoSyncChange();
                 }
                 break;
             case R.id.clouds:
-                getActivity().getApplicationContext().startActivity(
-                        new Intent(getActivity().getApplicationContext(), CloudDrives.class)
+                startActivity(new Intent(getActivity().getApplicationContext(), CloudDrives.class)
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
         }

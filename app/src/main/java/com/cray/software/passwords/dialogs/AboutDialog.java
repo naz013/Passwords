@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -19,16 +18,14 @@ public class AboutDialog extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.about_dialog_layout);
-
-        appName = (TextView) findViewById(R.id.appName);
+        appName = findViewById(R.id.appName);
         String name;
-        if (new Module().isPro()) name = getString(R.string.app_name);
+        if (Module.isPro()) name = getString(R.string.app_name);
         else name = getString(R.string.app_name_free);
         appName.setText(name.toUpperCase());
 
-        appVersion = (TextView) findViewById(R.id.appVersion);
+        appVersion = findViewById(R.id.appVersion);
         PackageInfo pInfo;
         try {
             pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -38,12 +35,7 @@ public class AboutDialog extends Activity {
             e.printStackTrace();
         }
 
-        aboutClose = (Button) findViewById(R.id.aboutClose);
-        aboutClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        aboutClose = findViewById(R.id.aboutClose);
+        aboutClose.setOnClickListener(v -> finish());
     }
 }

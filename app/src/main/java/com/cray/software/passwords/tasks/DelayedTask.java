@@ -4,27 +4,25 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 
-import com.cray.software.passwords.cloud.DropboxHelper;
+import com.cray.software.passwords.cloud.Dropbox;
 import com.cray.software.passwords.helpers.PostDataBase;
-import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.interfaces.Constants;
+import com.cray.software.passwords.utils.SuperUtil;
 
 public class DelayedTask extends AsyncTask<Void, Void, Boolean> {
 
-    Context tContext;
-    PostDataBase pdb;
-    DropboxHelper dbx;
+    private Context mContext;
 
     public DelayedTask(Context context){
-        this.tContext = context;
+        this.mContext = context;
     }
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        pdb = new PostDataBase(tContext);
+        PostDataBase pdb = new PostDataBase(mContext);
         pdb.open();
-        dbx = new DropboxHelper(tContext);
-        if (dbx.isLinked()) {
+        Dropbox dropbox = new Dropbox(mContext);
+        if (dropbox.isLinked()) {
             Cursor c = pdb.fetchCodes();
             if (c != null && c.moveToFirst()) {
                 do {
@@ -34,7 +32,7 @@ public class DelayedTask extends AsyncTask<Void, Void, Boolean> {
                         Cursor cx = pdb.fetchProcess(row_id);
                         if (cx != null && cx.moveToFirst()) {
                             String name = cx.getString(cx.getColumnIndex(PostDataBase.COLUMN_FILE_NAME));
-                            dbx.deleteFile(name);
+                            dropbox.deleteFile(name);
                             pdb.deleteProcess(row_id);
                             cx.close();
                         }
@@ -42,8 +40,8 @@ public class DelayedTask extends AsyncTask<Void, Void, Boolean> {
                         Cursor ac = pdb.fetchProcess(row_id);
                         if (ac != null && ac.moveToFirst()) {
                             String fileToUpload = ac.getString(ac.getColumnIndex(PostDataBase.COLUMN_FILE_NAME));
-                            if (SyncHelper.isConnected(tContext)) {
-                                new DropboxHelper(tContext).uploadToCloud(fileToUpload);
+                            if (SuperUtil.isConnected(mContext)) {
+                                dropbox.uploadToCloud(fileToUpload);
                             }
                             pdb.deleteProcess(row_id);
                             ac.close();

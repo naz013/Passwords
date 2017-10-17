@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.notes.NoteItem;
 import com.cray.software.passwords.passwords.Password;
+import com.cray.software.passwords.utils.Prefs;
 
 public class DataBase {
     public static final String DB_NAME = "appdb";
@@ -179,8 +180,7 @@ public class DataBase {
 
     public Cursor fetchAllPasswords() throws SQLException {
         openGuard();
-        SharedPrefs prefs = new SharedPrefs(mContext);
-        String orderPrefs = prefs.loadPrefs(Constants.NEW_PREFERENCES_ORDER_BY);
+        String orderPrefs = Prefs.getInstance(mContext).getOrderBy();
         String order = null;
         if (orderPrefs.matches(Constants.ORDER_DATE_A_Z)) {
             order = COLUMN_DATE + " ASC";

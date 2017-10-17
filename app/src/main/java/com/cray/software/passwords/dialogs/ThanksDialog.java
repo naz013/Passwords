@@ -22,7 +22,7 @@ public class ThanksDialog extends AppCompatActivity {
         ColorSetter cSetter = new ColorSetter(ThanksDialog.this);
         setContentView(R.layout.help_layout);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -35,7 +35,7 @@ public class ThanksDialog extends AppCompatActivity {
             getWindow().setStatusBarColor(cSetter.getColor(colorDark));
         }
 
-        TextView textView = (TextView) findViewById(R.id.textView);
+        TextView textView = findViewById(R.id.textView);
         textView.setText(readFile());
     }
 

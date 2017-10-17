@@ -13,10 +13,10 @@ import com.cray.software.passwords.fragments.OtherSettingsFragment;
 import com.cray.software.passwords.fragments.SecuritySettingsFragment;
 import com.cray.software.passwords.fragments.SettingsFragment;
 import com.cray.software.passwords.helpers.ColorSetter;
-import com.cray.software.passwords.helpers.SharedPrefs;
 import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
+import com.cray.software.passwords.utils.Prefs;
 
 import java.io.File;
 
@@ -28,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category_layout);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -91,7 +91,6 @@ public class SettingsActivity extends AppCompatActivity implements SettingsFragm
     }
 
     private void syncPrefs() {
-        SharedPrefs sPrefs = new SharedPrefs(SettingsActivity.this);
         boolean isSD = SyncHelper.isSdPresent();
         if (isSD) {
             File sdPath = Environment.getExternalStorageDirectory();
@@ -103,7 +102,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsFragm
             if (prefs.exists()) {
                 prefs.delete();
             }
-            sPrefs.saveSharedPreferencesToFile(prefs);
+            Prefs.getInstance(this).saveSharedPreferencesToFile(prefs);
         }
     }
 

@@ -26,36 +26,15 @@ public class OtherSettingsFragment extends Fragment {
         if (ab != null) {
             ab.setTitle(R.string.other_settings);
         }
-        TextView about = (TextView) rootView.findViewById(R.id.about);
-        about.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getApplicationContext()
-                        .startActivity(new Intent(getActivity().getApplicationContext(),
-                                AboutDialog.class)
-                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-            }
-        });
-        TextView rateApp = (TextView) rootView.findViewById(R.id.rateApp);
-        rateApp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getApplicationContext()
-                        .startActivity(new Intent(getActivity().getApplicationContext(),
-                                RateDialog.class)
-                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-            }
-        });
-        TextView thanks = (TextView) rootView.findViewById(R.id.thanks);
-        thanks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getApplicationContext()
-                        .startActivity(new Intent(getActivity().getApplicationContext(),
-                                ThanksDialog.class)
-                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-            }
-        });
+        TextView about = rootView.findViewById(R.id.about);
+        about.setOnClickListener(v -> startActivity(new Intent(getActivity().getApplicationContext(), AboutDialog.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
+        TextView rateApp = rootView.findViewById(R.id.rateApp);
+        rateApp.setOnClickListener(v -> startActivity(new Intent(getActivity().getApplicationContext(), RateDialog.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
+        TextView thanks = rootView.findViewById(R.id.thanks);
+        thanks.setOnClickListener(v -> startActivity(new Intent(getActivity().getApplicationContext(), ThanksDialog.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
         return rootView;
     }
 

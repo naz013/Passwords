@@ -3,9 +3,10 @@ package com.cray.software.passwords.tasks;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.cray.software.passwords.cloud.DropboxHelper;
-import com.cray.software.passwords.cloud.GDriveHelper;
+import com.cray.software.passwords.cloud.Dropbox;
+import com.cray.software.passwords.cloud.Google;
 import com.cray.software.passwords.helpers.SyncHelper;
+import com.cray.software.passwords.utils.SuperUtil;
 
 import org.json.JSONException;
 
@@ -13,32 +14,33 @@ import java.io.IOException;
 
 public class BackupTask extends AsyncTask<Void, Void, Boolean> {
 
-    private Context tContext;
+    private Context mContext;
 
     public BackupTask(Context context){
-        this.tContext = context;
+        this.mContext = context;
     }
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        SyncHelper sHelp = new SyncHelper(tContext);
+        SyncHelper sHelp = new SyncHelper(mContext);
         try {
             sHelp.exportPasswords();
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
 
-        boolean isConnected = SyncHelper.isConnected(tContext);
+        boolean isConnected = SuperUtil.isConnected(mContext);
         if (isConnected) {
-            new DropboxHelper(tContext).uploadToCloud(null);
-        }
-
-        if (isConnected) {
-            try {
-                new GDriveHelper(tContext).saveFileToDrive();
-            } catch (IOException e) {
-                e.printStackTrace();
+            Google google = Google.getInstance(mContext);
+            if (google.getDrive() != null) {
+                try {
+                    google.getDrive().saveFileToDrive();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+            Dropbox dropbox = new Dropbox(mContext);
+            if (dropbox.isLinked()) dropbox.uploadToCloud(null);
         }
         return true;
     }

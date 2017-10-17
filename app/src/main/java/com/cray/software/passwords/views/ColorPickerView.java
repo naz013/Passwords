@@ -52,25 +52,25 @@ public class ColorPickerView extends LinearLayout {
     private void init(final Context context, AttributeSet attrs) {
         View.inflate(context, R.layout.color_picker_view_layout, this);
         setOrientation(VERTICAL);
-        red = (ImageButton) findViewById(R.id.red_checkbox);
-        purple = (ImageButton) findViewById(R.id.violet_checkbox);
-        green = (ImageButton) findViewById(R.id.green_checkbox);
-        greenLight = (ImageButton) findViewById(R.id.light_green_checkbox);
-        blue = (ImageButton) findViewById(R.id.blue_checkbox);
-        blueLight = (ImageButton) findViewById(R.id.light_blue_checkbox);
-        yellow = (ImageButton) findViewById(R.id.yellow_checkbox);
-        orange = (ImageButton) findViewById(R.id.orange_checkbox);
-        cyan = (ImageButton) findViewById(R.id.grey_checkbox);
-        pink = (ImageButton) findViewById(R.id.pink_checkbox);
-        teal = (ImageButton) findViewById(R.id.sand_checkbox);
-        amber = (ImageButton) findViewById(R.id.brown_checkbox);
+        red = findViewById(R.id.red_checkbox);
+        purple = findViewById(R.id.violet_checkbox);
+        green = findViewById(R.id.green_checkbox);
+        greenLight = findViewById(R.id.light_green_checkbox);
+        blue = findViewById(R.id.blue_checkbox);
+        blueLight = findViewById(R.id.light_blue_checkbox);
+        yellow = findViewById(R.id.yellow_checkbox);
+        orange = findViewById(R.id.orange_checkbox);
+        cyan = findViewById(R.id.grey_checkbox);
+        pink = findViewById(R.id.pink_checkbox);
+        teal = findViewById(R.id.sand_checkbox);
+        amber = findViewById(R.id.brown_checkbox);
 
-        deepPurple = (ImageButton) findViewById(R.id.deepPurple);
-        indigo = (ImageButton) findViewById(R.id.indigoCheckbox);
-        lime = (ImageButton) findViewById(R.id.limeCheckbox);
-        deepOrange = (ImageButton) findViewById(R.id.deepOrange);
+        deepPurple = findViewById(R.id.deepPurple);
+        indigo = findViewById(R.id.indigoCheckbox);
+        lime = findViewById(R.id.limeCheckbox);
+        deepOrange = findViewById(R.id.deepOrange);
 
-        LinearLayout themeGroupPro = (LinearLayout) findViewById(R.id.themeGroupPro);
+        LinearLayout themeGroupPro = findViewById(R.id.themeGroupPro);
         if (Module.isPro()) {
             themeGroupPro.setVisibility(View.VISIBLE);
         } else themeGroupPro.setVisibility(View.GONE);
@@ -152,12 +152,7 @@ public class ColorPickerView extends LinearLayout {
         }
     }
 
-    private OnClickListener listener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            themeColorSwitch(v.getId());
-        }
-    };
+    private OnClickListener listener = v -> themeColorSwitch(v.getId());
 
     public void setListener(OnColorListener listener) {
         this.mColorListener = listener;

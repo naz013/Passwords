@@ -17,24 +17,26 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class GeneratePassword extends Activity implements View.OnClickListener {
-    TextView passLength;
-    SeekBar passwordLength;
-    CheckBox aZCheck, azCheck, numericCheck, symbolCheck;
-    EditText passwordShow;
-    Button genButton, genCancel, genInsert;
-    static final String AZ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    static final String az = "abcdefghijklmnopqrstuvwxyz";
-    static final String numeric = "0123456789";
-    static final String symbols = "!@#$%()?^*";
-    static Random rnd = new Random();
+
+    private static final String AZ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String az = "abcdefghijklmnopqrstuvwxyz";
+    private static final String numeric = "0123456789";
+    private static final String symbols = "!@#$%()?^*";
+
+    private TextView passLength;
+    private SeekBar passwordLength;
+    private CheckBox aZCheck, azCheck, numericCheck, symbolCheck;
+    private EditText passwordShow;
+
+    private Random rnd = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.generate_dialog_layout);
 
-        passLength = (TextView) findViewById(R.id.passLength);
-        passwordLength = (SeekBar) findViewById(R.id.passwordLength);
+        passLength = findViewById(R.id.passLength);
+        passwordLength = findViewById(R.id.passwordLength);
         passwordLength.setMax(32);
         passwordLength.setProgress(16);
         passLength.setText("16");
@@ -55,18 +57,18 @@ public class GeneratePassword extends Activity implements View.OnClickListener {
             }
         });
 
-        aZCheck = (CheckBox) findViewById(R.id.aZCheck);
-        azCheck = (CheckBox) findViewById(R.id.azCheck);
-        numericCheck = (CheckBox) findViewById(R.id.numericCheck);
-        symbolCheck = (CheckBox) findViewById(R.id.symbolCheck);
+        aZCheck = findViewById(R.id.aZCheck);
+        azCheck = findViewById(R.id.azCheck);
+        numericCheck = findViewById(R.id.numericCheck);
+        symbolCheck = findViewById(R.id.symbolCheck);
 
-        passwordShow = (EditText) findViewById(R.id.passwordShow);
+        passwordShow = findViewById(R.id.passwordShow);
 
-        genButton = (Button) findViewById(R.id.genButton);
+        Button genButton = findViewById(R.id.genButton);
         genButton.setOnClickListener(this);
-        genCancel = (Button) findViewById(R.id.genCancel);
+        Button genCancel = findViewById(R.id.genCancel);
         genCancel.setOnClickListener(this);
-        genInsert = (Button) findViewById(R.id.genInsert);
+        Button genInsert = findViewById(R.id.genInsert);
         genInsert.setOnClickListener(this);
     }
 

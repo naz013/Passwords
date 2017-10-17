@@ -6,12 +6,12 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 
 import com.cray.software.passwords.R;
-import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
+import com.cray.software.passwords.utils.Prefs;
 
 public class ColorSetter {
 
-    Context mContext;
+    private Context mContext;
 
     public ColorSetter(Context context){
         this.mContext = context;
@@ -33,7 +33,7 @@ public class ColorSetter {
      */
     @ColorRes
     public int colorPrimary(){
-        return colorPrimary(new SharedPrefs(mContext).loadInt(Constants.NEW_PREFERENCES_THEME));
+        return colorPrimary(Prefs.getInstance(mContext).getTheme());
     }
 
     /**
@@ -42,7 +42,7 @@ public class ColorSetter {
      */
     @ColorRes
     public int colorAccent(){
-        return colorAccent(new SharedPrefs(mContext).loadInt(Constants.NEW_PREFERENCES_THEME));
+        return colorAccent(Prefs.getInstance(mContext).getTheme());
     }
 
     /**
@@ -269,8 +269,7 @@ public class ColorSetter {
      */
     @ColorRes
     public int colorPrimaryDark(){
-        int loadedColor = new SharedPrefs(mContext).loadInt(Constants.NEW_PREFERENCES_THEME);
-        return colorPrimaryDark(loadedColor);
+        return colorPrimaryDark(Prefs.getInstance(mContext).getTheme());
     }
 
     /**

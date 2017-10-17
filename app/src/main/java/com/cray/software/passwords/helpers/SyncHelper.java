@@ -1,8 +1,6 @@
 package com.cray.software.passwords.helpers;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Environment;
 import android.util.Log;
 
@@ -20,8 +18,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -166,26 +162,5 @@ public class SyncHelper {
 
     public static boolean isSdPresent() {
         return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
-    }
-
-    public static boolean isConnected(Context context) {
-        ConnectivityManager cm = (ConnectivityManager)context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnected()) {
-            try {
-                URL url = new URL("http://www.google.com/");
-                HttpURLConnection urlc = (HttpURLConnection)url.openConnection();
-                urlc.setRequestProperty("User-Agent", "test");
-                urlc.setRequestProperty("Connection", "close");
-                urlc.setConnectTimeout(1000); // mTimeout is in seconds
-                urlc.connect();
-                return urlc.getResponseCode() == 200;
-            } catch (IOException e) {
-                Log.i("warning", "Error checking internet connection");
-                return false;
-            }
-        }
-        return false;
     }
 }

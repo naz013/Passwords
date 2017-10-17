@@ -32,22 +32,16 @@ public class NoteHolder extends RecyclerView.ViewHolder {
         super(v);
         this.mEventListener = listener;
         binding = DataBindingUtil.bind(v);
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mEventListener != null) {
-                    mEventListener.onItemClicked(getAdapterPosition(), v);
-                }
+        v.setOnClickListener(v1 -> {
+            if (mEventListener != null) {
+                mEventListener.onItemClicked(getAdapterPosition(), v1);
             }
         });
-        v.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (mEventListener != null) {
-                    mEventListener.onItemLongClicked(getAdapterPosition(), v);
-                }
-                return true;
+        v.setOnLongClickListener(v12 -> {
+            if (mEventListener != null) {
+                mEventListener.onItemLongClicked(getAdapterPosition(), v12);
             }
+            return true;
         });
     }
 }
