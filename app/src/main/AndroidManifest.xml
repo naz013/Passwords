@@ -130,6 +130,9 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/HomeWhite.NoActionBar" />
+        <activity
+            android:name=".notes.CreateNoteActivity"
+            android:theme="@style/HomeWhite.NoActionBar" />
         <activity android:name=".ManagePassword" />
         <activity
             android:name=".dialogs.ThemerDialog"

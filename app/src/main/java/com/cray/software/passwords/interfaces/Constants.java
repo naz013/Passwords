@@ -24,6 +24,9 @@ public class Constants {
     public static final int AUTO_FILE = 200;
     public static final String FILE_NAME = ".xml";
     public static final String FILE_EXTENSION = ".pasx";
+    public static final String FILE_EXTENSION_NOTE = ".notx";
 
     public static final String INTENT_ID = "intent_id";
+    public static final int ACTION_REQUEST_GALLERY = 12456;
+    public static final int ACTION_REQUEST_CAMERA = 12457;
 }

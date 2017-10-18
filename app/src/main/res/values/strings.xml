@@ -161,4 +161,10 @@
     <string name="deleting_note">Deleting note...</string>
     <string name="enter_a_x_digit_passcode">Enter a %d digit passcode</string>
     <string name="password_not_match">Password not match</string>
+    <string name="note">Note</string>
+    <string name="must_be_not_empty">Must be not empty</string>
+    <string name="delete_this_note">Delete this note</string>
+    <string name="image">Image</string>
+    <string name="take_a_shot">Take a shot</string>
+    <string name="from_gallery">From gallery</string>
 </resources>
