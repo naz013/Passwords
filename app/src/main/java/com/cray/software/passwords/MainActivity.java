@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.cray.software.passwords.dialogs.ProMarket;
-import com.cray.software.passwords.dialogs.RateDialog;
 import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.DataProvider;
 import com.cray.software.passwords.helpers.ListInterface;
@@ -36,6 +35,7 @@ import com.cray.software.passwords.tasks.DelayedTask;
 import com.cray.software.passwords.tasks.DeleteNoteTask;
 import com.cray.software.passwords.tasks.DeleteTask;
 import com.cray.software.passwords.tasks.SyncTask;
+import com.cray.software.passwords.utils.Dialogues;
 import com.cray.software.passwords.utils.Prefs;
 
 import java.util.List;
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
                 prefs.setRunsCount(counts + 1);
             } else {
                 prefs.setRunsCount(0);
-                startActivity(new Intent(MainActivity.this, RateDialog.class));
+                Dialogues.showRateDialog(this);
             }
         }
     }

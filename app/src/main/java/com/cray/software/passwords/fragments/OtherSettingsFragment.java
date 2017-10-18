@@ -15,8 +15,10 @@ import android.widget.TextView;
 
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.databinding.DialogAboutLayoutBinding;
-import com.cray.software.passwords.dialogs.RateDialog;
 import com.cray.software.passwords.dialogs.ThanksDialog;
+import com.cray.software.passwords.utils.Dialogues;
+import com.cray.software.passwords.utils.Prefs;
+import com.cray.software.passwords.utils.SuperUtil;
 
 public class OtherSettingsFragment extends Fragment {
 
@@ -32,8 +34,7 @@ public class OtherSettingsFragment extends Fragment {
         TextView about = rootView.findViewById(R.id.about);
         about.setOnClickListener(v -> showAboutDialog());
         TextView rateApp = rootView.findViewById(R.id.rateApp);
-        rateApp.setOnClickListener(v -> startActivity(new Intent(getActivity().getApplicationContext(), RateDialog.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
+        rateApp.setOnClickListener(v -> Dialogues.showRateDialog(getActivity()));
         TextView thanks = rootView.findViewById(R.id.thanks);
         thanks.setOnClickListener(v -> startActivity(new Intent(getActivity().getApplicationContext(), ThanksDialog.class)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
