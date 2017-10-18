@@ -1,6 +1,9 @@
 package com.cray.software.passwords.fragments;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -11,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cray.software.passwords.R;
-import com.cray.software.passwords.dialogs.AboutDialog;
+import com.cray.software.passwords.databinding.DialogAboutLayoutBinding;
 import com.cray.software.passwords.dialogs.RateDialog;
 import com.cray.software.passwords.dialogs.ThanksDialog;
 
@@ -27,8 +30,7 @@ public class OtherSettingsFragment extends Fragment {
             ab.setTitle(R.string.other_settings);
         }
         TextView about = rootView.findViewById(R.id.about);
-        about.setOnClickListener(v -> startActivity(new Intent(getActivity().getApplicationContext(), AboutDialog.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
+        about.setOnClickListener(v -> showAboutDialog());
         TextView rateApp = rootView.findViewById(R.id.rateApp);
         rateApp.setOnClickListener(v -> startActivity(new Intent(getActivity().getApplicationContext(), RateDialog.class)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
@@ -36,6 +38,22 @@ public class OtherSettingsFragment extends Fragment {
         thanks.setOnClickListener(v -> startActivity(new Intent(getActivity().getApplicationContext(), ThanksDialog.class)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
         return rootView;
+    }
+
+    private void showAboutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        DialogAboutLayoutBinding binding = DialogAboutLayoutBinding.inflate(LayoutInflater.from(getContext()));
+        String name = getString(R.string.app_name);
+        binding.appName.setText(name.toUpperCase());
+        PackageInfo pInfo;
+        try {
+            pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
+            binding.appVersion.setText(pInfo.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        builder.setView(binding.getRoot());
+        builder.create().show();
     }
 
     @Override

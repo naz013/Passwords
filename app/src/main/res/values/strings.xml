@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="copyright">\"2017 © Nazar Suhovich\"</string>
     <string name="app_name">Passwords PRO</string>
     <string name="app_name_free">Passwords</string>
     <string name="action_settings">Settings</string>
