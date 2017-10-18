@@ -159,4 +159,6 @@
     <string name="log_in">Log In</string>
     <string name="sign_up">Sign Up</string>
     <string name="deleting_note">Deleting note...</string>
+    <string name="enter_a_x_digit_passcode">Enter a %d digit passcode</string>
+    <string name="password_not_match">Password not match</string>
 </resources>

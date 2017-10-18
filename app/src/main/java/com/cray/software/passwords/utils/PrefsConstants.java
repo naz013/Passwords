@@ -25,8 +25,8 @@ class PrefsConstants {
     public static final String NEW_PREFERENCES = "new_settings";
     public static final String NEW_PREFERENCES_THEME = "color_state";
     public static final String NEW_PREFERENCES_CHECKBOX = "delete_backup_state";
-    public static final String NEW_PREFERENCES_EDIT_LENGHT = "edit_lenght_state";
-    public static final String NEW_PREFERENCES_EDIT_OLD_LENGHT = "edit_old_lenght_state";
+    public static final String NEW_PREFERENCES_EDIT_LENGHT = "edit_length_state";
+    public static final String NEW_PREFERENCES_EDIT_OLD_LENGHT = "edit_old_length_state";
     public static final String NEW_PREFERENCES_RESTORE_MAIL = "restore_key_state";
     public static final String NEW_PREFERENCES_AUTO_BACKUP = "auto_backup_state";
     public static final String NEW_PREFERENCES_AUTO_SYNC = "auto_sunc_state";
@@ -34,7 +34,7 @@ class PrefsConstants {
     public static final String NEW_PREFERENCES_SCREEN = "screen_state";
     public static final String NEW_PREFERENCES_ORDER_BY = "order_by";
 
-    public static final String NEW_APP_PREFERENCES_LOGIN = "login_pass";
+    public static final String NEW_APP_PREFERENCES_LOGIN = "login_passcode";
     public final static String NEW_APP_PREFS = "next_settings";
 
     protected static final String DRIVE_USER = "ggl_user";

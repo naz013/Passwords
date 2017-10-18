@@ -1,6 +1,7 @@
 package com.cray.software.passwords.utils;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
@@ -62,6 +63,7 @@ public final class Prefs extends SharedPrefs {
         prefsPassword.edit().putString(NEW_APP_PREFERENCES_LOGIN, value).apply();
     }
 
+    @NonNull
     public String loadPassPrefs(){
         return prefsPassword.getString(NEW_APP_PREFERENCES_LOGIN, "1111");
     }
