@@ -51,6 +51,10 @@ public final class Prefs extends SharedPrefs {
         return instance;
     }
 
+    public boolean hasSecureKey(String checkString) {
+        return prefsPassword.contains(checkString);
+    }
+
     public void setRestoreWord(String value){
         prefsPassword.edit().putString(NEW_PREFERENCES_RESTORE_MAIL, value).apply();
     }

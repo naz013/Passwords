@@ -50,30 +50,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".dialogs.RestoreInsertMail"
-            android:configChanges="keyboardHidden|orientation"
-            android:theme="@style/HomeWhite.Dialog">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".dialogs.ChangeKeyword"
-            android:configChanges="keyboardHidden|orientation"
-            android:theme="@style/HomeWhite.Dialog">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".dialogs.RestoreReceivePassword"
-            android:configChanges="keyboardHidden|orientation"
-            android:theme="@style/HomeWhite.Dialog">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".dialogs.GeneratePassword"
             android:configChanges="keyboardHidden|orientation"
             android:theme="@style/HomeWhite.Dialog">

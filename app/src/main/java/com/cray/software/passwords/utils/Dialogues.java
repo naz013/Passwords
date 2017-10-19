@@ -2,8 +2,18 @@ package com.cray.software.passwords.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.support.design.widget.TextInputLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.widget.EditText;
+import android.widget.SeekBar;
 
 import com.cray.software.passwords.R;
+import com.cray.software.passwords.databinding.DialogSeekBarBinding;
+import com.cray.software.passwords.databinding.DialogSingleFieldBinding;
+import com.cray.software.passwords.databinding.DialogTextViewBinding;
+import com.cray.software.passwords.databinding.DialogTwoFieldsBinding;
 
 /**
  * Copyright 2017 Nazar Suhovich
@@ -22,6 +32,120 @@ import com.cray.software.passwords.R;
  */
 
 public class Dialogues {
+
+    public static void showTextDialog(Activity activity, DialogOkClick click, String title, String value) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        DialogTextViewBinding binding = DialogTextViewBinding.inflate(LayoutInflater.from(activity));
+        builder.setView(binding.getRoot());
+        AlertDialog dialog = builder.create();
+        binding.dialogTitle.setText(title);
+        binding.valueView.setText(value);
+        binding.buttonOk.setOnClickListener(view -> click.onClick(dialog));
+        dialog.show();
+    }
+
+    public static void showSeekDialog(Activity activity, DialogSeekOkClick click, String title, int current) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        DialogSeekBarBinding binding = DialogSeekBarBinding.inflate(LayoutInflater.from(activity));
+        builder.setView(binding.getRoot());
+        AlertDialog dialog = builder.create();
+        binding.dialogTitle.setText(title);
+        binding.seekView.setProgress(current - 1);
+        binding.valueView.setText(String.valueOf(current));
+        binding.seekView.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                binding.valueView.setText(String.valueOf(i + 1));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        binding.buttonOk.setOnClickListener(view -> click.onClick(dialog, binding.seekView.getProgress() + 1));
+        dialog.show();
+    }
+
+    public static void showSimpleDialog(Activity activity, DialogOneOkClick click, String title, String hint) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        DialogSingleFieldBinding binding = DialogSingleFieldBinding.inflate(LayoutInflater.from(activity));
+        builder.setView(binding.getRoot());
+        AlertDialog dialog = builder.create();
+        binding.dialogTitle.setText(title);
+        binding.inputField.setHint(hint);
+        binding.inputField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                binding.inputLayout.setError("");
+                binding.inputLayout.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+        });
+        binding.buttonOk.setOnClickListener(view -> click.onClick(dialog, binding.inputField, binding.inputLayout));
+        dialog.show();
+    }
+
+    public static void showTwoFieldsDialog(Activity activity, DialogTwoOkClick click, String title, String hint1, String hint2) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        DialogTwoFieldsBinding binding = DialogTwoFieldsBinding.inflate(LayoutInflater.from(activity));
+        builder.setView(binding.getRoot());
+        AlertDialog dialog = builder.create();
+        binding.dialogTitle.setText(title);
+        binding.inputField.setHint(hint1);
+        binding.input2Field.setHint(hint2);
+        binding.inputField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                binding.inputLayout.setError("");
+                binding.inputLayout.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+        });
+        binding.input2Field.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                binding.input2Layout.setError("");
+                binding.input2Layout.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+        });
+        binding.buttonOk.setOnClickListener(view -> click.onClick(dialog, binding.inputField,
+                binding.inputLayout, binding.input2Field, binding.input2Layout));
+        dialog.show();
+    }
 
     public static void showRateDialog(Activity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -42,5 +166,21 @@ public class Dialogues {
         });
         builder.setCancelable(false);
         builder.create().show();
+    }
+
+    public interface DialogOneOkClick {
+        void onClick(AlertDialog dialog, EditText field, TextInputLayout layout);
+    }
+
+    public interface DialogTwoOkClick {
+        void onClick(AlertDialog dialog, EditText field, TextInputLayout layout, EditText field2, TextInputLayout layout2);
+    }
+
+    public interface DialogSeekOkClick {
+        void onClick(AlertDialog dialog, int value);
+    }
+
+    public interface DialogOkClick {
+        void onClick(AlertDialog dialog);
     }
 }

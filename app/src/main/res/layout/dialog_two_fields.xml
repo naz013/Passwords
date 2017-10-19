@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <com.cray.software.passwords.views.roboto.RoboTextView
+            android:id="@+id/dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/change_password_settings_title"
+            android:textSize="24sp"
+            app:font_style="roboto_medium" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <com.cray.software.passwords.views.roboto.RoboEditText
+                android:id="@+id/input_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/restore_dialog_enter_keyword"
+                android:importantForAutofill="noExcludeDescendants"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
+                app:edit_font_style="roboto_regular" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input2_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <com.cray.software.passwords.views.roboto.RoboEditText
+                android:id="@+id/input2_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/restore_dialog_enter_keyword"
+                android:importantForAutofill="noExcludeDescendants"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
+                app:edit_font_style="roboto_regular" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <com.cray.software.passwords.views.roboto.RoboButton
+            android:id="@+id/button_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/button_save"
+            android:textColor="?attr/colorAccent"
+            android:theme="@style/AlertDialog.AppCompat"
+            app:button_font_style="roboto_light" />
+
+    </LinearLayout>
+</layout>
