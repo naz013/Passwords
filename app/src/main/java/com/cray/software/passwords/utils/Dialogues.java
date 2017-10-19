@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.widget.EditText;
@@ -14,6 +15,8 @@ import com.cray.software.passwords.databinding.DialogSeekBarBinding;
 import com.cray.software.passwords.databinding.DialogSingleFieldBinding;
 import com.cray.software.passwords.databinding.DialogTextViewBinding;
 import com.cray.software.passwords.databinding.DialogTwoFieldsBinding;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Copyright 2017 Nazar Suhovich
@@ -100,7 +103,7 @@ public class Dialogues {
         dialog.show();
     }
 
-    public static void showTwoFieldsDialog(Activity activity, DialogTwoOkClick click, String title, String hint1, String hint2) {
+    public static void showPasswordChangeDialog(Activity activity, DialogTwoOkClick click, String title, String hint1, String hint2) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         DialogTwoFieldsBinding binding = DialogTwoFieldsBinding.inflate(LayoutInflater.from(activity));
         builder.setView(binding.getRoot());
@@ -142,6 +145,27 @@ public class Dialogues {
 
             }
         });
+
+        int passLengthInt = Prefs.getInstance(activity).getPasswordLength();
+        int passOldLengthInt = Prefs.getInstance(activity).getOldPasswordLength();
+
+        WeakReference<String> passDecrypted = new WeakReference<>(SuperUtil.decrypt(Prefs.getInstance(activity).loadPassPrefs()));
+        int loadPassLength = passDecrypted.get().length();
+
+        if (passOldLengthInt == loadPassLength) {
+            InputFilter[] FilterOldArray = new InputFilter[1];
+            FilterOldArray[0] = new InputFilter.LengthFilter(passOldLengthInt);
+            binding.inputField.setFilters(FilterOldArray);
+        } else {
+            InputFilter[] FilterOldArray = new InputFilter[1];
+            FilterOldArray[0] = new InputFilter.LengthFilter(loadPassLength);
+            binding.inputField.setFilters(FilterOldArray);
+        }
+
+        InputFilter[] FilterArray = new InputFilter[1];
+        FilterArray[0] = new InputFilter.LengthFilter(passLengthInt);
+        binding.input2Field.setFilters(FilterArray);
+
         binding.buttonOk.setOnClickListener(view -> click.onClick(dialog, binding.inputField,
                 binding.inputLayout, binding.input2Field, binding.input2Layout));
         dialog.show();

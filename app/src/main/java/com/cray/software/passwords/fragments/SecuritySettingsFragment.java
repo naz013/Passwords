@@ -1,6 +1,5 @@
 package com.cray.software.passwords.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -13,11 +12,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cray.software.passwords.R;
-import com.cray.software.passwords.dialogs.PassChangeDialog;
-import com.cray.software.passwords.dialogs.PassLengthDialog;
 import com.cray.software.passwords.utils.Dialogues;
 import com.cray.software.passwords.utils.Prefs;
 import com.cray.software.passwords.utils.SuperUtil;
+
+import java.lang.ref.WeakReference;
 
 public class SecuritySettingsFragment extends Fragment implements View.OnClickListener {
 
@@ -45,6 +44,10 @@ public class SecuritySettingsFragment extends Fragment implements View.OnClickLi
     @Override
     public void onResume() {
         super.onResume();
+        showPasswordLength();
+    }
+
+    private void showPasswordLength() {
         passLengthText.setText(String.valueOf(Prefs.getInstance(getActivity()).getPasswordLength()));
     }
 
@@ -61,25 +64,64 @@ public class SecuritySettingsFragment extends Fragment implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.changePassword:
-                startActivity(new Intent(getActivity().getApplicationContext(), PassChangeDialog.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                showChangePasswordDialog();
                 break;
             case R.id.keyword:
-                Dialogues.showSimpleDialog(getActivity(), (dialog, view, error) -> {
-                    String keyword = view.getText().toString().trim();
-                    if (TextUtils.isEmpty(keyword)) {
-                        error.setError(getResources().getString(R.string.set_att_if_all_field_empty));
-                        error.setErrorEnabled(true);
-                    } else {
-                        Prefs.getInstance(getActivity()).setRestoreWord(SuperUtil.encrypt(keyword));
-                        dialog.dismiss();
-                    }
-                }, getString(R.string.keyword_setting_title), getString(R.string.restore_dialog_enter_keyword));
+                showKeywordDialog();
                 break;
             case R.id.passLength:
-                startActivity(new Intent(getActivity().getApplicationContext(), PassLengthDialog.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                showPasswordLengthDialog();
                 break;
         }
+    }
+
+    private void showPasswordLengthDialog() {
+        Dialogues.showSeekDialog(getActivity(), (dialog, value) -> {
+            Prefs.getInstance(getContext()).setOldPasswordLength(Prefs.getInstance(getActivity()).getPasswordLength());
+            Prefs.getInstance(getContext()).setPasswordLength(value);
+            dialog.dismiss();
+            showPasswordLength();
+        }, getString(R.string.change_password_settings_title), Prefs.getInstance(getActivity()).getPasswordLength());
+    }
+
+    private void showKeywordDialog() {
+        Dialogues.showSimpleDialog(getActivity(), (dialog, view, error) -> {
+            String keyword = view.getText().toString().trim();
+            if (TextUtils.isEmpty(keyword)) {
+                error.setError(getResources().getString(R.string.set_att_if_all_field_empty));
+                error.setErrorEnabled(true);
+            } else {
+                Prefs.getInstance(getActivity()).setRestoreWord(SuperUtil.encrypt(keyword));
+                dialog.dismiss();
+            }
+        }, getString(R.string.keyword_setting_title), getString(R.string.restore_dialog_enter_keyword));
+    }
+
+    private void showChangePasswordDialog() {
+        Dialogues.showPasswordChangeDialog(getActivity(), (dialog, field, layout, field2, layout2) -> {
+            String oldPassStr = field.getText().toString().trim();
+            String newPassStr = field2.getText().toString().trim();
+            boolean hasError = false;
+            if (TextUtils.isEmpty(oldPassStr)) {
+                hasError = true;
+                layout.setError(getString(R.string.set_att_if_all_field_empty));
+                layout.setErrorEnabled(true);
+            }
+            if (TextUtils.isEmpty(newPassStr)) {
+                hasError = true;
+                layout2.setError(getString(R.string.set_att_if_all_field_empty));
+                layout2.setErrorEnabled(true);
+            }
+            if (hasError) return;
+
+            WeakReference<String> loadedPass1 = new WeakReference<>(SuperUtil.decrypt(Prefs.getInstance(getActivity()).loadPassPrefs()));
+            if (oldPassStr.equals(loadedPass1.get())) {
+                Prefs.getInstance(getActivity()).savePassPrefs(SuperUtil.encrypt(newPassStr));
+                dialog.dismiss();
+            } else {
+                layout.setError(getResources().getString(R.string.set_att_if_inserted_not_match_saved));
+                layout.setErrorEnabled(true);
+            }
+        }, getString(R.string.about_dialog_title), getString(R.string.dialog_old_text), getString(R.string.dialog_new_text));
     }
 }

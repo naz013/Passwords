@@ -137,19 +137,19 @@ public final class Prefs extends SharedPrefs {
     }
 
     public int getPasswordLength() {
-        return getInt(NEW_PREFERENCES_EDIT_LENGHT);
+        return getInt(NEW_PREFERENCES_EDIT_LENGTH);
     }
 
     public void setPasswordLength(int value) {
-        putInt(NEW_PREFERENCES_EDIT_LENGHT, value);
+        putInt(NEW_PREFERENCES_EDIT_LENGTH, value);
     }
 
     public int getOldPasswordLength() {
-        return getInt(NEW_PREFERENCES_EDIT_OLD_LENGHT);
+        return getInt(NEW_PREFERENCES_EDIT_OLD_LENGTH);
     }
 
     public void setOldPasswordLength(int value) {
-        putInt(NEW_PREFERENCES_EDIT_OLD_LENGHT, value);
+        putInt(NEW_PREFERENCES_EDIT_OLD_LENGTH, value);
     }
 
     public String getOrderBy() {
@@ -175,8 +175,8 @@ public final class Prefs extends SharedPrefs {
         if (!hasKey(NEW_PREFERENCES_SCREEN)) {
             putString(NEW_PREFERENCES_SCREEN, Constants.SCREEN_AUTO);
         }
-        if (!hasKey(NEW_PREFERENCES_EDIT_LENGHT)) {
-            putInt(NEW_PREFERENCES_EDIT_LENGHT, 4);
+        if (!hasKey(NEW_PREFERENCES_EDIT_LENGTH)) {
+            putInt(NEW_PREFERENCES_EDIT_LENGTH, 4);
         }
         if (!hasKey(NEW_PREFERENCES_CHECKBOX)) {
             putBoolean(NEW_PREFERENCES_CHECKBOX, false);
