@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.utils.Prefs;
@@ -48,10 +49,11 @@ public class GoogleLogin {
     private String mAccountName;
     private LoginCallback mCallback;
 
-    public GoogleLogin(Activity activity, LoginCallback mCallback) {
+    public GoogleLogin(Activity activity, @NonNull LoginCallback mCallback) {
         this.activity = activity;
         this.mCallback = mCallback;
         mGoogle = Google.getInstance(activity);
+        if (mGoogle != null) mCallback.onSuccess();
     }
 
     public void logOut() {

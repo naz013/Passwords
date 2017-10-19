@@ -2,7 +2,9 @@ package com.cray.software.passwords.cloud;
 
 import android.content.Context;
 import android.os.Environment;
+import android.widget.Toast;
 
+import com.cray.software.passwords.R;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.utils.LogUtil;
 import com.cray.software.passwords.utils.Prefs;
@@ -125,7 +127,11 @@ public class Dropbox {
     }
 
     public void startLink() {
-        Auth.startOAuth2Authentication(mContext, APP_KEY);
+        try {
+            Auth.startOAuth2Authentication(mContext, APP_KEY);
+        } catch (IllegalStateException e) {
+            Toast.makeText(mContext, R.string.dropbox_app_not_installed, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public boolean unlink() {

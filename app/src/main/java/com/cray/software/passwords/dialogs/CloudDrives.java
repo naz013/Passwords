@@ -21,9 +21,6 @@ public class CloudDrives extends Activity implements DropboxLogin.LoginCallback,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.clouds_dialog_layout);
 
-        mDropboxLogin = new DropboxLogin(this, this);
-        mGoogleLogin = new GoogleLogin(this, this);
-
         Button aboutClose = findViewById(R.id.aboutClose);
         aboutClose.setOnClickListener(v -> finish());
 
@@ -35,6 +32,9 @@ public class CloudDrives extends Activity implements DropboxLogin.LoginCallback,
             if (mGoogleLogin.isLogged()) mGoogleLogin.logOut();
             else mGoogleLogin.login();
         });
+
+        mDropboxLogin = new DropboxLogin(this, this);
+        mGoogleLogin = new GoogleLogin(this, this);
     }
 
     @Override

@@ -167,4 +167,5 @@
     <string name="image">Image</string>
     <string name="take_a_shot">Take a shot</string>
     <string name="from_gallery">From gallery</string>
+    <string name="dropbox_app_not_installed">Dropbox app do not installed</string>
 </resources>
