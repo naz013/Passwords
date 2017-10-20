@@ -85,6 +85,12 @@ public class HomeFragment extends BaseFragment implements SyncListener, SimpleLi
         }
     }
 
+    @Nullable
+    @Override
+    protected View getBgView() {
+        return binding.bgView;
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main, menu);

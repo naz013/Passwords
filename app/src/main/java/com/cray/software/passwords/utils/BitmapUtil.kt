@@ -55,6 +55,7 @@ class BitmapUtil {
             return BitmapFactory.decodeStream(context.contentResolver.openInputStream(selectedImage), null, o2)
         }
 
+        @JvmStatic
         fun getCompressed(bitmap: Bitmap?): ByteArray? {
             if (bitmap != null) {
                 val byteArrayOutputStream = ByteArrayOutputStream()

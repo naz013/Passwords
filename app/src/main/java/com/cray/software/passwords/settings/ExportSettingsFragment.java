@@ -2,90 +2,78 @@ package com.cray.software.passwords.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cray.software.passwords.R;
+import com.cray.software.passwords.databinding.FragmentExportSettingsBinding;
 import com.cray.software.passwords.dialogs.CloudDrives;
-import com.cray.software.passwords.dialogs.ProMarket;
+import com.cray.software.passwords.fragments.NestedFragment;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.utils.Prefs;
-import com.cray.software.passwords.views.roboto.RoboCheckBox;
-import com.cray.software.passwords.views.roboto.RoboTextView;
 
-public class ExportSettingsFragment extends Fragment implements View.OnClickListener {
+public class ExportSettingsFragment extends NestedFragment {
 
-    private RoboCheckBox autoBackupCheck, autoSyncCheck;
-    private ActionBar ab;
+    public static final String TAG = "ExportSettingsFragment";
+    private FragmentExportSettingsBinding binding;
+
+    public static ExportSettingsFragment newInstance() {
+        return new ExportSettingsFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.export_settings_layout, container, false);
-        ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (ab != null) {
-            ab.setTitle(R.string.export_settings_block);
+        binding = FragmentExportSettingsBinding.inflate(inflater, container, false);
+
+        binding.cloudsPref.setOnClickListener(view -> startActivity(new Intent(getActivity(), CloudDrives.class)));
+
+        binding.backupPref.setChecked(Prefs.getInstance(getActivity()).isAutoBackupEnabled());
+        binding.backupPref.setOnCheckedListener(this::updateBackup);
+
+        binding.syncPref.setChecked(Prefs.getInstance(getActivity()).isAutoSyncEnabled());
+        binding.syncPref.setOnCheckedListener(this::updateSync);
+
+        return binding.getRoot();
+    }
+
+    private void updateBackup(boolean checked) {
+        if (Module.isPro()) {
+            Prefs.getInstance(getActivity()).setAutoBackupEnabled(checked);
+        } else {
+            Prefs.getInstance(getActivity()).setAutoBackupEnabled(false);
+            if (checked) {
+                binding.backupPref.setChecked(false);
+                Toast.makeText(getContext(), R.string.this_feature_avilable_for_pro, Toast.LENGTH_SHORT).show();
+            }
         }
-        RoboTextView clouds = rootView.findViewById(R.id.clouds);
-        clouds.setOnClickListener(this);
-        RelativeLayout autoBackup = rootView.findViewById(R.id.autoBackup);
-        autoBackup.setOnClickListener(this);
-        autoBackupCheck = rootView.findViewById(R.id.autoBackupCheck);
-        autoBackupCheck.setChecked(Prefs.getInstance(getActivity()).isAutoBackupEnabled());
-        RelativeLayout autoSync = rootView.findViewById(R.id.autoSync);
-        autoSync.setOnClickListener(this);
-        autoSyncCheck = rootView.findViewById(R.id.autoSyncCheck);
-        autoSyncCheck.setChecked(Prefs.getInstance(getActivity()).isAutoSyncEnabled());
-        return rootView;
     }
 
-    private void autoBackupChange() {
-        boolean b = autoBackupCheck.isChecked();
-        Prefs.getInstance(getActivity()).setAutoBackupEnabled(!b);
-        autoBackupCheck.setChecked(!b);
-    }
-
-    private void autoSyncChange() {
-        boolean b = autoSyncCheck.isChecked();
-        Prefs.getInstance(getActivity()).setAutoSyncEnabled(!b);
-        autoSyncCheck.setChecked(!b);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (ab != null) {
-            ab.setTitle(R.string.action_settings);
+    private void updateSync(boolean checked) {
+        if (Module.isPro()) {
+            Prefs.getInstance(getActivity()).setAutoSyncEnabled(checked);
+        } else {
+            Prefs.getInstance(getActivity()).setAutoSyncEnabled(false);
+            if (checked) {
+                binding.syncPref.setChecked(false);
+                Toast.makeText(getContext(), R.string.this_feature_avilable_for_pro, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.autoBackup:
-                if (!Module.isPro()) {
-                    startActivity(new Intent(getActivity(), ProMarket.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                } else {
-                    autoBackupChange();
-                }
-                break;
-            case R.id.autoSync:
-                if (!Module.isPro()) {
-                    startActivity(new Intent(getActivity(), ProMarket.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                } else {
-                    autoSyncChange();
-                }
-                break;
-            case R.id.clouds:
-                startActivity(new Intent(getActivity().getApplicationContext(), CloudDrives.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                break;
+    public void onFragmentResume() {
+        super.onFragmentResume();
+        if (anInterface != null) {
+            anInterface.setTitle(getString(R.string.export_settings_block));
         }
+    }
+
+    @Nullable
+    @Override
+    protected View getBgView() {
+        return binding.bgView;
     }
 }

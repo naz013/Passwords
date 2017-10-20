@@ -1,7 +1,6 @@
 package com.cray.software.passwords.notes;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +24,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.databinding.ActivityCreateNoteBinding;
 import com.cray.software.passwords.databinding.DialogColorPickerLayoutBinding;
@@ -35,6 +35,7 @@ import com.cray.software.passwords.helpers.TImeUtils;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.utils.BitmapUtil;
+import com.cray.software.passwords.utils.SuperUtil;
 import com.cray.software.passwords.views.ColorPickerView;
 
 import java.io.File;
@@ -70,7 +71,6 @@ public class CreateNoteActivity extends AppCompatActivity {
     private RelativeLayout layoutContainer;
 
     private ActivityCreateNoteBinding binding;
-    private ProgressDialog mProgress;
 
     private NoteItem mItem;
     private AppBarLayout toolbar;
@@ -91,7 +91,8 @@ public class CreateNoteActivity extends AppCompatActivity {
         loadNote();
         if (mItem != null) {
             mColor = mItem.getColor();
-            setText(mItem.getSummary());
+            setText(SuperUtil.decrypt(mItem.getSummary()));
+            Glide.with(this).asBitmap().load(mItem.getImage()).into(binding.noteImage);
         } else {
             mColor = new Random().nextInt(16);
         }
@@ -134,16 +135,6 @@ public class CreateNoteActivity extends AppCompatActivity {
         toolbar.setVisibility(View.VISIBLE);
     }
 
-    private void hideProgress() {
-        if (mProgress != null && mProgress.isShowing()) {
-            mProgress.dismiss();
-        }
-    }
-
-    private void showProgress() {
-        mProgress = ProgressDialog.show(this, null, getString(R.string.wait_message), true, false);
-    }
-
     private boolean createObject() {
         String note = taskField.getText().toString().trim();
         if (TextUtils.isEmpty(note)) {
@@ -153,8 +144,15 @@ public class CreateNoteActivity extends AppCompatActivity {
         if (mItem == null) {
             mItem = new NoteItem();
         }
-        mItem.setSummary(note);
+        mItem.setSummary(SuperUtil.encrypt(note));
         mItem.setDate(TImeUtils.getGmtStamp());
+        if (mImageUri != null) {
+            try {
+                mItem.setImage(BitmapUtil.getCompressed(BitmapUtil.decodeUriToBitmap(this, mImageUri)));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
         mItem.setColor(mColor);
         return true;
     }
@@ -290,6 +288,7 @@ public class CreateNoteActivity extends AppCompatActivity {
 
     private void addImageFromUri(Uri uri) {
         if (uri == null) return;
+        mImageUri = uri;
         Bitmap bitmapImage = null;
         try {
             bitmapImage = BitmapUtil.decodeUriToBitmap(this, uri);

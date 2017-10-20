@@ -18,6 +18,7 @@ import com.cray.software.passwords.fragments.NestedFragment;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.notes.NotesFragment;
 import com.cray.software.passwords.passwords.PasswordsFragment;
+import com.cray.software.passwords.settings.SettingsFragment;
 import com.cray.software.passwords.tasks.BackupTask;
 import com.cray.software.passwords.tasks.DelayedTask;
 import com.cray.software.passwords.tasks.SyncTask;
@@ -61,6 +62,9 @@ public class MainActivity extends ThemedActivity implements FragmentInterface, F
                     break;
                 case R.id.tab_notes:
                     replaceFragment(NotesFragment.newInstance(), NotesFragment.TAG);
+                    break;
+                case R.id.tab_settings:
+                    replaceFragment(SettingsFragment.newInstance(), SettingsFragment.TAG);
                     break;
             }
         });

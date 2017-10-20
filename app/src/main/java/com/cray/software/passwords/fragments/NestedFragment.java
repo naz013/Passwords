@@ -16,5 +16,5 @@ package com.cray.software.passwords.fragments;
  * limitations under the License.
  */
 
-public class NestedFragment extends BaseFragment {
+public abstract class NestedFragment extends BaseFragment {
 }

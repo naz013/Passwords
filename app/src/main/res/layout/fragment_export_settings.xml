@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/bg_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.cray.software.passwords.views.PrefsView
+                android:id="@+id/backup_pref"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:prefs_divider_bottom="true"
+                app:prefs_primary_text="@string/auto_backup_title"
+                app:prefs_secondary_text="@string/auto_backup_explanation"
+                app:prefs_type="check" />
+
+            <com.cray.software.passwords.views.PrefsView
+                android:id="@+id/sync_pref"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:prefs_divider_bottom="true"
+                app:prefs_primary_text="@string/auto_sync_title"
+                app:prefs_secondary_text="@string/auto_sync_explanation"
+                app:prefs_type="check" />
+
+            <com.cray.software.passwords.views.PrefsView
+                android:id="@+id/clouds_pref"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:prefs_divider_bottom="true"
+                app:prefs_primary_text="@string/cloud_drives_settings_title"
+                app:prefs_type="none" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

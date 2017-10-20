@@ -129,7 +129,7 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     private void setImage(ImageView imageView, byte[] image) {
-        Glide.with(imageView.getContext().getApplicationContext())
+        Glide.with(imageView.getContext())
                 .load(image)
                 .into(imageView);
     }

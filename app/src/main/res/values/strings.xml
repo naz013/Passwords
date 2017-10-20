@@ -105,7 +105,7 @@
     <string name="sync_action_title">Synchronize</string>
     <string name="buy_button">BUY</string>
     <string name="verify_message">Verifying application</string>
-    <string name="buy_pro_title">Buy PRO</string>
+    <string name="buy_pro_title">Buy Pro</string>
     <string name="delete_password_message">Deleting password…</string>
 
     <array name="settings_list">
@@ -175,4 +175,5 @@
     <string name="no_notes">No notes</string>
     <string name="notes">Notes</string>
     <string name="copy_note">Copy note</string>
+    <string name="this_feature_avilable_for_pro">This feature available only for Pro users</string>
 </resources>

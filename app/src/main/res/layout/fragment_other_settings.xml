@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/bg_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.cray.software.passwords.views.PrefsView
+                android:id="@+id/feedback_pref"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:prefs_divider_bottom="true"
+                app:prefs_primary_text="@string/menu_feedback"
+                app:prefs_type="none" />
+
+            <com.cray.software.passwords.views.PrefsView
+                android:id="@+id/rate_pref"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:prefs_divider_bottom="true"
+                app:prefs_primary_text="@string/rate_settings_title"
+                app:prefs_type="none" />
+
+            <com.cray.software.passwords.views.PrefsView
+                android:id="@+id/buy_pref"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:prefs_divider_bottom="true"
+                app:prefs_primary_text="@string/buy_pro_title"
+                app:prefs_type="none" />
+
+            <com.cray.software.passwords.views.PrefsView
+                android:id="@+id/more_pref"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:prefs_divider_bottom="true"
+                app:prefs_primary_text="@string/string_more_apps"
+                app:prefs_type="none" />
+
+            <com.cray.software.passwords.views.PrefsView
+                android:id="@+id/license_pref"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:prefs_divider_bottom="true"
+                app:prefs_primary_text="@string/open_source_licenses"
+                app:prefs_type="none" />
+
+            <com.cray.software.passwords.views.PrefsView
+                android:id="@+id/about_pref"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:prefs_divider_bottom="true"
+                app:prefs_primary_text="@string/menu_about"
+                app:prefs_type="none" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

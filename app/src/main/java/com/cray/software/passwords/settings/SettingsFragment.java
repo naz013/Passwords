@@ -1,59 +1,58 @@
 package com.cray.software.passwords.settings;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.ViewGroup;
 
 import com.cray.software.passwords.R;
+import com.cray.software.passwords.databinding.FragmentSettingsBinding;
+import com.cray.software.passwords.fragments.BaseFragment;
 
-public class SettingsFragment extends ListFragment {
-    private OnHeadlineSelectedListener mCallback;
+public class SettingsFragment extends BaseFragment {
 
-    public interface OnHeadlineSelectedListener {
-        void onArticleSelected(int position);
+    public static final String TAG = "SettingsFragment";
+    private FragmentSettingsBinding binding;
+
+    public static BaseFragment newInstance() {
+        return new SettingsFragment();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentSettingsBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
-                android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
-        setListAdapter(new ArrayAdapter<>(getActivity(), layout, getActivity().getResources().getStringArray(R.array.settings_list)));
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.otherSettings.setOnClickListener(view1 -> {
+            if (anInterface != null) {
+                anInterface.openScreen(OtherSettingsFragment.newInstance(), OtherSettingsFragment.TAG);
+            }
+        });
+        binding.exportSettings.setOnClickListener(view1 -> {
+            if (anInterface != null) {
+                anInterface.openScreen(ExportSettingsFragment.newInstance(), ExportSettingsFragment.TAG);
+            }
+        });
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mCallback = (OnHeadlineSelectedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnHeadlineSelectedListener");
+    public void onFragmentResume() {
+        super.onFragmentResume();
+        if (anInterface != null) {
+            anInterface.setClick(null);
+            anInterface.setTitle(getString(R.string.action_settings));
         }
     }
 
+    @Nullable
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        mCallback.onArticleSelected(position);
-        getListView().setItemChecked(position, true);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        ActionBar ab = getActivity().getActionBar();
-        if (ab != null){
-            ab.setTitle(R.string.action_settings);
-        }
+    protected View getBgView() {
+        return binding.bgView;
     }
 }

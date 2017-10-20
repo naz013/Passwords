@@ -83,6 +83,12 @@ public class NotesFragment extends BaseFragment implements SyncListener, SimpleL
         }
     }
 
+    @Nullable
+    @Override
+    protected View getBgView() {
+        return binding.bgView;
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main, menu);

@@ -215,4 +215,10 @@ public class PasswordsFragment extends BaseFragment implements SyncListener, Sim
         adapter.remove(position);
         updateEmptyView();
     }
+
+    @Nullable
+    @Override
+    protected View getBgView() {
+        return binding.bgView;
+    }
 }
