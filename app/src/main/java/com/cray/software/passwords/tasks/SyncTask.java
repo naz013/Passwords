@@ -50,6 +50,7 @@ public class SyncTask extends AsyncTask<Void, Void, Boolean> {
         Dropbox dbx = new Dropbox(mContext);
         try {
             sHelp.exportPasswords();
+            sHelp.exportNotes();
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
@@ -74,7 +75,7 @@ public class SyncTask extends AsyncTask<Void, Void, Boolean> {
         }
 
         try {
-            sHelp.importPasswordFromJSON();
+            sHelp.importObjectsFromJson();
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }

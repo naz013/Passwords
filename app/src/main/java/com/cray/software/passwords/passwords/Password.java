@@ -1,6 +1,5 @@
 package com.cray.software.passwords.passwords;
 
-import com.cray.software.passwords.utils.SuperUtil;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -51,24 +50,6 @@ public class Password {
         this.color = color;
         this.password = password;
         this.uuId = uuId;
-    }
-
-    public void encrypt() {
-        title = SuperUtil.encrypt(title);
-        date = SuperUtil.encrypt(date);
-        login = SuperUtil.encrypt(login);
-        comment = SuperUtil.encrypt(comment);
-        url = SuperUtil.encrypt(url);
-        password = SuperUtil.encrypt(password);
-    }
-
-    public void decrypt() {
-        title = SuperUtil.decrypt(title);
-        date = SuperUtil.decrypt(date);
-        login = SuperUtil.decrypt(login);
-        comment = SuperUtil.decrypt(comment);
-        url = SuperUtil.decrypt(url);
-        password = SuperUtil.decrypt(password);
     }
 
     public String getUuId() {

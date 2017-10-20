@@ -5,7 +5,9 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.cray.software.passwords.interfaces.Constants;
+import com.cray.software.passwords.notes.NoteItem;
 import com.cray.software.passwords.passwords.Password;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,49 +28,60 @@ public class SyncHelper {
 
     private Context mContext;
 
-    public SyncHelper(Context context){
+    public SyncHelper(Context context) {
         this.mContext = context;
     }
 
     public void exportPasswords() throws JSONException, IOException {
         List<Password> list = DataProvider.getOriginalData(mContext);
+        File sdPath = Environment.getExternalStorageDirectory();
+        File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD);
+        if (!sdPathDr.exists()) {
+            sdPathDr.mkdirs();
+        }
         for (Password password : list) {
-            String uuID = password.getUuId();
-            if (uuID == null) {
-                uuID = generateID();
-            }
-            JSONObject jObjectData = new JSONObject();
-            jObjectData.put(DataBase.COLUMN_TITLE, password.getTitle());
-            jObjectData.put(DataBase.COLUMN_LOGIN, password.getLogin());
-            jObjectData.put(DataBase.COLUMN_PASSWORD, password.getPassword());
-            jObjectData.put(DataBase.COLUMN_URL, password.getUrl());
-            jObjectData.put(DataBase.COLUMN_COMMENT, password.getComment());
-            jObjectData.put(DataBase.COLUMN_DATE, password.getDate());
-            jObjectData.put(DataBase.COLUMN_TECHNICAL, password.getColor());
-            jObjectData.put(DataBase.COLUMN_PIC_SEL, uuID);
             if (isSdPresent()) {
-                File sdPath = Environment.getExternalStorageDirectory();
-                File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD);
-                if (!sdPathDr.exists()) {
-                    sdPathDr.mkdirs();
-                }
-                String exportFileName = uuID + Constants.FILE_EXTENSION;
+                String exportFileName = password.getUuId() + Constants.FILE_EXTENSION;
                 File file = new File(sdPathDr, exportFileName);
                 if (file.exists()) {
                     file.delete();
                 }
                 FileWriter fw = new FileWriter(file);
-                fw.write(jObjectData.toString());
+                fw.write(new Gson().toJson(password));
                 fw.close();
             } else Log.i("reminder-info", "Couldn't find external storage!");
         }
     }
 
-    public void importPasswordFromJSON() throws IOException, JSONException {
-        if (isSdPresent()){
+    public void exportNotes() throws JSONException, IOException {
+        List<NoteItem> list = DataProvider.getOriginalNotes(mContext);
+        File sdPath = Environment.getExternalStorageDirectory();
+        File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD);
+        if (!sdPathDr.exists()) {
+            sdPathDr.mkdirs();
+        }
+        for (NoteItem item : list) {
+            if (isSdPresent()) {
+                String exportFileName = item.getKey() + Constants.FILE_EXTENSION_NOTE;
+                File file = new File(sdPathDr, exportFileName);
+                if (file.exists()) {
+                    file.delete();
+                }
+                FileWriter fw = new FileWriter(file);
+                fw.write(new Gson().toJson(item));
+                fw.close();
+            } else Log.i("reminder-info", "Couldn't find external storage!");
+        }
+    }
+
+    public void importObjectsFromJson() throws IOException, JSONException {
+        if (isSdPresent()) {
             List<String> namesPass = new ArrayList<>();
             for (Password item : DataProvider.getOriginalData(mContext)) {
                 namesPass.add(item.getUuId());
+            }
+            for (NoteItem item : DataProvider.getOriginalNotes(mContext)) {
+                namesPass.add(item.getKey());
             }
             File sdPath = Environment.getExternalStorageDirectory();
             File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD);
@@ -104,16 +117,23 @@ public class SyncHelper {
                         } finally {
                             stream.close();
                         }
-                        String jsonText = writer.toString();
-                        JSONObject jsonObj = new JSONObject(jsonText);
-                        importObject(jsonObj);
+                        if (fileName.endsWith(Constants.FILE_EXTENSION_NOTE)) {
+                            importNote(writer.toString());
+                        } else {
+                            importPassword(writer.toString());
+                        }
                     }
                 }
             }
         }
     }
 
-    private void importObject(JSONObject jsonObj) throws JSONException {
+    private void importNote(String jsonText) throws JSONException {
+        DataProvider.saveNote(mContext, new Gson().fromJson(jsonText, NoteItem.class));
+    }
+
+    private void importPassword(String jsonText) throws JSONException {
+        JSONObject jsonObj = new JSONObject(jsonText);
         String title = null;
         if (!jsonObj.isNull(DataBase.COLUMN_TITLE)) {
             title = jsonObj.getString(DataBase.COLUMN_TITLE);
@@ -156,7 +176,7 @@ public class SyncHelper {
         DataProvider.savePassword(mContext, new Password(title, date, login, comment, url, 0, colorPass, password, uuID));
     }
 
-    public static String generateID(){
+    public static String generateID() {
         return UUID.randomUUID().toString();
     }
 

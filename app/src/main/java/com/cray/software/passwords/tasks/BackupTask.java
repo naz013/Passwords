@@ -25,6 +25,7 @@ public class BackupTask extends AsyncTask<Void, Void, Boolean> {
         SyncHelper sHelp = new SyncHelper(mContext);
         try {
             sHelp.exportPasswords();
+            sHelp.exportNotes();
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
