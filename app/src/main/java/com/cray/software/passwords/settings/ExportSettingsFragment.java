@@ -1,4 +1,4 @@
-package com.cray.software.passwords.fragments;
+package com.cray.software.passwords.settings;
 
 import android.content.Intent;
 import android.os.Bundle;

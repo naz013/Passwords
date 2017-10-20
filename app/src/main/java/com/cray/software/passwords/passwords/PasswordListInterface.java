@@ -19,11 +19,7 @@ import com.cray.software.passwords.helpers.ListInterface;
  */
 
 public interface PasswordListInterface extends ListInterface {
-    String getTitle();
-
     String getLogin();
-
-    String getDate();
 
     String getPassword();
 }

@@ -22,15 +22,14 @@ class PrefsConstants {
 
     public static final String NEW_PREFERENCES_RATE_SHOW = "show_rate_state";
     public static final String NEW_PREFERENCES_APP_RUNS_COUNT = "app_runs_state";
-    public static final String NEW_PREFERENCES = "new_settings";
-    public static final String NEW_PREFERENCES_THEME = "color_state";
+    public static final String APP_THEME = "theme_";
+    public static final String APP_THEME_COLOR = "theme_color";
     public static final String NEW_PREFERENCES_CHECKBOX = "delete_backup_state";
     public static final String NEW_PREFERENCES_EDIT_LENGTH = "edit_length_state";
     public static final String NEW_PREFERENCES_EDIT_OLD_LENGTH = "edit_old_length_state";
     public static final String NEW_PREFERENCES_RESTORE_MAIL = "restore_key_state";
     public static final String NEW_PREFERENCES_AUTO_BACKUP = "auto_backup_state";
     public static final String NEW_PREFERENCES_AUTO_SYNC = "auto_sunc_state";
-    public static final String NEW_PREFERENCES_DRIVE_USER = "email_drive_state";
     public static final String NEW_PREFERENCES_SCREEN = "screen_state";
     public static final String NEW_PREFERENCES_ORDER_BY = "order_by";
 

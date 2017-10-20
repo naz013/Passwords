@@ -3,12 +3,15 @@ package com.cray.software.passwords.helpers;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.notes.NoteInterfaceImpl;
 import com.cray.software.passwords.notes.NoteItem;
 import com.cray.software.passwords.passwords.Password;
 import com.cray.software.passwords.passwords.PasswordInterfaceImpl;
+import com.cray.software.passwords.utils.Prefs;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,25 +33,43 @@ import java.util.List;
 public class DataProvider {
     public static final String TAG = "LOG_TAG";
 
-    public static List<ListInterface> getData(Context context) {
+    public static List<ListInterface> getData(Context context, boolean incPasswords, boolean incNotes) {
         List<ListInterface> list = new ArrayList<>();
         DataBase db = new DataBase(context);
         db.open();
-        Cursor c = db.fetchAllPasswords();
-        if (c != null && c.moveToFirst()) {
-            do {
-                list.add(new PasswordInterfaceImpl(getFromCursor(c)));
-            } while (c.moveToNext());
-            c.close();
+        if (incPasswords) {
+            Cursor c = db.fetchAllPasswords();
+            if (c != null && c.moveToFirst()) {
+                do {
+                    list.add(new PasswordInterfaceImpl(getFromCursor(c)));
+                } while (c.moveToNext());
+                c.close();
+            }
         }
-        c = db.getNotes();
-        if (c != null && c.moveToFirst()) {
-            do {
-                list.add(new NoteInterfaceImpl(getNoteFromCursor(c)));
-            } while (c.moveToNext());
-            c.close();
+        if (incNotes) {
+            Cursor c = db.getNotes();
+            if (c != null && c.moveToFirst()) {
+                do {
+                    list.add(new NoteInterfaceImpl(getNoteFromCursor(c)));
+                } while (c.moveToNext());
+                c.close();
+            }
         }
         db.close();
+        return sort(context, list);
+    }
+
+    private static List<ListInterface> sort(Context context, List<ListInterface> list) {
+        String orderPrefs = Prefs.getInstance(context).getOrderBy();
+        if (orderPrefs.matches(Constants.ORDER_DATE_A_Z)) {
+            Collections.sort(list, (listInterface, t1) -> listInterface.getDate().compareTo(t1.getDate()));
+        } else if (orderPrefs.matches(Constants.ORDER_DATE_Z_A)) {
+            Collections.sort(list, (listInterface, t1) -> t1.getDate().compareTo(listInterface.getDate()));
+        } else if (orderPrefs.matches(Constants.ORDER_TITLE_A_Z)) {
+            Collections.sort(list, (listInterface, t1) -> listInterface.getTitle().compareTo(t1.getTitle()));
+        } else if (orderPrefs.matches(Constants.ORDER_TITLE_Z_A)) {
+            Collections.sort(list, (listInterface, t1) -> t1.getTitle().compareTo(listInterface.getTitle()));
+        }
         return list;
     }
 

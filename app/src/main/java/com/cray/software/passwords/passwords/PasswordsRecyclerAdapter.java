@@ -103,7 +103,7 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         } else if (holder instanceof NoteHolder) {
             NoteHolder h = (NoteHolder) holder;
             NoteListInterface item = (NoteListInterface) getItem(position);
-            loadNote(h.binding.note, item.getSummary());
+            loadNote(h.binding.note, item.getTitle());
             loadNoteCard(h.binding.card, item.getColor());
             setImage(h.binding.noteImage, item.getImage());
         }

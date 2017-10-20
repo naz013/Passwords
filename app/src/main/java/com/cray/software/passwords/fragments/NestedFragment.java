@@ -1,4 +1,4 @@
-package com.cray.software.passwords.helpers;
+package com.cray.software.passwords.fragments;
 
 /**
  * Copyright 2017 Nazar Suhovich
@@ -16,14 +16,5 @@ package com.cray.software.passwords.helpers;
  * limitations under the License.
  */
 
-public interface ListInterface {
-    int getColor();
-
-    long getId();
-
-    int getViewType();
-
-    String getDate();
-
-    String getTitle();
+public class NestedFragment extends BaseFragment {
 }

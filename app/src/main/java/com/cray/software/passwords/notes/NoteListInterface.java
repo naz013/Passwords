@@ -19,9 +19,5 @@ import com.cray.software.passwords.helpers.ListInterface;
  */
 
 public interface NoteListInterface extends ListInterface {
-    String getSummary();
-
-    String getDate();
-
     byte[] getImage();
 }

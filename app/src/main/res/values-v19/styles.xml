@@ -1,37 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <style name="HomeWhite" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">@color/colorBlue</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
         <item name="windowActionBar">false</item>
     </style>
-
-    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimaryDark">@color/material_grey</item>
-        <item name="android:windowBackground">@drawable/splash</item>
-    </style>
-
-    <style name="HomeWhite.Dialog" parent="Theme.AppCompat.Light.Dialog" />
-
-    <style name="HomeWhite.NoAction" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">@color/colorWhite</item>
-    </style>
-
-    <style name="Transparent" parent="@android:style/Theme.NoTitleBar">
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:backgroundDimEnabled">false</item>
-    </style>
-
-    <style name="HomeWhite.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="HomeWhite.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="HomeWhite.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="HomeWhite.Blue" parent="HomeWhite">
         <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
@@ -66,7 +39,7 @@
     <style name="HomeWhite.LightBlue" parent="HomeWhite">
         <item name="colorPrimaryDark">@color/blueLightPrimaryDark</item>
         <item name="colorPrimary">@color/blueLightPrimary</item>
-        <item name="colorAccent">@color/pinkAccent</item>
+        <item name="colorAccent">@color/greenAccent</item>
     </style>
 
     <style name="HomeWhite.Yellow" parent="HomeWhite">
@@ -563,4 +536,15 @@
         <item name="colorAccent">@color/indigoPrimary</item>
     </style>
 
+    <style name="HomeWhiteTranslucent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="HomeDarkTranslucent" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimaryDark">@color/bluePrimaryDark</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>

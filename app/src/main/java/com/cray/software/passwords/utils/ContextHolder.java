@@ -1,4 +1,6 @@
-package com.cray.software.passwords.helpers;
+package com.cray.software.passwords.utils;
+
+import android.content.Context;
 
 /**
  * Copyright 2017 Nazar Suhovich
@@ -16,14 +18,15 @@ package com.cray.software.passwords.helpers;
  * limitations under the License.
  */
 
-public interface ListInterface {
-    int getColor();
+public final class ContextHolder {
 
-    long getId();
+    private Context context;
 
-    int getViewType();
+    public ContextHolder(Context context) {
+        this.context = context;
+    }
 
-    String getDate();
-
-    String getTitle();
+    public Context getContext() {
+        return context;
+    }
 }

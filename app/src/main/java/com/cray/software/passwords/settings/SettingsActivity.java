@@ -1,4 +1,4 @@
-package com.cray.software.passwords;
+package com.cray.software.passwords.settings;
 
 import android.os.Bundle;
 import android.os.Environment;
@@ -7,11 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.cray.software.passwords.fragments.ExportSettingsFragment;
-import com.cray.software.passwords.fragments.GeneralSettingsFragment;
-import com.cray.software.passwords.fragments.OtherSettingsFragment;
-import com.cray.software.passwords.fragments.SecuritySettingsFragment;
-import com.cray.software.passwords.fragments.SettingsFragment;
+import com.cray.software.passwords.R;
 import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.interfaces.Constants;

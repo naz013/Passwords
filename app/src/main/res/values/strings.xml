@@ -170,4 +170,9 @@
     <string name="copy_login">Copy login/email</string>
     <string name="copy_password">Copy password</string>
     <string name="copied">copied</string>
+    <string name="home">Home</string>
+    <string name="passwords">Passwords</string>
+    <string name="no_notes">No notes</string>
+    <string name="notes">Notes</string>
+    <string name="copy_note">Copy note</string>
 </resources>

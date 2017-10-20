@@ -44,7 +44,7 @@ public class NoteInterfaceImpl implements NoteListInterface {
     }
 
     @Override
-    public String getSummary() {
+    public String getTitle() {
         return SuperUtil.decrypt(mNote.getSummary());
     }
 

@@ -33,7 +33,7 @@ public class ColorSetter {
      */
     @ColorRes
     public int colorPrimary(){
-        return colorPrimary(Prefs.getInstance(mContext).getTheme());
+        return colorPrimary(Prefs.getInstance(mContext).getAppThemeColor());
     }
 
     /**
@@ -42,7 +42,7 @@ public class ColorSetter {
      */
     @ColorRes
     public int colorAccent(){
-        return colorAccent(Prefs.getInstance(mContext).getTheme());
+        return colorAccent(Prefs.getInstance(mContext).getAppThemeColor());
     }
 
     /**
@@ -269,7 +269,7 @@ public class ColorSetter {
      */
     @ColorRes
     public int colorPrimaryDark(){
-        return colorPrimaryDark(Prefs.getInstance(mContext).getTheme());
+        return colorPrimaryDark(Prefs.getInstance(mContext).getAppThemeColor());
     }
 
     /**

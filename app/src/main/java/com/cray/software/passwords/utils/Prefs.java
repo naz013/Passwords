@@ -128,12 +128,20 @@ public final class Prefs extends SharedPrefs {
         putBoolean(NEW_PREFERENCES_AUTO_SYNC, value);
     }
 
-    public int getTheme() {
-        return getInt(NEW_PREFERENCES_THEME);
+    public int getAppThemeColor() {
+        return getInt(APP_THEME_COLOR);
     }
 
-    public void setTheme(int value) {
-        putInt(NEW_PREFERENCES_THEME, value);
+    public void setAppThemeColor(int value) {
+        putInt(APP_THEME_COLOR, value);
+    }
+
+    public int getAppTheme() {
+        return getInt(APP_THEME);
+    }
+
+    public void setAppTheme(int value) {
+        putInt(APP_THEME, value);
     }
 
     public int getPasswordLength() {
@@ -169,8 +177,11 @@ public final class Prefs extends SharedPrefs {
     }
 
     public void checkPrefs() {
-        if (!hasKey(NEW_PREFERENCES_THEME)) {
-            putInt(NEW_PREFERENCES_THEME, 3);
+        if (!hasKey(APP_THEME_COLOR)) {
+            putInt(APP_THEME_COLOR, 3);
+        }
+        if (!hasKey(APP_THEME)) {
+            putInt(APP_THEME, ThemeUtil.THEME_WHITE);
         }
         if (!hasKey(NEW_PREFERENCES_SCREEN)) {
             putString(NEW_PREFERENCES_SCREEN, Constants.SCREEN_AUTO);

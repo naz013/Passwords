@@ -1,4 +1,4 @@
-package com.cray.software.passwords;
+package com.cray.software.passwords.passwords;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.cray.software.passwords.R;
 import com.cray.software.passwords.databinding.ActivityManagePasswordBinding;
 import com.cray.software.passwords.databinding.DialogColorPickerLayoutBinding;
 import com.cray.software.passwords.dialogs.GeneratePassword;
@@ -23,7 +24,6 @@ import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.helpers.TImeUtils;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
-import com.cray.software.passwords.passwords.Password;
 import com.cray.software.passwords.utils.SuperUtil;
 import com.cray.software.passwords.views.ColorPickerView;
 

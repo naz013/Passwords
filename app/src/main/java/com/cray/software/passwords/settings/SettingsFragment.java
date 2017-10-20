@@ -1,4 +1,4 @@
-package com.cray.software.passwords.fragments;
+package com.cray.software.passwords.settings;
 
 import android.app.ActionBar;
 import android.app.Activity;

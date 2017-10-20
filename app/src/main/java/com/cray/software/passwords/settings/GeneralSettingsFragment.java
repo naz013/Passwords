@@ -1,4 +1,4 @@
-package com.cray.software.passwords.fragments;
+package com.cray.software.passwords.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -67,7 +67,7 @@ public class GeneralSettingsFragment extends Fragment implements View.OnClickLis
     }
 
     private void themeView() {
-        int loadedColor = Prefs.getInstance(getActivity()).getTheme();
+        int loadedColor = Prefs.getInstance(getActivity()).getAppThemeColor();
         themeColorSwitcher.setBackgroundResource(new ColorSetter(getActivity()).getIndicator(loadedColor));
     }
 

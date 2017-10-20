@@ -1,29 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tool="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_add"
-        android:orderInCategory="100"
-        tool:showAsAction="ifRoom"
+    <item
+        android:id="@+id/action_add"
         android:icon="@drawable/ic_sync_white_24dp"
-        android:title="@string/sync_action_title"/>
-
-    <item android:id="@+id/action_settings"
         android:orderInCategory="100"
-        tool:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="@string/sync_action_title"
+        tool:showAsAction="ifRoom" />
 
-    <item android:id="@+id/action_send"
-        android:orderInCategory="100"
-        tool:showAsAction="never"
-        android:title="@string/menu_feedback"/>
-
-    <item android:id="@+id/action_order"
+    <item
+        android:id="@+id/action_order"
         android:title="@string/menu_sort_title"
-        tool:showAsAction="never" />
-
-    <item android:id="@+id/action_more"
-        android:title="@string/string_more_apps"
-        android:orderInCategory="100"
         tool:showAsAction="never" />
 
 </menu>

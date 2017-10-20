@@ -133,8 +133,7 @@ public class DataBase {
 
     public Cursor getNotes() throws SQLException {
         openGuard();
-        String order = COLUMN_DT + " DESC";
-        return db.query(TABLE_NOTES_NAME, null, null, null, null, null, order);
+        return db.query(TABLE_NOTES_NAME, null, null, null, null, null, null);
     }
 
     public Cursor getNote(long rowId) throws SQLException {
@@ -180,18 +179,7 @@ public class DataBase {
 
     public Cursor fetchAllPasswords() throws SQLException {
         openGuard();
-        String orderPrefs = Prefs.getInstance(mContext).getOrderBy();
-        String order = null;
-        if (orderPrefs.matches(Constants.ORDER_DATE_A_Z)) {
-            order = COLUMN_DATE + " ASC";
-        } else if (orderPrefs.matches(Constants.ORDER_DATE_Z_A)) {
-            order = COLUMN_DATE + " DESC";
-        } else if (orderPrefs.matches(Constants.ORDER_TITLE_A_Z)) {
-            order = COLUMN_TITLE + " ASC";
-        } else if (orderPrefs.matches(Constants.ORDER_TITLE_Z_A)) {
-            order = COLUMN_TITLE + " DESC";
-        }
-        return db.query(TABLE_NAME, null, null, null, null, null, order);
+        return db.query(TABLE_NAME, null, null, null, null, null, null);
     }
 
     public Cursor fetchPass(long rowId) throws SQLException {

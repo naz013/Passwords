@@ -82,7 +82,7 @@ public class ThemerDialog extends AppCompatActivity {
     private View.OnClickListener listener = v -> themeColorSwitch(v.getId());
 
     private void setUpRadio(){
-        int loaded = Prefs.getInstance(this).getTheme();
+        int loaded = Prefs.getInstance(this).getAppThemeColor();
         switch (loaded) {
             case 0:
                 red.setSelected(true);
@@ -226,7 +226,7 @@ public class ThemerDialog extends AppCompatActivity {
     }
 
     private void saveColor(int code) {
-        Prefs.getInstance(this).setTheme(code);
+        Prefs.getInstance(this).setAppThemeColor(code);
     }
 
     @Override
