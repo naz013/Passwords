@@ -24,7 +24,7 @@ public class DeleteNoteTask extends AsyncTask<Long, Void, Boolean> {
     private SyncListener mListener;
     private ProgressDialog pd;
 
-    public DeleteNoteTask(Context context, SyncListener mListener){
+    public DeleteNoteTask(Context context, SyncListener mListener) {
         this.mContext = context;
         this.mListener = mListener;
     }
@@ -48,16 +48,16 @@ public class DeleteNoteTask extends AsyncTask<Long, Void, Boolean> {
             Dropbox dbx = new Dropbox(mContext);
             if (Prefs.getInstance(mContext).isDeleteBackFileEnabled()) {
                 File sdPath = Environment.getExternalStorageDirectory();
-                File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD + "/" + noteItem.getKey() + Constants.FILE_EXTENSION);
+                File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD + "/" + noteItem.getKey() + Constants.FILE_EXTENSION_NOTE);
                 if (sdPathDr.exists()) {
                     sdPathDr.delete();
                 }
-                File sdPathTmp = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD_DBX_TMP + "/" + noteItem.getKey() + Constants.FILE_EXTENSION);
+                File sdPathTmp = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD_DBX_TMP + "/" + noteItem.getKey() + Constants.FILE_EXTENSION_NOTE);
                 if (sdPathTmp.exists()) {
                     sdPathTmp.delete();
                 }
                 boolean isConnected = SuperUtil.isConnected(mContext);
-                String dbxFile = ("/" + Constants.DIR_DBX + noteItem.getKey() + Constants.FILE_EXTENSION);
+                String dbxFile = ("/" + Constants.DIR_DBX + noteItem.getKey() + Constants.FILE_EXTENSION_NOTE);
                 if (dbx.isLinked()) {
                     if (isConnected) {
                         dbx.deleteFile(noteItem.getKey());
@@ -68,13 +68,13 @@ public class DeleteNoteTask extends AsyncTask<Long, Void, Boolean> {
                     }
                 }
 
-                File sdPathGd = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD_GDX_TMP + "/" + noteItem.getKey() + Constants.FILE_EXTENSION);
+                File sdPathGd = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD_GDX_TMP + "/" + noteItem.getKey() + Constants.FILE_EXTENSION_NOTE);
                 if (sdPathGd.exists()) {
                     sdPathGd.delete();
                 }
 
                 Google google = Google.getInstance(mContext);
-                if (isConnected && google.getDrive() != null){
+                if (isConnected && google.getDrive() != null) {
                     google.getDrive().deleteFile(noteItem.getKey());
                 }
             }
@@ -85,7 +85,7 @@ public class DeleteNoteTask extends AsyncTask<Long, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean aVoid) {
         super.onPostExecute(aVoid);
-        if (pd != null && pd.isShowing()){
+        if (pd != null && pd.isShowing()) {
             pd.dismiss();
         }
         if (mListener != null) {
