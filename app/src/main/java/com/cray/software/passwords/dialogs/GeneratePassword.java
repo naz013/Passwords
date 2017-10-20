@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cray.software.passwords.R;
+import com.cray.software.passwords.views.roboto.RoboCheckBox;
+import com.cray.software.passwords.views.roboto.RoboEditText;
+import com.cray.software.passwords.views.roboto.RoboTextView;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -23,10 +23,10 @@ public class GeneratePassword extends Activity implements View.OnClickListener {
     private static final String numeric = "0123456789";
     private static final String symbols = "!@#$%()?^*";
 
-    private TextView passLength;
+    private RoboTextView passLength;
     private SeekBar passwordLength;
-    private CheckBox aZCheck, azCheck, numericCheck, symbolCheck;
-    private EditText passwordShow;
+    private RoboCheckBox aZCheck, azCheck, numericCheck, symbolCheck;
+    private RoboEditText passwordShow;
 
     private Random rnd = new Random();
 
@@ -74,40 +74,40 @@ public class GeneratePassword extends Activity implements View.OnClickListener {
 
     private String randomString(int len, int upper, int lower, int num, int sym) {
         String up = null;
-        if (upper != 0){
+        if (upper != 0) {
             up = AZ;
         }
         String low = null;
-        if (lower != 0){
+        if (lower != 0) {
             low = az;
         }
         String numerical = null;
-        if (num != 0){
+        if (num != 0) {
             numerical = numeric;
         }
         String symbolical = null;
-        if (sym != 0){
+        if (sym != 0) {
             symbolical = symbols;
         }
         int mapLength = upper + lower + num + sym;
         HashMap<Integer, String> map = new HashMap<>();
 
-        for (int i = 0; i < mapLength; i++){
-            if (up != null && !map.containsValue(up)){
+        for (int i = 0; i < mapLength; i++) {
+            if (up != null && !map.containsValue(up)) {
                 map.put(i, up);
             }
-            if (low != null && !map.containsValue(low)){
+            if (low != null && !map.containsValue(low)) {
                 map.put(i, low);
             }
-            if (numerical != null && !map.containsValue(numerical)){
+            if (numerical != null && !map.containsValue(numerical)) {
                 map.put(i, numerical);
             }
-            if (symbolical != null && !map.containsValue(symbolical)){
+            if (symbolical != null && !map.containsValue(symbolical)) {
                 map.put(i, symbolical);
             }
         }
-        StringBuilder sb = new StringBuilder( len );
-        for( int i = 0; i < len; i++ ) {
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++) {
             Random type = new Random();
             int next = type.nextInt(mapLength);
             String rand = map.get(next);
@@ -118,7 +118,7 @@ public class GeneratePassword extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.genCancel:
                 finish();
                 break;
@@ -137,10 +137,10 @@ public class GeneratePassword extends Activity implements View.OnClickListener {
         }
     }
 
-    private boolean preGenerateCheck(){
+    private boolean preGenerateCheck() {
         boolean status;
-        if (aZCheck.isChecked() || azCheck.isChecked() || numericCheck.isChecked() || symbolCheck.isChecked()){
-            if (passwordLength.getProgress() > 0){
+        if (aZCheck.isChecked() || azCheck.isChecked() || numericCheck.isChecked() || symbolCheck.isChecked()) {
+            if (passwordLength.getProgress() > 0) {
                 status = true;
             } else {
                 status = false;

@@ -8,13 +8,14 @@ import android.widget.Button;
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.cloud.DropboxLogin;
 import com.cray.software.passwords.cloud.GoogleLogin;
+import com.cray.software.passwords.views.roboto.RoboButton;
 
 public class CloudDrives extends Activity implements DropboxLogin.LoginCallback, GoogleLogin.LoginCallback {
 
     private GoogleLogin mGoogleLogin;
     private DropboxLogin mDropboxLogin;
 
-    private Button linkDropbox, linkGDrive;
+    private RoboButton linkDropbox, linkGDrive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

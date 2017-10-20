@@ -22,7 +22,7 @@
                 android:layout_toLeftOf="@+id/autoBackupCheck"
                 android:orientation="vertical">
 
-                <TextView
+                <com.cray.software.passwords.views.roboto.RoboTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
@@ -30,7 +30,7 @@
                     android:text="@string/auto_backup_title"
                     android:textSize="18sp" />
 
-                <TextView
+                <com.cray.software.passwords.views.roboto.RoboTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"
@@ -39,7 +39,7 @@
 
             </LinearLayout>
 
-            <CheckBox
+            <com.cray.software.passwords.views.roboto.RoboCheckBox
                 android:id="@+id/autoBackupCheck"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -68,7 +68,7 @@
                 android:layout_toLeftOf="@+id/autoSyncCheck"
                 android:orientation="vertical">
 
-                <TextView
+                <com.cray.software.passwords.views.roboto.RoboTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
@@ -76,7 +76,7 @@
                     android:text="@string/auto_sync_title"
                     android:textSize="18sp" />
 
-                <TextView
+                <com.cray.software.passwords.views.roboto.RoboTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"
@@ -85,7 +85,7 @@
 
             </LinearLayout>
 
-            <CheckBox
+            <com.cray.software.passwords.views.roboto.RoboCheckBox
                 android:id="@+id/autoSyncCheck"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -101,7 +101,7 @@
             android:layout_height="1dp"
             android:background="@android:color/darker_gray" />
 
-        <TextView
+        <com.cray.software.passwords.views.roboto.RoboTextView
             android:id="@+id/clouds"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

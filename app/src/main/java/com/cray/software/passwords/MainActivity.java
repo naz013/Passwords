@@ -41,8 +41,6 @@ import com.cray.software.passwords.tasks.SyncTask;
 import com.cray.software.passwords.utils.Dialogues;
 import com.cray.software.passwords.utils.Prefs;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity implements SyncListener, SimpleListener {
 
     private static final int MENU_ITEM_PRO = 12;
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
     private RecyclerView currentList;
     private LinearLayout emptyItem;
 
-    private List<ListInterface> data;
+    private PasswordsRecyclerAdapter adapter;
 
     private FloatingActionButton mFab;
     private Toolbar toolbar;
@@ -165,15 +163,16 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
     }
 
     public void loaderAdapter() {
-        data = DataProvider.getData(this);
-        PasswordsRecyclerAdapter adapter = new PasswordsRecyclerAdapter(this, data);
+        adapter = new PasswordsRecyclerAdapter(this, DataProvider.getData(this));
         adapter.setEventListener(this);
         currentList.setAdapter(adapter);
-        if (data.size() > 0) {
-            currentList.setVisibility(View.VISIBLE);
+        updateEmptyView();
+    }
+
+    private void updateEmptyView() {
+        if (adapter.getItemCount() > 0) {
             emptyItem.setVisibility(View.GONE);
         } else {
-            currentList.setVisibility(View.GONE);
             emptyItem.setVisibility(View.VISIBLE);
         }
     }
@@ -247,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
     }
 
     private void showPopup(int position, View view) {
-        ListInterface el = data.get(position);
+        ListInterface el = adapter.getItem(position);
         if (el instanceof PasswordListInterface) {
             final String[] items = {
                     getString(R.string.copy_login),
@@ -284,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
     }
 
     private void edit(int position) {
-        ListInterface item = data.get(position);
+        ListInterface item = adapter.getItem(position);
         long id = item.getId();
         if (item instanceof PasswordListInterface) {
             Intent intentId = new Intent(this, ManagePassword.class);
@@ -298,12 +297,14 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
     }
 
     private void delete(int position) {
-        ListInterface item = data.get(position);
-        long del = data.get(position).getId();
+        ListInterface item = adapter.getItem(position);
+        long del = item.getId();
         if (item instanceof PasswordListInterface) {
             new DeleteTask(this, result -> Snackbar.make(mFab, R.string.removed, Snackbar.LENGTH_SHORT).show()).execute(del);
         } else {
             new DeleteNoteTask(this, result -> Snackbar.make(mFab, R.string.removed, Snackbar.LENGTH_SHORT).show()).execute(del);
         }
+        adapter.remove(position);
+        updateEmptyView();
     }
 }

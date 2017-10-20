@@ -9,18 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.utils.Dialogues;
 import com.cray.software.passwords.utils.Prefs;
 import com.cray.software.passwords.utils.SuperUtil;
+import com.cray.software.passwords.views.roboto.RoboTextView;
 
 import java.lang.ref.WeakReference;
 
 public class SecuritySettingsFragment extends Fragment implements View.OnClickListener {
 
-    private TextView passLengthText;
+    private RoboTextView passLengthText;
     private ActionBar ab;
 
     @Override
@@ -30,9 +30,9 @@ public class SecuritySettingsFragment extends Fragment implements View.OnClickLi
         if (ab != null) {
             ab.setTitle(R.string.security_block);
         }
-        TextView changePassword = rootView.findViewById(R.id.changePassword);
+        RoboTextView changePassword = rootView.findViewById(R.id.changePassword);
         changePassword.setOnClickListener(this);
-        TextView keyword = rootView.findViewById(R.id.keyword);
+        RoboTextView keyword = rootView.findViewById(R.id.keyword);
         keyword.setOnClickListener(this);
         RelativeLayout passLength = rootView.findViewById(R.id.passLength);
         passLength.setOnClickListener(this);

@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:orientation="vertical"
     android:paddingBottom="16dp"
-    android:paddingTop="24dp"
     android:paddingLeft="24dp"
-    android:paddingRight="24dp">
+    android:paddingRight="24dp"
+    android:paddingTop="24dp">
 
-    <TextView
+    <com.cray.software.passwords.views.roboto.RoboTextView
+        android:id="@+id/appName"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_weight="0.001"
+        android:text="@string/cloud_drives_settings_title"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/appName"
-        android:text="@string/cloud_drives_settings_title" />
+        app:font_style="roboto_medium" />
 
     <ScrollView
         android:layout_width="wrap_content"
-        android:layout_weight="2"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="2">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -32,25 +34,27 @@
                 android:layout_width="270dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="15dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-                <TextView
-                    android:layout_width="match_parent"
+                <com.cray.software.passwords.views.roboto.RoboTextView
+                    android:id="@+id/dropboxTitle"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.65"
-                    android:gravity="center|left"
-                    android:id="@+id/dropboxTitle"
-                    android:drawablePadding="10dp"
                     android:drawableLeft="@drawable/ic_dropbox"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
                     android:text="Dropbox"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    app:font_style="roboto_light" />
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                <com.cray.software.passwords.views.roboto.RoboButton
                     android:id="@+id/linkDropbox"
-                    android:text="@string/login_button"/>
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.35"
+                    android:text="@string/login_button" />
 
             </LinearLayout>
 
@@ -58,38 +62,39 @@
                 android:layout_width="270dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="15dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-                <TextView
-                    android:layout_width="match_parent"
+                <com.cray.software.passwords.views.roboto.RoboTextView
+                    android:id="@+id/gDriveTitle"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.65"
-                    android:gravity="center|left"
-                    android:id="@+id/gDriveTitle"
-                    android:drawablePadding="10dp"
                     android:drawableLeft="@drawable/ic_google_drive"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
                     android:text="@string/google_drive_title"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp" />
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                <com.cray.software.passwords.views.roboto.RoboButton
                     android:id="@+id/linkGDrive"
-                    android:text="@string/login_button"/>
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.35"
+                    android:text="@string/login_button" />
 
             </LinearLayout>
         </LinearLayout>
-
     </ScrollView>
-    <Button
+
+    <com.cray.software.passwords.views.roboto.RoboButton
+        android:id="@+id/aboutClose"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
-        android:textColor="@color/colorBlack"
+        android:layout_gravity="end"
+        android:layout_marginTop="20dp"
         android:background="@android:color/transparent"
         android:text="@string/button_close"
-        android:id="@+id/aboutClose"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="end"/>
+        android:textColor="@color/colorBlack" />
 
 </LinearLayout>

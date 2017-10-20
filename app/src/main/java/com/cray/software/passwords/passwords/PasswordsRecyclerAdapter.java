@@ -21,6 +21,7 @@ import com.cray.software.passwords.interfaces.SimpleListener;
 import com.cray.software.passwords.notes.NoteHolder;
 import com.cray.software.passwords.notes.NoteListInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,7 +44,7 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
     public static final int PASSWORD = 0;
     public static final int NOTE = 1;
 
-    private List<ListInterface> list;
+    private List<ListInterface> list = new ArrayList<>();
     private SimpleListener mEventListener;
     private ColorSetter mColor;
 
@@ -56,11 +57,15 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         return list.get(position);
     }
 
+    public void remove(int position) {
+        list.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(0, list.size());
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         ListItemCardBinding binding;
-
-        public ViewHolder(View v) {
+        ViewHolder(View v) {
             super(v);
             binding = DataBindingUtil.bind(v);
             v.setOnClickListener(view -> {

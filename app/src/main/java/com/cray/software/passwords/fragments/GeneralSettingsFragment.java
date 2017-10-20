@@ -9,17 +9,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.dialogs.ThemerDialog;
 import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.utils.Prefs;
+import com.cray.software.passwords.views.roboto.RoboCheckBox;
 
 public class GeneralSettingsFragment extends Fragment implements View.OnClickListener {
 
-    private CheckBox backupFileCheck;
+    private RoboCheckBox backupFileCheck;
     private View themeColorSwitcher;
     private ActionBar ab;
 
@@ -85,7 +85,7 @@ public class GeneralSettingsFragment extends Fragment implements View.OnClickLis
         switch (v.getId()) {
             case R.id.themeColor:
                 startActivity(new Intent(getActivity().getApplicationContext(), ThemerDialog.class)
-                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
             case R.id.backupFile:
                 setDeleteFileChange();

@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/toolbar"
-        android:id="@+id/toolbar"/>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView" >
+        android:layout_height="match_parent">
 
-        <TextView
+        <com.cray.software.passwords.views.roboto.RoboTextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"
             android:gravity="left"
-            android:padding="15dp"
-            android:layout_gravity="center_horizontal" />
+            android:padding="15dp" />
     </ScrollView>
 </LinearLayout>

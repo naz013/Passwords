@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.interfaces.Module;
+import com.cray.software.passwords.views.roboto.RoboTextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class ThanksDialog extends AppCompatActivity {
             getWindow().setStatusBarColor(cSetter.getColor(colorDark));
         }
 
-        TextView textView = findViewById(R.id.textView);
+        RoboTextView textView = findViewById(R.id.textView);
         textView.setText(readFile());
     }
 

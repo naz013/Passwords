@@ -6,66 +6,66 @@
     android:scrollbars="none">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/menu_about"
+        <com.cray.software.passwords.views.roboto.RoboTextView
             android:id="@+id/about"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
-            android:layout_gravity="center_horizontal"
             android:gravity="center_vertical"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="@string/menu_about"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="18sp" />
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/rate_settings_title"
+        <com.cray.software.passwords.views.roboto.RoboTextView
             android:id="@+id/rateApp"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_vertical"
-            android:textSize="18sp" />
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/open_source_licenses"
-            android:id="@+id/thanks"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
+            android:layout_gravity="center_horizontal"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
-            android:layout_gravity="center_horizontal"
             android:gravity="center_vertical"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="@string/rate_settings_title"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="18sp" />
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
+
+        <com.cray.software.passwords.views.roboto.RoboTextView
+            android:id="@+id/thanks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="@string/open_source_licenses"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
 
     </LinearLayout>
 </ScrollView>

@@ -11,14 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.databinding.DialogAboutLayoutBinding;
 import com.cray.software.passwords.dialogs.ThanksDialog;
 import com.cray.software.passwords.utils.Dialogues;
-import com.cray.software.passwords.utils.Prefs;
-import com.cray.software.passwords.utils.SuperUtil;
+import com.cray.software.passwords.views.roboto.RoboTextView;
 
 public class OtherSettingsFragment extends Fragment {
 
@@ -31,11 +29,11 @@ public class OtherSettingsFragment extends Fragment {
         if (ab != null) {
             ab.setTitle(R.string.other_settings);
         }
-        TextView about = rootView.findViewById(R.id.about);
+        RoboTextView about = rootView.findViewById(R.id.about);
         about.setOnClickListener(v -> showAboutDialog());
-        TextView rateApp = rootView.findViewById(R.id.rateApp);
+        RoboTextView rateApp = rootView.findViewById(R.id.rateApp);
         rateApp.setOnClickListener(v -> Dialogues.showRateDialog(getActivity()));
-        TextView thanks = rootView.findViewById(R.id.thanks);
+        RoboTextView thanks = rootView.findViewById(R.id.thanks);
         thanks.setOnClickListener(v -> startActivity(new Intent(getActivity().getApplicationContext(), ThanksDialog.class)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
         return rootView;

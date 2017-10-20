@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,10 +16,12 @@ import com.cray.software.passwords.dialogs.CloudDrives;
 import com.cray.software.passwords.dialogs.ProMarket;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.utils.Prefs;
+import com.cray.software.passwords.views.roboto.RoboCheckBox;
+import com.cray.software.passwords.views.roboto.RoboTextView;
 
 public class ExportSettingsFragment extends Fragment implements View.OnClickListener {
 
-    private CheckBox autoBackupCheck, autoSyncCheck;
+    private RoboCheckBox autoBackupCheck, autoSyncCheck;
     private ActionBar ab;
 
     @Override
@@ -30,7 +31,7 @@ public class ExportSettingsFragment extends Fragment implements View.OnClickList
         if (ab != null) {
             ab.setTitle(R.string.export_settings_block);
         }
-        TextView clouds = rootView.findViewById(R.id.clouds);
+        RoboTextView clouds = rootView.findViewById(R.id.clouds);
         clouds.setOnClickListener(this);
         RelativeLayout autoBackup = rootView.findViewById(R.id.autoBackup);
         autoBackup.setOnClickListener(this);
@@ -83,7 +84,7 @@ public class ExportSettingsFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.clouds:
                 startActivity(new Intent(getActivity().getApplicationContext(), CloudDrives.class)
-                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
         }
     }

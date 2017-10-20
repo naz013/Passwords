@@ -3,95 +3,97 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:scrollbars="none">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.cray.software.passwords.views.roboto.RoboTextView
+            android:id="@+id/changePassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/change_password_settings_title"
-            android:id="@+id/changePassword"
-            android:paddingRight="15dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
+            android:layout_gravity="center_horizontal"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
-            android:layout_gravity="center_horizontal"
             android:gravity="center_vertical"
+            android:paddingBottom="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:text="@string/change_password_settings_title"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="18sp" />
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
 
         <RelativeLayout
             android:id="@+id/passLength"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:layout_height="wrap_content">
+            android:clickable="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_toLeftOf="@+id/passLengthText">
+                android:layout_toLeftOf="@+id/passLengthText"
+                android:orientation="vertical">
 
-                <TextView
+                <com.cray.software.passwords.views.roboto.RoboTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
                     android:gravity="center_vertical"
                     android:text="@string/password_length_title"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="5dp"/>
-                <TextView
+                    android:textSize="18sp" />
+
+                <com.cray.software.passwords.views.roboto.RoboTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:paddingBottom="10dp"
                     android:text="@string/password_length_explanation"
-                    android:paddingBottom="10dp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
-            <TextView
+            <com.cray.software.passwords.views.roboto.RoboTextView
                 android:id="@+id/passLengthText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:textSize="18sp"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:textSize="18sp" />
 
         </RelativeLayout>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
 
-        <TextView
+        <com.cray.software.passwords.views.roboto.RoboTextView
+            android:id="@+id/keyword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/keyword_setting_title"
-            android:id="@+id/keyword"
-            android:paddingRight="15dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
+            android:layout_gravity="center_horizontal"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
-            android:layout_gravity="center_horizontal"
             android:gravity="center_vertical"
+            android:paddingBottom="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:text="@string/keyword_setting_title"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="18sp" />
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
 
     </LinearLayout>
-    </ScrollView>
+</ScrollView>

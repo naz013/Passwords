@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Button;
 
 import com.cray.software.passwords.R;
+import com.cray.software.passwords.views.roboto.RoboButton;
 
 public class ProMarket extends Activity {
 
@@ -17,7 +17,7 @@ public class ProMarket extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.market_layout);
 
-        Button buyButton = findViewById(R.id.buyButton);
+        RoboButton buyButton = findViewById(R.id.buyButton);
         buyButton.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse("market://details?id=" + MARKET_APP_PASSWORDS_PRO));
