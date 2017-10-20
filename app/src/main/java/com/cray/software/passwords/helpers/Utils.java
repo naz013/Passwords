@@ -1,6 +1,5 @@
 package com.cray.software.passwords.helpers;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -9,6 +8,8 @@ import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.support.v7.widget.PopupMenu;
+import android.view.View;
 
 import com.cray.software.passwords.interfaces.LCAMListener;
 import com.cray.software.passwords.interfaces.Module;
@@ -85,13 +86,13 @@ public class Utils {
      * @param listener listener.
      * @param actions list of actions.
      */
-    public static void showLCAM(Context context, final LCAMListener listener, String... actions) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setItems(actions, (dialog, item) -> {
-            dialog.dismiss();
-            if (listener != null) listener.onAction(item);
+    public static void showLCAM(Context context, View view, final LCAMListener listener, String... actions) {
+        PopupMenu popupMenu = new PopupMenu(context, view);
+        for (int i = 0; i < actions.length; i++) popupMenu.getMenu().add(1, i, i, actions[i]);
+        popupMenu.setOnMenuItemClickListener(item -> {
+            if (listener != null) listener.onAction(item.getItemId());
+            return true;
         });
-        AlertDialog alert = builder.create();
-        alert.show();
+        popupMenu.show();
     }
 }

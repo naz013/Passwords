@@ -24,4 +24,6 @@ public interface PasswordListInterface extends ListInterface {
     String getLogin();
 
     String getDate();
+
+    String getPassword();
 }

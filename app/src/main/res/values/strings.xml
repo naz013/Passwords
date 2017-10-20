@@ -8,11 +8,11 @@
     <string name="repeat_pass">Confirm Password</string>
     <string name="enter_pass">Enter Password</string>
     <string name="activity_title">Add Password</string>
-    <string name="item_title">Enter Title:</string>
-    <string name="item_login">Login/E-mail:</string>
-    <string name="item_password">Password:</string>
-    <string name="item_link">Url:</string>
-    <string name="item_comment">Comments:</string>
+    <string name="item_title">Enter Title</string>
+    <string name="item_login">Login/E-mail</string>
+    <string name="item_password">Password</string>
+    <string name="item_link">Url</string>
+    <string name="item_comment">Comments</string>
     <string name="item_date">Date</string>
     <string name="view_act_item_close_in">Close</string>
     <string name="set_att_if_all_field_empty">Must not be empty!</string>
@@ -61,7 +61,6 @@
     <string name="gen_insert">INS</string>
     <string name="pass_length">Password length must be more than 0</string>
     <string name="pass_checks">You must check at least one item</string>
-    <string name="copyright_text">2015© Nazar Suhovych. All rights reserved.</string>
     <string name="export_settings_block">Export &amp; Synchronization</string>
     <string name="interface_block">User Interface</string>
     <string name="other_settings">Other</string>
@@ -168,4 +167,7 @@
     <string name="take_a_shot">Take a shot</string>
     <string name="from_gallery">From gallery</string>
     <string name="dropbox_app_not_installed">Dropbox app do not installed</string>
+    <string name="copy_login">Copy login/email</string>
+    <string name="copy_password">Copy password</string>
+    <string name="copied">copied</string>
 </resources>

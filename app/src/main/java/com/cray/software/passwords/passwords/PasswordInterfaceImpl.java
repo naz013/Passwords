@@ -57,4 +57,9 @@ public class PasswordInterfaceImpl implements PasswordListInterface {
     public String getDate() {
         return TImeUtils.getDateFromGmt(SuperUtil.decrypt(mPassword.getDate()));
     }
+
+    @Override
+    public String getPassword() {
+        return SuperUtil.decrypt(mPassword.getPassword());
+    }
 }

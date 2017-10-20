@@ -1,7 +1,7 @@
 package com.cray.software.passwords.passwords;
 
 import android.content.Context;
-import android.graphics.Typeface;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.cray.software.passwords.R;
+import com.cray.software.passwords.databinding.ListItemCardBinding;
 import com.cray.software.passwords.databinding.NoteListItemBinding;
 import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.ListInterface;
@@ -44,57 +44,35 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
     public static final int NOTE = 1;
 
     private List<ListInterface> list;
-    private Typeface typeface;
     private SimpleListener mEventListener;
     private ColorSetter mColor;
 
     public PasswordsRecyclerAdapter(Context context, List<ListInterface> list) {
         this.list = list;
         this.mColor = new ColorSetter(context);
-        this.typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
     }
 
     public ListInterface getItem(int position) {
         return list.get(position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements
-            View.OnLongClickListener, View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textView, dateView, loginView;
-        public CardView itemCard;
+        ListItemCardBinding binding;
 
         public ViewHolder(View v) {
             super(v);
-            textView = v.findViewById(R.id.textView);
-            dateView = v.findViewById(R.id.dateView);
-            loginView = v.findViewById(R.id.loginView);
-            itemCard = v.findViewById(R.id.itemCard);
-            if (Module.isLollipop()) {
-                itemCard.setCardElevation(5f);
-            }
-
-            textView.setTypeface(typeface);
-            dateView.setTypeface(typeface);
-            loginView.setTypeface(typeface);
-
-            v.setOnClickListener(this);
-            v.setOnLongClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (mEventListener != null) {
-                mEventListener.onItemClicked(getAdapterPosition(), itemCard);
-            }
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            if (mEventListener != null) {
-                mEventListener.onItemLongClicked(getAdapterPosition(), itemCard);
-            }
-            return true;
+            binding = DataBindingUtil.bind(v);
+            v.setOnClickListener(view -> {
+                if (mEventListener != null) {
+                    mEventListener.onItemClicked(getAdapterPosition(), binding.itemCard);
+                }
+            });
+            binding.moreButton.setOnClickListener(view -> {
+                if (mEventListener != null) {
+                    mEventListener.onItemClicked(getAdapterPosition(), view);
+                }
+            });
         }
     }
 
@@ -102,8 +80,7 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         if (viewType == PASSWORD) {
-            View itemLayoutView = inflater.inflate(R.layout.list_item_card, parent, false);
-            return new ViewHolder(itemLayoutView);
+            return new ViewHolder(ListItemCardBinding.inflate(inflater, parent, false).getRoot());
         } else {
             return new NoteHolder(NoteListItemBinding.inflate(inflater, parent, false).getRoot(), mEventListener);
         }
@@ -114,10 +91,10 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         if (holder instanceof ViewHolder) {
             ViewHolder h = (ViewHolder) holder;
             PasswordListInterface item = (PasswordListInterface) getItem(position);
-            h.textView.setText(item.getTitle());
-            h.dateView.setText(item.getDate());
-            h.loginView.setText(item.getLogin());
-            h.itemCard.setCardBackgroundColor(mColor.getColor(mColor.colorPrimary(item.getColor())));
+            h.binding.textView.setText(item.getTitle());
+            h.binding.dateView.setText(item.getDate());
+            h.binding.loginView.setText(item.getLogin());
+            h.binding.itemCard.setCardBackgroundColor(mColor.getColor(mColor.colorPrimary(item.getColor())));
         } else if (holder instanceof NoteHolder) {
             NoteHolder h = (NoteHolder) holder;
             NoteListInterface item = (NoteListInterface) getItem(position);

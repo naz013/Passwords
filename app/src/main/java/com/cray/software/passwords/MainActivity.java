@@ -2,6 +2,9 @@ package com.cray.software.passwords;
 
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -233,10 +236,54 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
 
     @Override
     public void onItemClicked(int position, View view) {
-        edit(position);
+        switch (view.getId()) {
+            case R.id.more_button:
+                showPopup(position, view);
+                break;
+            default:
+                edit(position);
+                break;
+        }
     }
 
-    void edit(int position) {
+    private void showPopup(int position, View view) {
+        ListInterface el = data.get(position);
+        if (el instanceof PasswordListInterface) {
+            final String[] items = {
+                    getString(R.string.copy_login),
+                    getString(R.string.copy_password),
+                    getString(R.string.edit),
+                    getString(R.string.delete)
+            };
+            Utils.showLCAM(this, view, item -> {
+                switch (item) {
+                    case 0:
+                        copyText(getString(R.string.item_login), ((PasswordListInterface) el).getLogin());
+                        break;
+                    case 1:
+                        copyText(getString(R.string.item_password), ((PasswordListInterface) el).getPassword());
+                        break;
+                    case 2:
+                        edit(position);
+                        break;
+                    case 3:
+                        delete(position);
+                        break;
+                }
+            }, items);
+        }
+    }
+
+    private void copyText(String label, String value) {
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText(label, value);
+        if (clipboard != null) {
+            clipboard.setPrimaryClip(clip);
+            Toast.makeText(this, label + " " + getString(R.string.copied), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void edit(int position) {
         ListInterface item = data.get(position);
         long id = item.getId();
         if (item instanceof PasswordListInterface) {
@@ -258,18 +305,5 @@ public class MainActivity extends AppCompatActivity implements SyncListener, Sim
         } else {
             new DeleteNoteTask(this, result -> Snackbar.make(mFab, R.string.removed, Snackbar.LENGTH_SHORT).show()).execute(del);
         }
-    }
-
-    @Override
-    public void onItemLongClicked(final int position, View view) {
-        final String[] items = {getString(R.string.edit), getString(R.string.delete)};
-        Utils.showLCAM(this, item -> {
-            if (item == 0) {
-                edit(position);
-            }
-            if (item == 1) {
-                delete(position);
-            }
-        }, items);
     }
 }
