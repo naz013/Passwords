@@ -38,7 +38,6 @@ public class ThemerDialog extends AppCompatActivity {
         toolbar.setBackgroundColor(cs.getColor(cs.colorPrimary()));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setNavigationIcon(R.drawable.ic_clear_white_24dp);
         toolbar.setTitle(getString(R.string.app_theme_title));
 
         red = findViewById(R.id.red_checkbox);

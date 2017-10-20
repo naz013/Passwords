@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="8"
+            android:layout_gravity="center_horizontal"
             android:textSize="20sp"
             app:font_style="roboto_regular" />
 

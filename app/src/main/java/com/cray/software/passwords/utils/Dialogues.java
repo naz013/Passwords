@@ -109,8 +109,10 @@ public class Dialogues {
         builder.setView(binding.getRoot());
         AlertDialog dialog = builder.create();
         binding.dialogTitle.setText(title);
+
         binding.inputField.setHint(hint1);
         binding.input2Field.setHint(hint2);
+
         binding.inputField.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
