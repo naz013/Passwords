@@ -28,8 +28,9 @@
                 android:id="@+id/input_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:digits="0123456789"
                 android:importantForAutofill="noExcludeDescendants"
-                android:inputType="text"
+                android:inputType="numberPassword"
                 android:maxLines="1"
                 android:singleLine="true"
                 app:edit_font_style="roboto_regular" />
@@ -46,8 +47,9 @@
                 android:id="@+id/input2_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:digits="0123456789"
                 android:importantForAutofill="noExcludeDescendants"
-                android:inputType="text"
+                android:inputType="numberPassword"
                 android:maxLines="1"
                 android:singleLine="true"
                 app:edit_font_style="roboto_regular" />

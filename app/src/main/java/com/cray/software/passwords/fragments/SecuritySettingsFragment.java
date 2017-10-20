@@ -81,7 +81,7 @@ public class SecuritySettingsFragment extends Fragment implements View.OnClickLi
             Prefs.getInstance(getContext()).setPasswordLength(value);
             dialog.dismiss();
             showPasswordLength();
-        }, getString(R.string.change_password_settings_title), Prefs.getInstance(getActivity()).getPasswordLength());
+        }, getString(R.string.password_length_title), Prefs.getInstance(getActivity()).getPasswordLength());
     }
 
     private void showKeywordDialog() {
