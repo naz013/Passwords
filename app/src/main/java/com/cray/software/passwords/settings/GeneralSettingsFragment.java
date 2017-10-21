@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.databinding.FragmentGeneralSettingsBinding;
-import com.cray.software.passwords.dialogs.ThemerDialog;
+import com.cray.software.passwords.dialogs.ThemeActivity;
 import com.cray.software.passwords.fragments.NestedFragment;
 import com.cray.software.passwords.utils.Dialogues;
 import com.cray.software.passwords.utils.Prefs;
@@ -35,7 +35,7 @@ public class GeneralSettingsFragment extends NestedFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGeneralSettingsBinding.inflate(inflater, container, false);
 
-        binding.colorPrefs.setOnClickListener(view -> startActivityForResult(new Intent(getActivity(), ThemerDialog.class), REQ_THEME));
+        binding.colorPrefs.setOnClickListener(view -> startActivityForResult(new Intent(getActivity(), ThemeActivity.class), REQ_THEME));
         initAppTheme();
 
         return binding.getRoot();

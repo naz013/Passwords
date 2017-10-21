@@ -44,7 +44,7 @@
             android:name=".notes.CreateNoteActivity" />
         <activity android:name=".passwords.ManagePassword" />
         <activity
-            android:name=".dialogs.ThemerDialog"
+            android:name=".dialogs.ThemeActivity"
             android:configChanges="keyboardHidden|orientation">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />

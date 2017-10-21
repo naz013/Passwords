@@ -2,6 +2,7 @@ package com.cray.software.passwords.dialogs;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,10 +10,8 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.cray.software.passwords.R;
+import com.cray.software.passwords.databinding.DialogGeneratePasswordBinding;
 import com.cray.software.passwords.utils.ThemeUtil;
-import com.cray.software.passwords.views.roboto.RoboCheckBox;
-import com.cray.software.passwords.views.roboto.RoboEditText;
-import com.cray.software.passwords.views.roboto.RoboTextView;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -24,10 +23,7 @@ public class GeneratePassword extends Activity implements View.OnClickListener {
     private static final String numeric = "0123456789";
     private static final String symbols = "!@#$%()?^*";
 
-    private RoboTextView passLength;
-    private SeekBar passwordLength;
-    private RoboCheckBox aZCheck, azCheck, numericCheck, symbolCheck;
-    private RoboEditText passwordShow;
+    private DialogGeneratePasswordBinding binding;
 
     private Random rnd = new Random();
 
@@ -35,17 +31,16 @@ public class GeneratePassword extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(ThemeUtil.getInstance(this).getDialogStyle());
-        setContentView(R.layout.generate_dialog_layout);
+        binding = DataBindingUtil.setContentView(this, R.layout.dialog_generate_password);
+        binding.bgView.setBackgroundColor(ThemeUtil.getInstance(this).getBackgroundStyle());
 
-        passLength = findViewById(R.id.passLength);
-        passwordLength = findViewById(R.id.passwordLength);
-        passwordLength.setMax(32);
-        passwordLength.setProgress(16);
-        passLength.setText("16");
-        passwordLength.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        binding.passwordLength.setMax(32);
+        binding.passwordLength.setProgress(16);
+        binding.passLength.setText("16");
+        binding.passwordLength.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                passLength.setText(String.valueOf(progress));
+                binding.passLength.setText(String.valueOf(progress));
             }
 
             @Override
@@ -58,13 +53,6 @@ public class GeneratePassword extends Activity implements View.OnClickListener {
 
             }
         });
-
-        aZCheck = findViewById(R.id.aZCheck);
-        azCheck = findViewById(R.id.azCheck);
-        numericCheck = findViewById(R.id.numericCheck);
-        symbolCheck = findViewById(R.id.symbolCheck);
-
-        passwordShow = findViewById(R.id.passwordShow);
 
         Button genButton = findViewById(R.id.genButton);
         genButton.setOnClickListener(this);
@@ -131,7 +119,7 @@ public class GeneratePassword extends Activity implements View.OnClickListener {
                 break;
             case R.id.genInsert:
                 Intent intent = new Intent();
-                String genPass = passwordShow.getText().toString().trim();
+                String genPass = binding.passwordShow.getText().toString().trim();
                 intent.putExtra("GENERATED_PASSWORD", genPass);
                 setResult(RESULT_OK, intent);
                 finish();
@@ -141,8 +129,8 @@ public class GeneratePassword extends Activity implements View.OnClickListener {
 
     private boolean preGenerateCheck() {
         boolean status;
-        if (aZCheck.isChecked() || azCheck.isChecked() || numericCheck.isChecked() || symbolCheck.isChecked()) {
-            if (passwordLength.getProgress() > 0) {
+        if (binding.aZCheck.isChecked() || binding.azCheck.isChecked() || binding.numericCheck.isChecked() || binding.symbolCheck.isChecked()) {
+            if (binding.passwordLength.getProgress() > 0) {
                 status = true;
             } else {
                 status = false;
@@ -150,7 +138,7 @@ public class GeneratePassword extends Activity implements View.OnClickListener {
             }
         } else {
             status = false;
-            aZCheck.setChecked(true);
+            binding.aZCheck.setChecked(true);
             Toast.makeText(GeneratePassword.this, getString(R.string.pass_checks), Toast.LENGTH_SHORT).show();
         }
         return status;
@@ -158,22 +146,22 @@ public class GeneratePassword extends Activity implements View.OnClickListener {
 
     private void startGenerating() {
         int aZCh = 0;
-        if (aZCheck.isChecked()) {
+        if (binding.aZCheck.isChecked()) {
             aZCh = 1;
         }
         int azCh = 0;
-        if (azCheck.isChecked()) {
+        if (binding.azCheck.isChecked()) {
             azCh = 1;
         }
         int numCh = 0;
-        if (numericCheck.isChecked()) {
+        if (binding.numericCheck.isChecked()) {
             numCh = 1;
         }
         int symCh = 0;
-        if (symbolCheck.isChecked()) {
+        if (binding.symbolCheck.isChecked()) {
             symCh = 1;
         }
-        String password = randomString(passwordLength.getProgress(), aZCh, azCh, numCh, symCh);
-        passwordShow.setText(password);
+        String password = randomString(binding.passwordLength.getProgress(), aZCh, azCh, numCh, symCh);
+        binding.passwordShow.setText(password);
     }
 }

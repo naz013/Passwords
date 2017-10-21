@@ -153,8 +153,8 @@ public class ManagePassword extends ThemedActivity {
         String password = binding.passwordEnter.getText().toString().trim();
         String url = binding.linkEnter.getText().toString().trim();
         String comment = binding.commentEnter.getText().toString().trim();
-        String date = TImeUtils.getGmtStamp();
         if (checkEmpty()) return false;
+        String date = TImeUtils.getGmtStamp();
         title = SuperUtil.encrypt(title);
         login = SuperUtil.encrypt(login);
         password = SuperUtil.encrypt(password);

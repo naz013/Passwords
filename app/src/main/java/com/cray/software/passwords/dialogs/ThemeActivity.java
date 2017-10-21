@@ -14,7 +14,7 @@ import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.utils.Prefs;
 import com.cray.software.passwords.utils.ThemedActivity;
 
-public class ThemerDialog extends ThemedActivity {
+public class ThemeActivity extends ThemedActivity {
 
     private ImageButton red, green, blue, yellow, greenLight, blueLight, cyan, purple,
             amber, orange, pink, teal, deepPurple, deepOrange, indigo, lime;

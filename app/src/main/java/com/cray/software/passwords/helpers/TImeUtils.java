@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Copyright 2017 Nazar Suhovich
@@ -28,11 +29,13 @@ public class TImeUtils {
     private static final DateFormat viewStamp = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
 
     public static String getGmtStamp() {
+        timeStamp.setTimeZone(TimeZone.getTimeZone("GMT"));
         return timeStamp.format(new Date(System.currentTimeMillis()));
     }
 
     public static String getDateFromGmt(String gmt) {
         try {
+            timeStamp.setTimeZone(TimeZone.getTimeZone("GMT"));
             Date date = timeStamp.parse(gmt);
             return viewStamp.format(date);
         } catch (ParseException e) {

@@ -24,10 +24,8 @@ import com.cray.software.passwords.helpers.ListInterface;
 import com.cray.software.passwords.helpers.Utils;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.SimpleListener;
-import com.cray.software.passwords.interfaces.SyncListener;
 import com.cray.software.passwords.passwords.PasswordsRecyclerAdapter;
 import com.cray.software.passwords.tasks.DeleteNoteTask;
-import com.cray.software.passwords.tasks.SyncTask;
 import com.cray.software.passwords.utils.Dialogues;
 import com.cray.software.passwords.utils.Prefs;
 
@@ -47,7 +45,7 @@ import com.cray.software.passwords.utils.Prefs;
  * limitations under the License.
  */
 
-public class NotesFragment extends BaseFragment implements SyncListener, SimpleListener {
+public class NotesFragment extends BaseFragment implements SimpleListener {
 
     public static final String TAG = "NotesFragment";
 
@@ -59,6 +57,12 @@ public class NotesFragment extends BaseFragment implements SyncListener, SimpleL
 
     public static NotesFragment newInstance() {
         return new NotesFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -92,16 +96,13 @@ public class NotesFragment extends BaseFragment implements SyncListener, SimpleL
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main, menu);
+        inflater.inflate(R.menu.fragment_passwords, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_add:
-                new SyncTask(getContext(), this).execute();
-                return true;
             case R.id.action_order:
                 showOrders();
                 return true;
@@ -148,11 +149,6 @@ public class NotesFragment extends BaseFragment implements SyncListener, SimpleL
         } else {
             binding.emptyItem.setVisibility(View.VISIBLE);
         }
-    }
-
-    @Override
-    public void endExecution(boolean result) {
-        loaderAdapter();
     }
 
     @Override

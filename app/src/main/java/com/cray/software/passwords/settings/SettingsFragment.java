@@ -1,7 +1,6 @@
 package com.cray.software.passwords.settings;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +9,6 @@ import android.view.ViewGroup;
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.databinding.FragmentSettingsBinding;
 import com.cray.software.passwords.fragments.BaseFragment;
-import com.cray.software.passwords.helpers.SyncHelper;
-import com.cray.software.passwords.interfaces.Constants;
-import com.cray.software.passwords.utils.Prefs;
-
-import java.io.File;
 
 public class SettingsFragment extends BaseFragment {
 
@@ -55,28 +49,6 @@ public class SettingsFragment extends BaseFragment {
                 anInterface.openScreen(GeneralSettingsFragment.newInstance(), GeneralSettingsFragment.TAG);
             }
         });
-    }
-
-    private void syncPrefs() {
-        boolean isSD = SyncHelper.isSdPresent();
-        if (isSD) {
-            File sdPath = Environment.getExternalStorageDirectory();
-            File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.PREFS);
-            if (!sdPathDr.exists()) {
-                sdPathDr.mkdirs();
-            }
-            File prefs = new File(sdPathDr + "/prefs.xml");
-            if (prefs.exists()) {
-                prefs.delete();
-            }
-            Prefs.getInstance(getContext()).saveSharedPreferencesToFile(prefs);
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        syncPrefs();
     }
 
     @Override

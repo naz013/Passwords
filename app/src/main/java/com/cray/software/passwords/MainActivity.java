@@ -3,6 +3,7 @@ package com.cray.software.passwords;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,8 @@ import com.cray.software.passwords.databinding.ActivityMainBinding;
 import com.cray.software.passwords.fragments.BaseFragment;
 import com.cray.software.passwords.fragments.FragmentInterface;
 import com.cray.software.passwords.fragments.NestedFragment;
+import com.cray.software.passwords.helpers.SyncHelper;
+import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.notes.NotesFragment;
 import com.cray.software.passwords.passwords.PasswordsFragment;
@@ -27,6 +30,8 @@ import com.cray.software.passwords.utils.Dialogues;
 import com.cray.software.passwords.utils.Prefs;
 import com.cray.software.passwords.utils.ThemedActivity;
 import com.roughike.bottombar.BottomBarTab;
+
+import java.io.File;
 
 public class MainActivity extends ThemedActivity implements FragmentInterface, FragmentManager.OnBackStackChangedListener {
 
@@ -47,6 +52,7 @@ public class MainActivity extends ThemedActivity implements FragmentInterface, F
         replaceFragment(HomeFragment.newInstance(), HomeFragment.TAG);
 
         initBottomBar();
+        showRate();
     }
 
     private void initBottomBar() {
@@ -79,13 +85,13 @@ public class MainActivity extends ThemedActivity implements FragmentInterface, F
     protected void onResume() {
         super.onResume();
         delayedThreads();
-        showRate();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         autoBackup();
+        syncPrefs();
     }
 
     private void autoBackup() {
@@ -207,5 +213,21 @@ public class MainActivity extends ThemedActivity implements FragmentInterface, F
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (mFragment != null) mFragment.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void syncPrefs() {
+        boolean isSD = SyncHelper.isSdPresent();
+        if (isSD) {
+            File sdPath = Environment.getExternalStorageDirectory();
+            File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.PREFS);
+            if (!sdPathDr.exists()) {
+                sdPathDr.mkdirs();
+            }
+            File prefs = new File(sdPathDr + "/prefs.xml");
+            if (prefs.exists()) {
+                prefs.delete();
+            }
+            Prefs.getInstance(this).saveSharedPreferencesToFile(prefs);
+        }
     }
 }
