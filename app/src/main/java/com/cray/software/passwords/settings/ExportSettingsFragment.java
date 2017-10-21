@@ -71,6 +71,7 @@ public class ExportSettingsFragment extends NestedFragment {
     public void onFragmentResume() {
         super.onFragmentResume();
         if (anInterface != null) {
+            anInterface.setClick(null);
             anInterface.setTitle(getString(R.string.export_settings_block));
         }
     }

@@ -41,6 +41,7 @@ public class SecuritySettingsFragment extends NestedFragment {
     public void onFragmentResume() {
         super.onFragmentResume();
         if (anInterface != null) {
+            anInterface.setClick(null);
             anInterface.setTitle(getString(R.string.security_block));
         }
     }

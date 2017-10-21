@@ -59,6 +59,7 @@ public class GeneralSettingsFragment extends NestedFragment {
         super.onFragmentResume();
         initThemeColor();
         if (anInterface != null) {
+            anInterface.setClick(null);
             anInterface.setTitle(getString(R.string.interface_block));
         }
     }

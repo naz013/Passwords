@@ -49,7 +49,6 @@ public abstract class BaseFragment extends Fragment {
 
     public void onFragmentResume() {
         if (anInterface != null) {
-            anInterface.setClick(null);
             anInterface.setCurrent(this);
         }
     }

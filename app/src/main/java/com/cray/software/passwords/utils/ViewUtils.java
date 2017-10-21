@@ -8,6 +8,8 @@ import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -134,8 +136,9 @@ public final class ViewUtils {
         view.setVisibility(View.GONE);
     }
 
-    public static void show(Context context, View v, AnimationCallback callback) {
-        Animation scaleUp = AnimationUtils.loadAnimation(context, R.anim.scale_zoom);
+    public static void show(@NonNull View v, @Nullable AnimationCallback callback) {
+        if (v.getVisibility() == View.VISIBLE) return;
+        Animation scaleUp = AnimationUtils.loadAnimation(v.getContext(), R.anim.scale_zoom);
         scaleUp.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -158,8 +161,9 @@ public final class ViewUtils {
         v.setVisibility(View.VISIBLE);
     }
 
-    public static void hide(Context context, View v, AnimationCallback callback) {
-        Animation scaleDown = AnimationUtils.loadAnimation(context, R.anim.scale_zoom_out);
+    public static void hide(@NonNull View v, @Nullable AnimationCallback callback) {
+        if (v.getVisibility() == View.GONE) return;
+        Animation scaleDown = AnimationUtils.loadAnimation(v.getContext(), R.anim.scale_zoom_out);
         scaleDown.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {

@@ -66,6 +66,7 @@ public class CloudFragment extends NestedFragment implements GoogleLogin.LoginCa
     public void onFragmentResume() {
         super.onFragmentResume();
         if (anInterface != null) {
+            anInterface.setClick(null);
             anInterface.setTitle(getString(R.string.cloud_drives_settings_title));
         }
         mDropboxLogin.checkDropboxStatus();

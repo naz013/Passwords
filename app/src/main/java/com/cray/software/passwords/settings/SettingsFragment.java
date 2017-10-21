@@ -15,7 +15,7 @@ public class SettingsFragment extends BaseFragment {
     public static final String TAG = "SettingsFragment";
     private FragmentSettingsBinding binding;
 
-    public static BaseFragment newInstance() {
+    public static SettingsFragment newInstance() {
         return new SettingsFragment();
     }
 
@@ -55,6 +55,7 @@ public class SettingsFragment extends BaseFragment {
     public void onFragmentResume() {
         super.onFragmentResume();
         if (anInterface != null) {
+            anInterface.setClick(null);
             anInterface.setTitle(getString(R.string.action_settings));
         }
     }

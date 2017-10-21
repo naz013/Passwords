@@ -60,11 +60,12 @@ public class OssFragment extends NestedFragment {
     public void onFragmentResume() {
         super.onFragmentResume();
         if (anInterface != null) {
+            anInterface.setClick(null);
             anInterface.setTitle(getString(R.string.open_source_licenses));
         }
     }
 
-    private String readFile(){
+    private String readFile() {
         BufferedReader reader = null;
         StringBuilder sb = new StringBuilder();
         try {

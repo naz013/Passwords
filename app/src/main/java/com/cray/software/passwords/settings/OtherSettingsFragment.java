@@ -105,6 +105,7 @@ public class OtherSettingsFragment extends NestedFragment {
     public void onFragmentResume() {
         super.onFragmentResume();
         if (anInterface != null) {
+            anInterface.setClick(null);
             anInterface.setTitle(getString(R.string.other_settings));
         }
     }

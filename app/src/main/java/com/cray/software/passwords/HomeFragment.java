@@ -89,6 +89,7 @@ public class HomeFragment extends BaseFragment implements SyncListener, SimpleLi
         loaderAdapter();
         if (anInterface != null) {
             anInterface.setTitle(getString(R.string.home));
+            anInterface.setClick(null);
         }
     }
 

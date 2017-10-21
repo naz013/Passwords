@@ -29,6 +29,7 @@ import com.cray.software.passwords.tasks.SyncTask;
 import com.cray.software.passwords.utils.Dialogues;
 import com.cray.software.passwords.utils.Prefs;
 import com.cray.software.passwords.utils.ThemedActivity;
+import com.cray.software.passwords.utils.ViewUtils;
 import com.roughike.bottombar.BottomBarTab;
 
 import java.io.File;
@@ -169,9 +170,9 @@ public class MainActivity extends ThemedActivity implements FragmentInterface, F
     public void setClick(@Nullable View.OnClickListener clickListener) {
         if (clickListener != null) {
             binding.fab.setOnClickListener(clickListener);
-            binding.fab.setVisibility(View.VISIBLE);
+            ViewUtils.show(binding.fab, null);
         } else {
-            binding.fab.setVisibility(View.GONE);
+            ViewUtils.hide(binding.fab, null);
         }
     }
 
