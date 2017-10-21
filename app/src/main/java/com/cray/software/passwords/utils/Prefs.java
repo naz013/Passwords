@@ -56,24 +56,24 @@ public final class Prefs extends SharedPrefs {
     }
 
     public void setRestoreWord(String value){
-        prefsPassword.edit().putString(NEW_PREFERENCES_RESTORE_MAIL, value).apply();
+        prefsPassword.edit().putString(KEYWORD, value).apply();
     }
 
     public String getRestoreWord(){
-        return prefsPassword.getString(NEW_PREFERENCES_RESTORE_MAIL, null);
+        return prefsPassword.getString(KEYWORD, null);
     }
 
     public void savePassPrefs(String value){
-        prefsPassword.edit().putString(NEW_APP_PREFERENCES_LOGIN, value).apply();
+        prefsPassword.edit().putString(LOGIN_PASSCODE, value).apply();
     }
 
     @NonNull
     public String loadPassPrefs(){
-        return prefsPassword.getString(NEW_APP_PREFERENCES_LOGIN, "1111");
+        return prefsPassword.getString(LOGIN_PASSCODE, "1111");
     }
 
     public boolean isPassString(){
-        return prefsPassword.contains(NEW_APP_PREFERENCES_LOGIN);
+        return prefsPassword.contains(LOGIN_PASSCODE);
     }
 
     public void saveSystemPrefs(String key, String value){
@@ -97,35 +97,35 @@ public final class Prefs extends SharedPrefs {
     }
 
     public boolean isRateShowed() {
-        return getBoolean(NEW_PREFERENCES_RATE_SHOW);
+        return getBoolean(RATE_SHOW);
     }
 
     public void setRateShowed(boolean value) {
-        putBoolean(NEW_PREFERENCES_RATE_SHOW, value);
+        putBoolean(RATE_SHOW, value);
     }
 
     public boolean isDeleteBackFileEnabled() {
-        return getBoolean(NEW_PREFERENCES_CHECKBOX);
+        return getBoolean(DELETE_BACKUP);
     }
 
     public void setDeleteBackFileEnabled(boolean value) {
-        putBoolean(NEW_PREFERENCES_CHECKBOX, value);
+        putBoolean(DELETE_BACKUP, value);
     }
 
     public boolean isAutoBackupEnabled() {
-        return getBoolean(NEW_PREFERENCES_AUTO_BACKUP);
+        return getBoolean(AUTO_BACKUP);
     }
 
     public void setAutoBackupEnabled(boolean value) {
-        putBoolean(NEW_PREFERENCES_AUTO_BACKUP, value);
+        putBoolean(AUTO_BACKUP, value);
     }
 
     public boolean isAutoSyncEnabled() {
-        return getBoolean(NEW_PREFERENCES_AUTO_SYNC);
+        return getBoolean(AUTO_SYNC);
     }
 
     public void setAutoSyncEnabled(boolean value) {
-        putBoolean(NEW_PREFERENCES_AUTO_SYNC, value);
+        putBoolean(AUTO_SYNC, value);
     }
 
     public int getAppThemeColor() {
@@ -145,35 +145,35 @@ public final class Prefs extends SharedPrefs {
     }
 
     public int getPasswordLength() {
-        return getInt(NEW_PREFERENCES_EDIT_LENGTH);
+        return getInt(PASSWORD_LENGTH);
     }
 
     public void setPasswordLength(int value) {
-        putInt(NEW_PREFERENCES_EDIT_LENGTH, value);
+        putInt(PASSWORD_LENGTH, value);
     }
 
     public int getOldPasswordLength() {
-        return getInt(NEW_PREFERENCES_EDIT_OLD_LENGTH);
+        return getInt(PASSWORD_OLD_LENGTH);
     }
 
     public void setOldPasswordLength(int value) {
-        putInt(NEW_PREFERENCES_EDIT_OLD_LENGTH, value);
+        putInt(PASSWORD_OLD_LENGTH, value);
     }
 
     public String getOrderBy() {
-        return getString(NEW_PREFERENCES_ORDER_BY, Constants.ORDER_DATE_A_Z);
+        return getString(ORDER_BY, Constants.ORDER_DATE_A_Z);
     }
 
     public void setOrderBy(String value) {
-        putString(NEW_PREFERENCES_ORDER_BY, value);
+        putString(ORDER_BY, value);
     }
 
     public void setRunsCount(int value) {
-        putInt(NEW_PREFERENCES_APP_RUNS_COUNT, value);
+        putInt(APP_RUNS_COUNT, value);
     }
 
     public int getRunsCount() {
-        return getInt(NEW_PREFERENCES_APP_RUNS_COUNT);
+        return getInt(APP_RUNS_COUNT);
     }
 
     public void checkPrefs() {
@@ -181,23 +181,20 @@ public final class Prefs extends SharedPrefs {
             putInt(APP_THEME_COLOR, 3);
         }
         if (!hasKey(APP_THEME)) {
-            putInt(APP_THEME, ThemeUtil.THEME_WHITE);
+            putInt(APP_THEME, ThemeUtil.THEME_AUTO);
         }
-        if (!hasKey(NEW_PREFERENCES_SCREEN)) {
-            putString(NEW_PREFERENCES_SCREEN, Constants.SCREEN_AUTO);
+        if (!hasKey(PASSWORD_LENGTH)) {
+            putInt(PASSWORD_LENGTH, 4);
         }
-        if (!hasKey(NEW_PREFERENCES_EDIT_LENGTH)) {
-            putInt(NEW_PREFERENCES_EDIT_LENGTH, 4);
-        }
-        if (!hasKey(NEW_PREFERENCES_CHECKBOX)) {
-            putBoolean(NEW_PREFERENCES_CHECKBOX, false);
+        if (!hasKey(DELETE_BACKUP)) {
+            putBoolean(DELETE_BACKUP, false);
         }
         if (Module.isPro()) {
-            if (!hasKey(NEW_PREFERENCES_AUTO_SYNC)) {
-                putBoolean(NEW_PREFERENCES_AUTO_SYNC, false);
+            if (!hasKey(AUTO_SYNC)) {
+                putBoolean(AUTO_SYNC, false);
             }
-            if (!hasKey(NEW_PREFERENCES_AUTO_BACKUP)) {
-                putBoolean(NEW_PREFERENCES_AUTO_BACKUP, false);
+            if (!hasKey(AUTO_BACKUP)) {
+                putBoolean(AUTO_BACKUP, false);
             }
         }
     }

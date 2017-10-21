@@ -41,7 +41,7 @@ abstract class SharedPrefs extends PrefsConstants {
 
     SharedPrefs(Context context) {
         prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        prefsPassword = context.getSharedPreferences(NEW_APP_PREFS, Context.MODE_PRIVATE);
+        prefsPassword = context.getSharedPreferences(LOGIN_PREFS, Context.MODE_PRIVATE);
     }
 
     void putString(String stringToSave, String value) {
@@ -57,11 +57,7 @@ abstract class SharedPrefs extends PrefsConstants {
         try {
             x = prefs.getInt(stringToLoad, 0);
         } catch (ClassCastException e) {
-            try {
-                x = Integer.parseInt(prefs.getString(stringToLoad, "4"));
-            } catch (ClassCastException e1) {
-                x = 0;
-            }
+            x = 0;
         }
         return x;
     }
@@ -75,7 +71,7 @@ abstract class SharedPrefs extends PrefsConstants {
         try {
             x = prefs.getLong(stringToLoad, 1000);
         } catch (ClassCastException e) {
-            x = Long.parseLong(prefs.getString(stringToLoad, "1000"));
+            x = 1000;
         }
         return x;
     }
@@ -115,7 +111,7 @@ abstract class SharedPrefs extends PrefsConstants {
         try {
             res = prefs.getBoolean(stringToLoad, false);
         } catch (ClassCastException e) {
-            res = Boolean.parseBoolean(prefs.getString(stringToLoad, "false"));
+            res = false;
         }
         return res;
     }

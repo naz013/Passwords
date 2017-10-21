@@ -57,7 +57,7 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     private void checkKeys() {
-        File settings = new File("/data/data/" + getPackageName() + "/shared_prefs/" + Prefs.NEW_APP_PREFS + ".xml");
+        File settings = new File("/data/data/" + getPackageName() + "/shared_prefs/" + Prefs.LOGIN_PREFS + ".xml");
         if (settings.exists()) {
             boolean loadedStr = Prefs.getInstance(this).isPassString();
             if (loadedStr) {
@@ -66,7 +66,7 @@ public class SplashScreen extends AppCompatActivity {
                 attachDouble();
             }
         } else {
-            SharedPreferences appSettings = getSharedPreferences(Prefs.NEW_APP_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences appSettings = getSharedPreferences(Prefs.LOGIN_PREFS, Context.MODE_PRIVATE);
             SharedPreferences.Editor ed = appSettings.edit();
             ed.apply();
             attachDouble();

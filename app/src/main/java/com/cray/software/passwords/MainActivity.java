@@ -26,6 +26,7 @@ import com.cray.software.passwords.tasks.SyncTask;
 import com.cray.software.passwords.utils.Dialogues;
 import com.cray.software.passwords.utils.Prefs;
 import com.cray.software.passwords.utils.ThemedActivity;
+import com.roughike.bottombar.BottomBarTab;
 
 public class MainActivity extends ThemedActivity implements FragmentInterface, FragmentManager.OnBackStackChangedListener {
 
@@ -50,7 +51,10 @@ public class MainActivity extends ThemedActivity implements FragmentInterface, F
 
     private void initBottomBar() {
         for (int i = 0; i < binding.bottomBar.getTabCount(); i++) {
-            binding.bottomBar.getTabAtPosition(i).setActiveColor(getThemeUtil().getColor(getThemeUtil().colorAccent()));
+            BottomBarTab tab = binding.bottomBar.getTabAtPosition(i);
+            tab.setActiveColor(getThemeUtil().getColor(getThemeUtil().colorAccent()));
+            tab.setInActiveColor(getThemeUtil().getColor(getThemeUtil().colorPrimary()));
+            tab.setBarColorWhenSelected(getThemeUtil().getBackgroundStyle());
         }
         binding.bottomBar.setDefaultTabPosition(0);
         binding.bottomBar.setOnTabSelectListener(tabId -> {

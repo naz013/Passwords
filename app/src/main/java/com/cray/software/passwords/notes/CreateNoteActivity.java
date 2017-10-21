@@ -145,7 +145,7 @@ public class CreateNoteActivity extends AppCompatActivity {
             mItem = new NoteItem();
         }
         mItem.setSummary(SuperUtil.encrypt(note));
-        mItem.setDate(TImeUtils.getGmtStamp());
+        mItem.setDate(SuperUtil.encrypt(TImeUtils.getGmtStamp()));
         if (mImageUri != null) {
             try {
                 mItem.setImage(BitmapUtil.getCompressed(BitmapUtil.decodeUriToBitmap(this, mImageUri)));

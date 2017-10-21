@@ -18,23 +18,22 @@ package com.cray.software.passwords.utils;
 
 class PrefsConstants {
 
-    protected static final String PREFS_NAME = "new_settings";
+    protected static final String PREFS_NAME = "pass_prefs";
 
-    public static final String NEW_PREFERENCES_RATE_SHOW = "show_rate_state";
-    public static final String NEW_PREFERENCES_APP_RUNS_COUNT = "app_runs_state";
+    public static final String RATE_SHOW = "show_rate_state";
+    public static final String APP_RUNS_COUNT = "app_runs_state";
     public static final String APP_THEME = "theme_";
     public static final String APP_THEME_COLOR = "theme_color";
-    public static final String NEW_PREFERENCES_CHECKBOX = "delete_backup_state";
-    public static final String NEW_PREFERENCES_EDIT_LENGTH = "edit_length_state";
-    public static final String NEW_PREFERENCES_EDIT_OLD_LENGTH = "edit_old_length_state";
-    public static final String NEW_PREFERENCES_RESTORE_MAIL = "restore_key_state";
-    public static final String NEW_PREFERENCES_AUTO_BACKUP = "auto_backup_state";
-    public static final String NEW_PREFERENCES_AUTO_SYNC = "auto_sunc_state";
-    public static final String NEW_PREFERENCES_SCREEN = "screen_state";
-    public static final String NEW_PREFERENCES_ORDER_BY = "order_by";
+    public static final String DELETE_BACKUP = "delete_backup_state";
+    public static final String PASSWORD_LENGTH = "edit_length_state";
+    public static final String PASSWORD_OLD_LENGTH = "edit_old_length_state";
+    public static final String KEYWORD = "restore_key_state";
+    public static final String AUTO_BACKUP = "auto_backup_state";
+    public static final String AUTO_SYNC = "auto_sunc_state";
+    public static final String ORDER_BY = "order_by";
 
-    public static final String NEW_APP_PREFERENCES_LOGIN = "login_passcode";
-    public final static String NEW_APP_PREFS = "next_settings";
+    public static final String LOGIN_PASSCODE = "login_passcode";
+    public final static String LOGIN_PREFS = "next_settings";
 
     protected static final String DRIVE_USER = "ggl_user";
     static final String DROPBOX_UID = "dropbox_uid";

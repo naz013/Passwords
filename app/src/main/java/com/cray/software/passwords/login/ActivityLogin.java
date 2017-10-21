@@ -51,7 +51,7 @@ public class ActivityLogin extends ThemedActivity {
     }
 
     private void showRestoreDialog() {
-        if (Prefs.getInstance(this).hasSecureKey(Prefs.NEW_PREFERENCES_RESTORE_MAIL)) {
+        if (Prefs.getInstance(this).hasSecureKey(Prefs.KEYWORD)) {
             Dialogues.showSimpleDialog(this, (dialog, field, layout) -> {
                 String keyword = field.getText().toString().trim();
                 if (TextUtils.isEmpty(keyword)) {
