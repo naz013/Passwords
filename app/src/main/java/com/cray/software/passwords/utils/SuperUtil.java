@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Base64;
 import android.widget.Toast;
 
@@ -96,7 +97,8 @@ public class SuperUtil {
     }
 
     @NonNull
-    public static String decrypt(@NonNull String string) {
+    public static String decrypt(@Nullable String string) {
+        if (string == null) return "";
         String result = "";
         byte[] byte_string = Base64.decode(string, Base64.DEFAULT);
         try {
@@ -108,7 +110,8 @@ public class SuperUtil {
     }
 
     @NonNull
-    public static String encrypt(@NonNull String string) {
+    public static String encrypt(@Nullable String string) {
+        if (string == null) return "";
         byte[] string_byted = null;
         try {
             string_byted = string.getBytes("UTF-8");

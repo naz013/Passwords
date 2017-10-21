@@ -54,6 +54,7 @@ public class SyncHelper {
     }
 
     public void exportNotes() throws JSONException, IOException {
+        if (!isSdPresent()) return;
         List<NoteItem> list = DataProvider.getOriginalNotes(mContext);
         File sdPath = Environment.getExternalStorageDirectory();
         File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD);
@@ -61,16 +62,14 @@ public class SyncHelper {
             sdPathDr.mkdirs();
         }
         for (NoteItem item : list) {
-            if (isSdPresent()) {
-                String exportFileName = item.getKey() + Constants.FILE_EXTENSION_NOTE;
-                File file = new File(sdPathDr, exportFileName);
-                if (file.exists()) {
-                    file.delete();
-                }
-                FileWriter fw = new FileWriter(file);
-                fw.write(new Gson().toJson(item));
-                fw.close();
-            } else Log.i("reminder-info", "Couldn't find external storage!");
+            String exportFileName = item.getKey() + Constants.FILE_EXTENSION_NOTE;
+            File file = new File(sdPathDr, exportFileName);
+            if (file.exists()) {
+                file.delete();
+            }
+            FileWriter fw = new FileWriter(file);
+            fw.write(new Gson().toJson(item));
+            fw.close();
         }
     }
 
@@ -133,47 +132,51 @@ public class SyncHelper {
     }
 
     private void importPassword(String jsonText) throws JSONException {
-        JSONObject jsonObj = new JSONObject(jsonText);
-        String title = null;
-        if (!jsonObj.isNull(DataBase.COLUMN_TITLE)) {
-            title = jsonObj.getString(DataBase.COLUMN_TITLE);
-        }
-        String login = null;
-        if (!jsonObj.isNull(DataBase.COLUMN_LOGIN)) {
-            login = jsonObj.getString(DataBase.COLUMN_LOGIN);
-        }
-        String password = null;
-        if (!jsonObj.isNull(DataBase.COLUMN_PASSWORD)) {
-            password = jsonObj.getString(DataBase.COLUMN_PASSWORD);
-        }
-        String url = null;
-        if (!jsonObj.isNull(DataBase.COLUMN_URL)) {
-            url = jsonObj.getString(DataBase.COLUMN_URL);
-        }
-        String comment = null;
-        if (!jsonObj.isNull(DataBase.COLUMN_COMMENT)) {
-            comment = jsonObj.getString(DataBase.COLUMN_COMMENT);
-        }
-        String date = null;
-        if (!jsonObj.isNull(DataBase.COLUMN_DATE)) {
-            date = jsonObj.getString(DataBase.COLUMN_DATE);
-        }
-        int colorPass = 0;
-        if (jsonObj.has(DataBase.COLUMN_TECHNICAL)) {
-            try {
-                String color = jsonObj.getString(DataBase.COLUMN_TECHNICAL);
-                if (color != null) {
-                    colorPass = Integer.parseInt(color);
-                }
-            } catch (ClassCastException e) {
-                colorPass = jsonObj.getInt(DataBase.COLUMN_TECHNICAL);
+        try {
+            DataProvider.savePassword(mContext, new Gson().fromJson(jsonText, Password.class));
+        } catch (Exception e) {
+            JSONObject jsonObj = new JSONObject(jsonText);
+            String title = null;
+            if (!jsonObj.isNull(DataBase.COLUMN_TITLE)) {
+                title = jsonObj.getString(DataBase.COLUMN_TITLE);
             }
+            String login = null;
+            if (!jsonObj.isNull(DataBase.COLUMN_LOGIN)) {
+                login = jsonObj.getString(DataBase.COLUMN_LOGIN);
+            }
+            String password = null;
+            if (!jsonObj.isNull(DataBase.COLUMN_PASSWORD)) {
+                password = jsonObj.getString(DataBase.COLUMN_PASSWORD);
+            }
+            String url = null;
+            if (!jsonObj.isNull(DataBase.COLUMN_URL)) {
+                url = jsonObj.getString(DataBase.COLUMN_URL);
+            }
+            String comment = null;
+            if (!jsonObj.isNull(DataBase.COLUMN_COMMENT)) {
+                comment = jsonObj.getString(DataBase.COLUMN_COMMENT);
+            }
+            String date = null;
+            if (!jsonObj.isNull(DataBase.COLUMN_DATE)) {
+                date = jsonObj.getString(DataBase.COLUMN_DATE);
+            }
+            int colorPass = 0;
+            if (jsonObj.has(DataBase.COLUMN_TECHNICAL)) {
+                try {
+                    String color = jsonObj.getString(DataBase.COLUMN_TECHNICAL);
+                    if (color != null) {
+                        colorPass = Integer.parseInt(color);
+                    }
+                } catch (ClassCastException e1) {
+                    colorPass = jsonObj.getInt(DataBase.COLUMN_TECHNICAL);
+                }
+            }
+            String uuID = null;
+            if (!jsonObj.isNull(DataBase.COLUMN_PIC_SEL)) {
+                uuID = jsonObj.getString(DataBase.COLUMN_PIC_SEL);
+            }
+            DataProvider.savePassword(mContext, new Password(title, date, login, comment, url, 0, colorPass, password, uuID));
         }
-        String uuID = null;
-        if (!jsonObj.isNull(DataBase.COLUMN_PIC_SEL)) {
-            uuID = jsonObj.getString(DataBase.COLUMN_PIC_SEL);
-        }
-        DataProvider.savePassword(mContext, new Password(title, date, login, comment, url, 0, colorPass, password, uuID));
     }
 
     public static String generateID() {
