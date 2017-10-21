@@ -9,6 +9,7 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.cray.software.passwords.R;
+import com.cray.software.passwords.utils.ThemeUtil;
 import com.cray.software.passwords.views.roboto.RoboCheckBox;
 import com.cray.software.passwords.views.roboto.RoboEditText;
 import com.cray.software.passwords.views.roboto.RoboTextView;
@@ -33,6 +34,7 @@ public class GeneratePassword extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(ThemeUtil.getInstance(this).getDialogStyle());
         setContentView(R.layout.generate_dialog_layout);
 
         passLength = findViewById(R.id.passLength);

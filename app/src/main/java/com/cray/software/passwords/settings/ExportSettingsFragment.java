@@ -1,6 +1,5 @@
 package com.cray.software.passwords.settings;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.widget.Toast;
 
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.databinding.FragmentExportSettingsBinding;
-import com.cray.software.passwords.dialogs.CloudDrives;
 import com.cray.software.passwords.fragments.NestedFragment;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.utils.Prefs;
@@ -28,7 +26,7 @@ public class ExportSettingsFragment extends NestedFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentExportSettingsBinding.inflate(inflater, container, false);
 
-        binding.cloudsPref.setOnClickListener(view -> startActivity(new Intent(getActivity(), CloudDrives.class)));
+        binding.cloudsPref.setOnClickListener(view -> openClouds());
 
         binding.backupPref.setChecked(Prefs.getInstance(getActivity()).isAutoBackupEnabled());
         binding.backupPref.setOnCheckedListener(this::updateBackup);
@@ -37,6 +35,12 @@ public class ExportSettingsFragment extends NestedFragment {
         binding.syncPref.setOnCheckedListener(this::updateSync);
 
         return binding.getRoot();
+    }
+
+    private void openClouds() {
+        if (anInterface != null) {
+            anInterface.openScreen(CloudFragment.newInstance(), CloudFragment.TAG);
+        }
     }
 
     private void updateBackup(boolean checked) {

@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.databinding.DialogAboutLayoutBinding;
 import com.cray.software.passwords.databinding.FragmentOtherSettingsBinding;
-import com.cray.software.passwords.dialogs.ThanksDialog;
 import com.cray.software.passwords.fragments.NestedFragment;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.utils.Dialogues;
@@ -38,8 +37,7 @@ public class OtherSettingsFragment extends NestedFragment {
 
         binding.aboutPref.setOnClickListener(v -> showAboutDialog());
         binding.ratePref.setOnClickListener(v -> Dialogues.showRateDialog(getActivity()));
-        binding.licensePref.setOnClickListener(v -> startActivity(new Intent(getActivity().getApplicationContext(), ThanksDialog.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
+        binding.licensePref.setOnClickListener(v -> openOss());
         binding.buyPref.setOnClickListener(view -> openMarket());
         binding.morePref.setOnClickListener(view -> showMoreApps());
         binding.feedbackPref.setOnClickListener(view -> sendFeedback());
@@ -51,6 +49,12 @@ public class OtherSettingsFragment extends NestedFragment {
         }
 
         return binding.getRoot();
+    }
+
+    private void openOss() {
+        if (anInterface != null) {
+            anInterface.openScreen(OssFragment.newInstance(), OssFragment.TAG);
+        }
     }
 
     private void openMarket() {
