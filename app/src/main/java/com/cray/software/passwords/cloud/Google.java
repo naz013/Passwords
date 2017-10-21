@@ -3,6 +3,7 @@ package com.cray.software.passwords.cloud;
 import android.content.Context;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.cray.software.passwords.interfaces.Constants;
@@ -72,6 +73,7 @@ public class Google {
         instance = null;
     }
 
+    @Nullable
     public static Google getInstance(Context context) {
         try {
             instance = new Google(context.getApplicationContext());
@@ -81,6 +83,7 @@ public class Google {
         return instance;
     }
 
+    @Nullable
     public Drives getDrive() {
         return mDrives;
     }

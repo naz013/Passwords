@@ -33,7 +33,7 @@ public class BackupTask extends AsyncTask<Void, Void, Boolean> {
         boolean isConnected = SuperUtil.isConnected(mContext);
         if (isConnected) {
             Google google = Google.getInstance(mContext);
-            if (google.getDrive() != null) {
+            if (google != null && google.getDrive() != null) {
                 try {
                     google.getDrive().saveFileToDrive();
                 } catch (IOException e) {

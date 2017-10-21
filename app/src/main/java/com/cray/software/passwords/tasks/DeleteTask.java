@@ -35,7 +35,6 @@ public class DeleteTask extends AsyncTask<Long, Void, Boolean> {
             Password password = DataProvider.getPassword(mContext, id);
             DataProvider.deletePassword(mContext, password);
             if (delBackup == 1) {
-                Dropbox dbx = new Dropbox(mContext);
                 if (Prefs.getInstance(mContext).isDeleteBackFileEnabled()) {
                     File sdPath = Environment.getExternalStorageDirectory();
                     File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD + "/" + password.getUuId() + Constants.FILE_EXTENSION);
@@ -48,6 +47,7 @@ public class DeleteTask extends AsyncTask<Long, Void, Boolean> {
                     }
                     boolean isConnected = SuperUtil.isConnected(mContext);
                     String dbxFile = ("/" + Constants.DIR_DBX + password.getUuId() + Constants.FILE_EXTENSION);
+                    Dropbox dbx = new Dropbox(mContext);
                     if (dbx.isLinked()) {
                         if (isConnected) {
                             dbx.deleteFile(password.getUuId());
@@ -64,7 +64,7 @@ public class DeleteTask extends AsyncTask<Long, Void, Boolean> {
                     }
 
                     Google google = Google.getInstance(mContext);
-                    if (isConnected && google.getDrive() != null) {
+                    if (isConnected && google != null && google.getDrive() != null) {
                         google.getDrive().deleteFile(password.getUuId());
                     }
                 }

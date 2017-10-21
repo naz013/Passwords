@@ -64,7 +64,7 @@ public class DeleteNoteTask extends AsyncTask<Long, Void, Boolean> {
                     }
 
                     Google google = Google.getInstance(mContext);
-                    if (isConnected && google.getDrive() != null) {
+                    if (isConnected && google != null && google.getDrive() != null) {
                         google.getDrive().deleteFile(noteItem.getKey());
                     }
                 }

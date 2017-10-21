@@ -61,7 +61,7 @@ public class SyncTask extends AsyncTask<Void, Void, Boolean> {
             dbx.downloadFiles();
         }
         Google google = Google.getInstance(mContext);
-        if (isConnected && google.getDrive() != null) {
+        if (isConnected && google != null && google.getDrive() != null) {
             try {
                 google.getDrive().saveFileToDrive();
             } catch (IOException e) {
