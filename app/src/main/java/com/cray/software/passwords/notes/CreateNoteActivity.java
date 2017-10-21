@@ -28,14 +28,15 @@ import com.bumptech.glide.Glide;
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.databinding.ActivityCreateNoteBinding;
 import com.cray.software.passwords.databinding.DialogColorPickerLayoutBinding;
-import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.DataProvider;
 import com.cray.software.passwords.helpers.Permissions;
 import com.cray.software.passwords.helpers.TImeUtils;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.utils.BitmapUtil;
+import com.cray.software.passwords.utils.Dialogues;
 import com.cray.software.passwords.utils.SuperUtil;
+import com.cray.software.passwords.utils.ThemeUtil;
 import com.cray.software.passwords.views.ColorPickerView;
 
 import java.io.File;
@@ -66,7 +67,6 @@ public class CreateNoteActivity extends AppCompatActivity {
 
     private int mColor = 0;
     private Uri mImageUri;
-    private ColorSetter cs = new ColorSetter(this);
 
     private RelativeLayout layoutContainer;
 
@@ -183,7 +183,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     }
 
     private void showColorDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = Dialogues.getDialog(this);
         builder.setTitle(getString(R.string.choose_color));
         DialogColorPickerLayoutBinding binding = DialogColorPickerLayoutBinding.inflate(LayoutInflater.from(this));
         ColorPickerView view = binding.pickerView;
@@ -199,7 +199,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     }
 
     private void deleteDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = Dialogues.getDialog(this);
         builder.setMessage(R.string.delete_this_note);
         builder.setPositiveButton(getString(R.string.yes), (dialog, which) -> {
             dialog.dismiss();
@@ -227,7 +227,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     }
 
     private void getImage() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = Dialogues.getDialog(this);
         builder.setTitle(R.string.image);
         builder.setItems(new CharSequence[]{getString(R.string.from_gallery),
                         getString(R.string.take_a_shot)},
@@ -310,10 +310,11 @@ public class CreateNoteActivity extends AppCompatActivity {
     }
 
     private void updateBackground() {
-        layoutContainer.setBackgroundColor(cs.getColor(mColor));
-        toolbar.setBackgroundColor(cs.getColor(cs.colorPrimary(mColor)));
+        ThemeUtil themeUtil = ThemeUtil.getInstance(this);
+        layoutContainer.setBackgroundColor(themeUtil.getColor(mColor));
+        toolbar.setBackgroundColor(themeUtil.getColor(themeUtil.colorPrimary(mColor)));
         if (Module.isLollipop()) {
-            getWindow().setStatusBarColor(cs.getColor(cs.colorPrimaryDark(mColor)));
+            getWindow().setStatusBarColor(themeUtil.getColor(themeUtil.colorPrimaryDark(mColor)));
         }
     }
 

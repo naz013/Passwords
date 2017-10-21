@@ -1,5 +1,6 @@
 package com.cray.software.passwords;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
@@ -196,5 +197,11 @@ public class MainActivity extends ThemedActivity implements FragmentInterface, F
         for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
             fm.popBackStack();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mFragment != null) mFragment.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.cray.software.passwords.R;
 import com.cray.software.passwords.databinding.DialogAboutLayoutBinding;
 import com.cray.software.passwords.databinding.FragmentOtherSettingsBinding;
-import com.cray.software.passwords.dialogs.ProMarket;
 import com.cray.software.passwords.dialogs.ThanksDialog;
 import com.cray.software.passwords.fragments.NestedFragment;
 import com.cray.software.passwords.interfaces.Module;
@@ -25,6 +24,7 @@ import com.cray.software.passwords.utils.Dialogues;
 public class OtherSettingsFragment extends NestedFragment {
 
     public static final String TAG = "OtherSettingsFragment";
+    private static final String MARKET_APP_PASSWORDS_PRO = "com.cray.software.passwordspro";
 
     private FragmentOtherSettingsBinding binding;
 
@@ -40,11 +40,23 @@ public class OtherSettingsFragment extends NestedFragment {
         binding.ratePref.setOnClickListener(v -> Dialogues.showRateDialog(getActivity()));
         binding.licensePref.setOnClickListener(v -> startActivity(new Intent(getActivity().getApplicationContext(), ThanksDialog.class)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
-        binding.buyPref.setOnClickListener(view -> startActivity(new Intent(getContext(), ProMarket.class)));
+        binding.buyPref.setOnClickListener(view -> openMarket());
         binding.morePref.setOnClickListener(view -> showMoreApps());
         binding.feedbackPref.setOnClickListener(view -> sendFeedback());
 
+        if (Module.isPro()) {
+            binding.buyPref.setVisibility(View.GONE);
+        } else {
+            binding.buyPref.setVisibility(View.VISIBLE);
+        }
+
         return binding.getRoot();
+    }
+
+    private void openMarket() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("market://details?id=" + MARKET_APP_PASSWORDS_PRO));
+        startActivity(intent);
     }
 
     private void sendFeedback() {
@@ -70,7 +82,7 @@ public class OtherSettingsFragment extends NestedFragment {
     }
 
     private void showAboutDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = Dialogues.getDialog(getContext());
         DialogAboutLayoutBinding binding = DialogAboutLayoutBinding.inflate(LayoutInflater.from(getContext()));
         String name = getString(R.string.app_name);
         binding.appName.setText(name.toUpperCase());

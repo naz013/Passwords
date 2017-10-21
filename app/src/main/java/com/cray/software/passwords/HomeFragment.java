@@ -31,6 +31,7 @@ import com.cray.software.passwords.passwords.PasswordsRecyclerAdapter;
 import com.cray.software.passwords.tasks.DeleteNoteTask;
 import com.cray.software.passwords.tasks.DeleteTask;
 import com.cray.software.passwords.tasks.SyncTask;
+import com.cray.software.passwords.utils.Dialogues;
 import com.cray.software.passwords.utils.Prefs;
 
 /**
@@ -116,7 +117,7 @@ public class HomeFragment extends BaseFragment implements SyncListener, SimpleLi
                 getString(R.string.sort_by_date_za),
                 getString(R.string.sort_by_title_az),
                 getString(R.string.sort_by_title_za)};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = Dialogues.getDialog(getContext());
         builder.setTitle(getString(R.string.menu_sort_title));
         builder.setItems(items, (dialog, item) -> {
             Prefs prefs = Prefs.getInstance(getContext());
@@ -137,7 +138,7 @@ public class HomeFragment extends BaseFragment implements SyncListener, SimpleLi
     }
 
     public void loaderAdapter() {
-        adapter = new PasswordsRecyclerAdapter(getContext(), DataProvider.getData(getContext(), true, true));
+        adapter = new PasswordsRecyclerAdapter(DataProvider.getData(getContext(), true, true));
         adapter.setEventListener(this);
         binding.currentList.setAdapter(adapter);
         updateEmptyView();

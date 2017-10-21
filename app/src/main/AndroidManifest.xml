@@ -42,17 +42,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".dialogs.ProMarket"
-            android:configChanges="keyboardHidden|orientation"
-            android:theme="@style/HomeWhite.Dialog">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".dialogs.ThanksDialog"
             android:configChanges="keyboardHidden|orientation|keyboard"
-            android:theme="@style/HomeWhite"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -64,11 +55,9 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".MainActivity"
-            android:theme="@style/HomeWhite.NoActionBar" />
+            android:name=".MainActivity" />
         <activity
-            android:name=".notes.CreateNoteActivity"
-            android:theme="@style/HomeWhite.NoActionBar" />
+            android:name=".notes.CreateNoteActivity" />
         <activity android:name=".passwords.ManagePassword" />
         <activity
             android:name=".dialogs.ThemerDialog"

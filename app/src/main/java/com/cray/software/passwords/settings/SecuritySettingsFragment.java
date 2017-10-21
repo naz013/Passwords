@@ -1,78 +1,58 @@
 package com.cray.software.passwords.settings;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.cray.software.passwords.R;
+import com.cray.software.passwords.databinding.FragmentSecuritySettingsBinding;
+import com.cray.software.passwords.fragments.NestedFragment;
 import com.cray.software.passwords.utils.Dialogues;
 import com.cray.software.passwords.utils.Prefs;
 import com.cray.software.passwords.utils.SuperUtil;
-import com.cray.software.passwords.views.roboto.RoboTextView;
 
 import java.lang.ref.WeakReference;
 
-public class SecuritySettingsFragment extends Fragment implements View.OnClickListener {
+public class SecuritySettingsFragment extends NestedFragment {
 
-    private RoboTextView passLengthText;
-    private ActionBar ab;
+    public static final String TAG = "SecuritySettingsFragment";
+
+    private FragmentSecuritySettingsBinding binding;
+
+    public static SecuritySettingsFragment newInstance() {
+        return new SecuritySettingsFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.security_settings_layout, container, false);
-        ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (ab != null) {
-            ab.setTitle(R.string.security_block);
-        }
-        RoboTextView changePassword = rootView.findViewById(R.id.changePassword);
-        changePassword.setOnClickListener(this);
-        RoboTextView keyword = rootView.findViewById(R.id.keyword);
-        keyword.setOnClickListener(this);
-        RelativeLayout passLength = rootView.findViewById(R.id.passLength);
-        passLength.setOnClickListener(this);
-        passLengthText = rootView.findViewById(R.id.passLengthText);
-        passLengthText.setText(String.valueOf(Prefs.getInstance(getActivity()).getPasswordLength()));
-        return rootView;
+        binding = FragmentSecuritySettingsBinding.inflate(inflater, container, false);
+
+        binding.passwordPref.setOnClickListener(view -> showChangePasswordDialog());
+        binding.lengthPref.setOnClickListener(view -> showPasswordLengthDialog());
+        binding.keywordPref.setOnClickListener(view -> showKeywordDialog());
+
+        return binding.getRoot();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        showPasswordLength();
+    public void onFragmentResume() {
+        super.onFragmentResume();
+        if (anInterface != null) {
+            anInterface.setTitle(getString(R.string.security_block));
+        }
+    }
+
+    @Nullable
+    @Override
+    protected View getBgView() {
+        return binding.bgView;
     }
 
     private void showPasswordLength() {
-        passLengthText.setText(String.valueOf(Prefs.getInstance(getActivity()).getPasswordLength()));
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (ab != null) {
-            ab.setTitle(R.string.action_settings);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.changePassword:
-                showChangePasswordDialog();
-                break;
-            case R.id.keyword:
-                showKeywordDialog();
-                break;
-            case R.id.passLength:
-                showPasswordLengthDialog();
-                break;
-        }
+        binding.lengthPref.setValueText(String.valueOf(Prefs.getInstance(getActivity()).getPasswordLength()));
     }
 
     private void showPasswordLengthDialog() {

@@ -39,7 +39,8 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:src="@drawable/ic_add_white_24dp"
-            app:backgroundTint="?attr/colorAccent" />
+            app:backgroundTint="?attr/colorAccent"
+            app:fabSize="normal" />
 
         <com.roughike.bottombar.BottomBar
             android:id="@+id/bottom_bar"

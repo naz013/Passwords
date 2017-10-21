@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -18,23 +17,23 @@ import com.cray.software.passwords.R;
 import com.cray.software.passwords.databinding.ActivityManagePasswordBinding;
 import com.cray.software.passwords.databinding.DialogColorPickerLayoutBinding;
 import com.cray.software.passwords.dialogs.GeneratePassword;
-import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.DataProvider;
 import com.cray.software.passwords.helpers.SyncHelper;
 import com.cray.software.passwords.helpers.TImeUtils;
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.interfaces.Module;
+import com.cray.software.passwords.utils.Dialogues;
 import com.cray.software.passwords.utils.SuperUtil;
+import com.cray.software.passwords.utils.ThemedActivity;
 import com.cray.software.passwords.views.ColorPickerView;
 
 import java.util.Random;
 
-public class ManagePassword extends AppCompatActivity {
+public class ManagePassword extends ThemedActivity {
 
     private static final int MENU_ITEM_DELETE = 12;
 
     private ActivityManagePasswordBinding binding;
-    private ColorSetter cSetter;
     private Password mPassword;
     private int mColor;
 
@@ -44,10 +43,7 @@ public class ManagePassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_manage_password);
-        cSetter = new ColorSetter(ManagePassword.this);
-        if (Module.isLollipop()) {
-            getWindow().setStatusBarColor(cSetter.getColor(cSetter.colorPrimaryDark()));
-        }
+
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -113,7 +109,7 @@ public class ManagePassword extends AppCompatActivity {
     }
 
     private void deleteDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = Dialogues.getDialog(this);
         builder.setMessage(R.string.delete_this_password);
         builder.setPositiveButton(R.string.yes, (dialog, which) -> {
             dialog.dismiss();
@@ -216,14 +212,14 @@ public class ManagePassword extends AppCompatActivity {
     }
 
     private void updateBackground() {
-        binding.appBar.setBackgroundColor(cSetter.getColor(cSetter.colorPrimary(mColor)));
+        binding.appBar.setBackgroundColor(getThemeUtil().getColor(getThemeUtil().colorPrimary(mColor)));
         if (Module.isLollipop()) {
-            getWindow().setStatusBarColor(cSetter.getColor(cSetter.colorPrimaryDark(mColor)));
+            getWindow().setStatusBarColor(getThemeUtil().getColor(getThemeUtil().colorPrimaryDark(mColor)));
         }
     }
 
     private void showColorDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = Dialogues.getDialog(this);
         builder.setTitle(getString(R.string.choose_color));
         DialogColorPickerLayoutBinding binding = DialogColorPickerLayoutBinding.inflate(LayoutInflater.from(this));
         ColorPickerView view = binding.pickerView;

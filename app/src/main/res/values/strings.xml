@@ -176,4 +176,12 @@
     <string name="notes">Notes</string>
     <string name="copy_note">Copy note</string>
     <string name="this_feature_avilable_for_pro">This feature available only for Pro users</string>
+
+    <string name="theme">Theme</string>
+    <string name="auto">Auto</string>
+    <string name="theme_color">Theme color</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="amoled" translatable="false">AMOLED</string>
+
 </resources>

@@ -39,13 +39,22 @@ public class SettingsFragment extends BaseFragment {
                 anInterface.openScreen(ExportSettingsFragment.newInstance(), ExportSettingsFragment.TAG);
             }
         });
+        binding.securitySettings.setOnClickListener(view12 -> {
+            if (anInterface != null) {
+                anInterface.openScreen(SecuritySettingsFragment.newInstance(), SecuritySettingsFragment.TAG);
+            }
+        });
+        binding.generalSettings.setOnClickListener(view12 -> {
+            if (anInterface != null) {
+                anInterface.openScreen(GeneralSettingsFragment.newInstance(), GeneralSettingsFragment.TAG);
+            }
+        });
     }
 
     @Override
     public void onFragmentResume() {
         super.onFragmentResume();
         if (anInterface != null) {
-            anInterface.setClick(null);
             anInterface.setTitle(getString(R.string.action_settings));
         }
     }

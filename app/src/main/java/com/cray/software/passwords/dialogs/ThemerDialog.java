@@ -2,7 +2,6 @@ package com.cray.software.passwords.dialogs;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,32 +9,28 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.cray.software.passwords.R;
-import com.cray.software.passwords.helpers.ColorSetter;
 import com.cray.software.passwords.helpers.Utils;
 import com.cray.software.passwords.interfaces.Module;
 import com.cray.software.passwords.utils.Prefs;
+import com.cray.software.passwords.utils.ThemedActivity;
 
-public class ThemerDialog extends AppCompatActivity {
+public class ThemerDialog extends ThemedActivity {
 
     private ImageButton red, green, blue, yellow, greenLight, blueLight, cyan, purple,
             amber, orange, pink, teal, deepPurple, deepOrange, indigo, lime;
     private FloatingActionButton mFab;
 
-    private ColorSetter cs;
     private Toolbar toolbar;
     private int prevId;
+
+    private boolean isChanged = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        cs = new ColorSetter(ThemerDialog.this);
-        if (Module.isLollipop()) {
-            getWindow().setStatusBarColor(cs.getColor(cs.colorPrimaryDark()));
-        }
         setContentView(R.layout.theme_color_layout);
 
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(cs.getColor(cs.colorPrimary()));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setTitle(getString(R.string.app_theme_title));
@@ -70,7 +65,7 @@ public class ThemerDialog extends AppCompatActivity {
         setUpRadio();
 
         mFab = findViewById(R.id.fab);
-        mFab.setBackgroundTintList(Utils.getFabState(this, cs.colorAccent(), cs.colorPrimary()));
+        mFab.setBackgroundTintList(Utils.getFabState(this, getThemeUtil().colorAccent(), getThemeUtil().colorPrimary()));
     }
 
     private void setOnClickListener(View... views){
@@ -140,6 +135,7 @@ public class ThemerDialog extends AppCompatActivity {
 
     private void themeColorSwitch(int radio){
         if (radio == prevId) return;
+        isChanged = true;
         prevId = radio;
         disableAll();
         setSelected(radio);
@@ -193,13 +189,12 @@ public class ThemerDialog extends AppCompatActivity {
                 saveColor(15);
                 break;
         }
-        cs = new ColorSetter(ThemerDialog.this);
-        toolbar.setBackgroundColor(cs.getColor(cs.colorPrimary()));
+        toolbar.setBackgroundColor(getThemeUtil().getColor(getThemeUtil().colorPrimary()));
         if (Module.isLollipop()) {
-            getWindow().setStatusBarColor(cs.getColor(cs.colorPrimaryDark()));
+            getWindow().setStatusBarColor(getThemeUtil().getColor(getThemeUtil().colorPrimaryDark()));
         }
-        mFab.setBackgroundTintList(Utils.getFabState(this, cs.colorAccent(), cs.colorPrimary()));
-        mFab.setRippleColor(cs.getColor(cs.colorPrimary()));
+        mFab.setBackgroundTintList(Utils.getFabState(this, getThemeUtil().colorAccent(), getThemeUtil().colorPrimary()));
+        mFab.setRippleColor(getThemeUtil().getColor(getThemeUtil().colorPrimary()));
     }
 
     private void setSelected(int radio) {
@@ -231,6 +226,7 @@ public class ThemerDialog extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if (isChanged) setResult(RESULT_OK);
         finish();
     }
 
@@ -238,7 +234,7 @@ public class ThemerDialog extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

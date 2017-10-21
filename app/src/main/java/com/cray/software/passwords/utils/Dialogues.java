@@ -2,6 +2,8 @@ package com.cray.software.passwords.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -17,6 +19,8 @@ import com.cray.software.passwords.databinding.DialogTextViewBinding;
 import com.cray.software.passwords.databinding.DialogTwoFieldsBinding;
 
 import java.lang.ref.WeakReference;
+
+import static com.cray.software.passwords.utils.ThemeUtil.THEME_AMOLED;
 
 /**
  * Copyright 2017 Nazar Suhovich
@@ -36,8 +40,16 @@ import java.lang.ref.WeakReference;
 
 public class Dialogues {
 
+    public static AlertDialog.Builder getDialog(@NonNull Context context) {
+        if (Prefs.getInstance(context).getAppTheme() == THEME_AMOLED) {
+            return new AlertDialog.Builder(context, ThemeUtil.getInstance(context).getDialogStyle());
+        } else {
+            return new AlertDialog.Builder(context);
+        }
+    }
+
     public static void showTextDialog(Activity activity, DialogOkClick click, String title, String value) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = getDialog(activity);
         DialogTextViewBinding binding = DialogTextViewBinding.inflate(LayoutInflater.from(activity));
         builder.setView(binding.getRoot());
         AlertDialog dialog = builder.create();
@@ -48,7 +60,7 @@ public class Dialogues {
     }
 
     public static void showSeekDialog(Activity activity, DialogSeekOkClick click, String title, int current) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = getDialog(activity);
         DialogSeekBarBinding binding = DialogSeekBarBinding.inflate(LayoutInflater.from(activity));
         builder.setView(binding.getRoot());
         AlertDialog dialog = builder.create();
@@ -76,7 +88,7 @@ public class Dialogues {
     }
 
     public static void showSimpleDialog(Activity activity, DialogOneOkClick click, String title, String hint) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = getDialog(activity);
         DialogSingleFieldBinding binding = DialogSingleFieldBinding.inflate(LayoutInflater.from(activity));
         builder.setView(binding.getRoot());
         AlertDialog dialog = builder.create();
@@ -104,7 +116,7 @@ public class Dialogues {
     }
 
     public static void showPasswordChangeDialog(Activity activity, DialogTwoOkClick click, String title, String hint1, String hint2) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = getDialog(activity);
         DialogTwoFieldsBinding binding = DialogTwoFieldsBinding.inflate(LayoutInflater.from(activity));
         builder.setView(binding.getRoot());
         AlertDialog dialog = builder.create();
@@ -174,7 +186,7 @@ public class Dialogues {
     }
 
     public static void showRateDialog(Activity activity) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = getDialog(activity);
         builder.setMessage(R.string.rate_question);
         builder.setPositiveButton(R.string.button_rate, (dialogInterface, i) -> {
             dialogInterface.dismiss();

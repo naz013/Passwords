@@ -27,6 +27,7 @@ import com.cray.software.passwords.interfaces.SimpleListener;
 import com.cray.software.passwords.interfaces.SyncListener;
 import com.cray.software.passwords.tasks.DeleteTask;
 import com.cray.software.passwords.tasks.SyncTask;
+import com.cray.software.passwords.utils.Dialogues;
 import com.cray.software.passwords.utils.Prefs;
 
 /**
@@ -107,7 +108,7 @@ public class PasswordsFragment extends BaseFragment implements SyncListener, Sim
                 getString(R.string.sort_by_date_za),
                 getString(R.string.sort_by_title_az),
                 getString(R.string.sort_by_title_za)};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = Dialogues.getDialog(getContext());
         builder.setTitle(getString(R.string.menu_sort_title));
         builder.setItems(items, (dialog, item) -> {
             Prefs prefs = Prefs.getInstance(getContext());
@@ -128,7 +129,7 @@ public class PasswordsFragment extends BaseFragment implements SyncListener, Sim
     }
 
     public void loaderAdapter() {
-        adapter = new PasswordsRecyclerAdapter(getContext(), DataProvider.getData(getContext(), true, false));
+        adapter = new PasswordsRecyclerAdapter(DataProvider.getData(getContext(), true, false));
         adapter.setEventListener(this);
         binding.currentList.setAdapter(adapter);
         updateEmptyView();
