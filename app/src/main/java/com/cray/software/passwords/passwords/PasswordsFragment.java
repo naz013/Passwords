@@ -163,7 +163,8 @@ public class PasswordsFragment extends BaseFragment implements SimpleListener {
                     getString(R.string.copy_login),
                     getString(R.string.copy_password),
                     getString(R.string.edit),
-                    getString(R.string.delete)
+                    getString(R.string.delete),
+                    getString(R.string.delete_with_backup)
             };
             Utils.showLCAM(getContext(), view, item -> {
                 switch (item) {
@@ -177,7 +178,10 @@ public class PasswordsFragment extends BaseFragment implements SimpleListener {
                         edit(position);
                         break;
                     case 3:
-                        delete(position);
+                        delete(position, false);
+                        break;
+                    case 4:
+                        delete(position, true);
                         break;
                 }
             }, items);
@@ -203,11 +207,11 @@ public class PasswordsFragment extends BaseFragment implements SimpleListener {
         }
     }
 
-    private void delete(int position) {
+    private void delete(int position, boolean deleteFile) {
         ListInterface item = adapter.getItem(position);
         long del = item.getId();
         if (item instanceof PasswordListInterface) {
-            new DeleteTask(getContext(), null).execute(del);
+            new DeleteTask(getContext(), null).execute(del, deleteFile ? 1L : 0L);
         }
         adapter.remove(position);
         updateEmptyView();

@@ -178,29 +178,64 @@ public class HomeFragment extends BaseFragment implements SyncListener, SimpleLi
     private void showPopup(int position, View view) {
         ListInterface el = adapter.getItem(position);
         if (el instanceof PasswordListInterface) {
-            final String[] items = {
-                    getString(R.string.copy_login),
-                    getString(R.string.copy_password),
-                    getString(R.string.edit),
-                    getString(R.string.delete)
-            };
-            Utils.showLCAM(getContext(), view, item -> {
-                switch (item) {
-                    case 0:
-                        copyText(getString(R.string.item_login), ((PasswordListInterface) el).getLogin());
-                        break;
-                    case 1:
-                        copyText(getString(R.string.item_password), ((PasswordListInterface) el).getPassword());
-                        break;
-                    case 2:
-                        edit(position);
-                        break;
-                    case 3:
-                        delete(position);
-                        break;
-                }
-            }, items);
+            showPasswordPopup(position, view, el);
+        } else {
+            showNotePopup(position, view, el);
         }
+    }
+
+    private void showPasswordPopup(int position, View view, ListInterface el) {
+        final String[] items = {
+                getString(R.string.copy_login),
+                getString(R.string.copy_password),
+                getString(R.string.edit),
+                getString(R.string.delete),
+                getString(R.string.delete_with_backup)
+        };
+        Utils.showLCAM(getContext(), view, item -> {
+            switch (item) {
+                case 0:
+                    copyText(getString(R.string.item_login), ((PasswordListInterface) el).getLogin());
+                    break;
+                case 1:
+                    copyText(getString(R.string.item_password), ((PasswordListInterface) el).getPassword());
+                    break;
+                case 2:
+                    edit(position);
+                    break;
+                case 3:
+                    delete(position, false);
+                    break;
+                case 4:
+                    delete(position, true);
+                    break;
+            }
+        }, items);
+    }
+
+    private void showNotePopup(int position, View view, ListInterface el) {
+        final String[] items = {
+                getString(R.string.copy_note),
+                getString(R.string.edit),
+                getString(R.string.delete),
+                getString(R.string.delete_with_backup)
+        };
+        Utils.showLCAM(getContext(), view, item -> {
+            switch (item) {
+                case 0:
+                    copyText(getString(R.string.note), el.getTitle());
+                    break;
+                case 1:
+                    edit(position);
+                    break;
+                case 2:
+                    delete(position, false);
+                    break;
+                case 3:
+                    delete(position, true);
+                    break;
+            }
+        }, items);
     }
 
     private void copyText(String label, String value) {
@@ -226,13 +261,13 @@ public class HomeFragment extends BaseFragment implements SyncListener, SimpleLi
         }
     }
 
-    private void delete(int position) {
+    private void delete(int position, boolean deleteFile) {
         ListInterface item = adapter.getItem(position);
         long del = item.getId();
         if (item instanceof PasswordListInterface) {
-            new DeleteTask(getContext(), null).execute(del);
+            new DeleteTask(getContext(), null).execute(del, deleteFile ? 1L : 0L);
         } else {
-            new DeleteNoteTask(getContext(), null).execute(del);
+            new DeleteNoteTask(getContext(), null).execute(del, deleteFile ? 1L : 0L);
         }
         adapter.remove(position);
         updateEmptyView();

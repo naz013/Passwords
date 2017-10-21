@@ -169,7 +169,8 @@ public class NotesFragment extends BaseFragment implements SimpleListener {
             final String[] items = {
                     getString(R.string.copy_note),
                     getString(R.string.edit),
-                    getString(R.string.delete)
+                    getString(R.string.delete),
+                    getString(R.string.delete_with_backup)
             };
             Utils.showLCAM(getContext(), view, item -> {
                 switch (item) {
@@ -180,7 +181,10 @@ public class NotesFragment extends BaseFragment implements SimpleListener {
                         edit(position);
                         break;
                     case 2:
-                        delete(position);
+                        delete(position, false);
+                        break;
+                    case 3:
+                        delete(position, true);
                         break;
                 }
             }, items);
@@ -206,11 +210,11 @@ public class NotesFragment extends BaseFragment implements SimpleListener {
         }
     }
 
-    private void delete(int position) {
+    private void delete(int position, boolean deleteFile) {
         ListInterface item = adapter.getItem(position);
         long del = item.getId();
         if (item instanceof NoteInterfaceImpl) {
-            new DeleteNoteTask(getContext(), null).execute(del);
+            new DeleteNoteTask(getContext(), null).execute(del, deleteFile ? 1L : 0L);
         }
         adapter.remove(position);
         updateEmptyView();

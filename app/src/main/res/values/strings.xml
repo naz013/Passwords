@@ -183,5 +183,6 @@
     <string name="light">Light</string>
     <string name="dark">Dark</string>
     <string name="amoled" translatable="false">AMOLED</string>
+    <string name="delete_with_backup">Delete with backup</string>
 
 </resources>
