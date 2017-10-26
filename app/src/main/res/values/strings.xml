@@ -174,7 +174,7 @@
     <string name="passwords">Passwords</string>
     <string name="no_notes">No notes</string>
     <string name="notes">Notes</string>
-    <string name="copy_note">Copy note</string>
+    <string name="copy_note">Copy note text</string>
     <string name="this_feature_avilable_for_pro">This feature available only for Pro users</string>
 
     <string name="theme">Theme</string>

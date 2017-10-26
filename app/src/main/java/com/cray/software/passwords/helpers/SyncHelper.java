@@ -26,6 +26,8 @@ import java.util.UUID;
 
 public class SyncHelper {
 
+    private static final String TAG = "SyncHelper";
+
     private Context mContext;
 
     public SyncHelper(Context context) {
@@ -68,7 +70,8 @@ public class SyncHelper {
                 file.delete();
             }
             FileWriter fw = new FileWriter(file);
-            fw.write(new Gson().toJson(item));
+            String json = new Gson().toJson(item);
+            fw.write(json);
             fw.close();
         }
     }
@@ -83,44 +86,44 @@ public class SyncHelper {
                 namesPass.add(item.getKey());
             }
             File sdPath = Environment.getExternalStorageDirectory();
-            File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD);
-            importFromFolder(sdPathDr, namesPass);
-            File sdPathD = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD_DBX_TMP);
-            importFromFolder(sdPathD, namesPass);
-            File sdPathG = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD_GDX_TMP);
-            importFromFolder(sdPathG, namesPass);
+            File folder = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD);
+            importFromFolder(folder, namesPass);
+            folder = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD_DBX_TMP);
+            importFromFolder(folder, namesPass);
+            folder = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD_GDX_TMP);
+            importFromFolder(folder, namesPass);
         }
     }
 
     private void importFromFolder(File folder, List<String> names) throws IOException, JSONException {
+        if (!folder.exists()) return;
         File[] files = folder.listFiles();
-        if (files != null) {
-            int f = files.length;
-            if (f > 0) {
-                for (File file1 : files) {
-                    String fileName = file1.getName();
-                    int pos = fileName.lastIndexOf(".");
-                    String fileLoc = folder + "/" + fileName;
-                    String fileNameS = fileName.substring(0, pos);
-                    if (!names.contains(fileNameS)) {
-                        names.add(fileNameS);
-                        FileInputStream stream = new FileInputStream(fileLoc);
-                        Writer writer = new StringWriter();
-                        char[] buffer = new char[1024];
-                        try {
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-                            int n;
-                            while ((n = reader.read(buffer)) != -1) {
-                                writer.write(buffer, 0, n);
-                            }
-                        } finally {
-                            stream.close();
+        if (files == null) return;
+        if (files.length > 0) {
+            for (File file1 : files) {
+                String fileName = file1.getName();
+                int pos = fileName.lastIndexOf(".");
+                String fileLoc = folder + "/" + fileName;
+                String fileNameS = fileName.substring(0, pos);
+                if (!names.contains(fileNameS)) {
+                    names.add(fileNameS);
+                    FileInputStream stream = new FileInputStream(fileLoc);
+                    Writer writer = new StringWriter();
+                    char[] buffer = new char[1024];
+                    try {
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+                        int n;
+                        while ((n = reader.read(buffer)) != -1) {
+                            writer.write(buffer, 0, n);
                         }
-                        if (fileName.endsWith(Constants.FILE_EXTENSION_NOTE)) {
-                            importNote(writer.toString());
-                        } else {
-                            importPassword(writer.toString());
-                        }
+                    } finally {
+                        stream.close();
+                    }
+                    String json = writer.toString();
+                    if (fileName.endsWith(Constants.FILE_EXTENSION_NOTE)) {
+                        importNote(json);
+                    } else {
+                        importPassword(json);
                     }
                 }
             }
@@ -128,7 +131,8 @@ public class SyncHelper {
     }
 
     private void importNote(String jsonText) throws JSONException {
-        DataProvider.saveNote(mContext, new Gson().fromJson(jsonText, NoteItem.class));
+        NoteItem item = new Gson().fromJson(jsonText, NoteItem.class);
+        DataProvider.saveNote(mContext, item);
     }
 
     private void importPassword(String jsonText) throws JSONException {

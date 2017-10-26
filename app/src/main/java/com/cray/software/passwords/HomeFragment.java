@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -161,6 +162,7 @@ public class HomeFragment extends BaseFragment implements SyncListener, SimpleLi
 
     @Override
     public void endExecution(boolean result) {
+        Log.d(TAG, "endExecution: ");
         loaderAdapter();
     }
 

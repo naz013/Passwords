@@ -30,43 +30,41 @@ public class DeleteNoteTask extends AsyncTask<Long, Void, Boolean> {
     protected Boolean doInBackground(Long... params) {
         if (params.length > 0) {
             long id = params[0];
-            long delBackup = 0;
+            long delBackup = 0L;
             if (params.length > 1) delBackup = params[1];
             NoteItem noteItem = DataProvider.getNote(mContext, id);
             DataProvider.deleteNote(mContext, noteItem);
-            if (delBackup == 1) {
+            if (delBackup == 1L) {
                 Dropbox dbx = new Dropbox(mContext);
-                if (Prefs.getInstance(mContext).isDeleteBackFileEnabled()) {
-                    File sdPath = Environment.getExternalStorageDirectory();
-                    File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD + "/" + noteItem.getKey() + Constants.FILE_EXTENSION_NOTE);
-                    if (sdPathDr.exists()) {
-                        sdPathDr.delete();
+                File sdPath = Environment.getExternalStorageDirectory();
+                File sdPathDr = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD + "/" + noteItem.getKey() + Constants.FILE_EXTENSION_NOTE);
+                if (sdPathDr.exists()) {
+                    sdPathDr.delete();
+                }
+                File sdPathTmp = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD_DBX_TMP + "/" + noteItem.getKey() + Constants.FILE_EXTENSION_NOTE);
+                if (sdPathTmp.exists()) {
+                    sdPathTmp.delete();
+                }
+                boolean isConnected = SuperUtil.isConnected(mContext);
+                String dbxFile = ("/" + Constants.DIR_DBX + noteItem.getKey() + Constants.FILE_EXTENSION_NOTE);
+                if (dbx.isLinked()) {
+                    if (isConnected) {
+                        dbx.deleteFile(noteItem.getKey());
+                    } else {
+                        PostDataBase postDataBase = new PostDataBase(mContext);
+                        postDataBase.addProcess(noteItem.getKey(), dbxFile, Constants.FILE_DELETE);
+                        postDataBase.close();
                     }
-                    File sdPathTmp = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD_DBX_TMP + "/" + noteItem.getKey() + Constants.FILE_EXTENSION_NOTE);
-                    if (sdPathTmp.exists()) {
-                        sdPathTmp.delete();
-                    }
-                    boolean isConnected = SuperUtil.isConnected(mContext);
-                    String dbxFile = ("/" + Constants.DIR_DBX + noteItem.getKey() + Constants.FILE_EXTENSION_NOTE);
-                    if (dbx.isLinked()) {
-                        if (isConnected) {
-                            dbx.deleteFile(noteItem.getKey());
-                        } else {
-                            PostDataBase postDataBase = new PostDataBase(mContext);
-                            postDataBase.addProcess(noteItem.getKey(), dbxFile, Constants.FILE_DELETE);
-                            postDataBase.close();
-                        }
-                    }
+                }
 
-                    File sdPathGd = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD_GDX_TMP + "/" + noteItem.getKey() + Constants.FILE_EXTENSION_NOTE);
-                    if (sdPathGd.exists()) {
-                        sdPathGd.delete();
-                    }
+                File sdPathGd = new File(sdPath.toString() + "/Pass_backup/" + Constants.DIR_SD_GDX_TMP + "/" + noteItem.getKey() + Constants.FILE_EXTENSION_NOTE);
+                if (sdPathGd.exists()) {
+                    sdPathGd.delete();
+                }
 
-                    Google google = Google.getInstance(mContext);
-                    if (isConnected && google != null && google.getDrive() != null) {
-                        google.getDrive().deleteFile(noteItem.getKey());
-                    }
+                Google google = Google.getInstance(mContext);
+                if (isConnected && google != null && google.getDrive() != null) {
+                    google.getDrive().deleteFile(noteItem.getKey());
                 }
             }
         }

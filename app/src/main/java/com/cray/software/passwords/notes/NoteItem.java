@@ -3,6 +3,7 @@ package com.cray.software.passwords.notes;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 /**
@@ -95,5 +96,17 @@ public class NoteItem {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "NoteItem{" +
+                "summary='" + summary + '\'' +
+                ", key='" + key + '\'' +
+                ", date='" + date + '\'' +
+                ", color=" + color +
+                ", image=" + Arrays.toString(image) +
+                ", id=" + id +
+                '}';
     }
 }

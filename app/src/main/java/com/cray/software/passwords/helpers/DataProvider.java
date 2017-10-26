@@ -2,6 +2,9 @@ package com.cray.software.passwords.helpers;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.cray.software.passwords.interfaces.Constants;
 import com.cray.software.passwords.notes.NoteInterfaceImpl;
@@ -33,6 +36,7 @@ import java.util.List;
 public class DataProvider {
     public static final String TAG = "LOG_TAG";
 
+    @NonNull
     public static List<ListInterface> getData(Context context, boolean incPasswords, boolean incNotes) {
         List<ListInterface> list = new ArrayList<>();
         DataBase db = new DataBase(context);
@@ -56,9 +60,11 @@ public class DataProvider {
             }
         }
         db.close();
+        Log.d(TAG, "getData: " + list.size());
         return sort(context, list);
     }
 
+    @NonNull
     private static List<ListInterface> sort(Context context, List<ListInterface> list) {
         String orderPrefs = Prefs.getInstance(context).getOrderBy();
         if (orderPrefs.matches(Constants.ORDER_DATE_A_Z)) {
@@ -73,6 +79,7 @@ public class DataProvider {
         return list;
     }
 
+    @NonNull
     public static List<Password> getOriginalData(Context context) {
         List<Password> list = new ArrayList<>();
         DataBase db = new DataBase(context);
@@ -88,6 +95,7 @@ public class DataProvider {
         return list;
     }
 
+    @NonNull
     public static List<NoteItem> getOriginalNotes(Context context) {
         List<NoteItem> list = new ArrayList<>();
         DataBase db = new DataBase(context);
@@ -103,9 +111,13 @@ public class DataProvider {
         return list;
     }
 
-    public static void savePassword(Context context, Password password) {
+    public static void savePassword(Context context, @NonNull Password password) {
         DataBase db  = new DataBase(context);
         db.open();
+        Password pass = getPassword(context, password.getId());
+        if (pass == null || !pass.getUuId().equals(password.getUuId())) {
+            password.setId(0);
+        }
         if (password.getId() != 0) {
             db.updatePass(password);
         } else {
@@ -114,13 +126,18 @@ public class DataProvider {
         db.close();
     }
 
-    public static void saveNote(Context context, NoteItem item) {
+    public static void saveNote(Context context, @NonNull NoteItem item) {
         DataBase db  = new DataBase(context);
         db.open();
+        NoteItem noteItem = getNote(context, item.getId());
+        if (noteItem == null || !item.getKey().equals(noteItem.getKey())) {
+            item.setId(0);
+        }
         db.saveNote(item);
         db.close();
     }
 
+    @Nullable
     public static Password getPassword(Context context, long id) {
         DataBase db = new DataBase(context);
         db.open();
@@ -134,6 +151,7 @@ public class DataProvider {
         return password;
     }
 
+    @Nullable
     public static NoteItem getNote(Context context, long id) {
         DataBase db = new DataBase(context);
         db.open();
@@ -147,14 +165,14 @@ public class DataProvider {
         return item;
     }
 
-    public static void deletePassword(Context context, Password password) {
+    public static void deletePassword(Context context, @NonNull Password password) {
         DataBase db = new DataBase(context);
         db.open();
         db.deletePass(password.getId());
         db.close();
     }
 
-    public static void deleteNote(Context context, NoteItem noteItem) {
+    public static void deleteNote(Context context, @NonNull NoteItem noteItem) {
         DataBase db = new DataBase(context);
         db.open();
         db.deleteNote(noteItem.getId());
@@ -175,7 +193,8 @@ public class DataProvider {
         return login;
     }
 
-    private static Password getFromCursor(Cursor c) {
+    @NonNull
+    private static Password getFromCursor(@NonNull Cursor c) {
         String title = c.getString(c.getColumnIndex(DataBase.COLUMN_TITLE));
         String login = c.getString(c.getColumnIndex(DataBase.COLUMN_LOGIN));
         String password = c.getString(c.getColumnIndex(DataBase.COLUMN_PASSWORD));
@@ -188,7 +207,8 @@ public class DataProvider {
         return new Password(title, date, login, comment, url, id, color, password, uuId);
     }
 
-    private static NoteItem getNoteFromCursor(Cursor c) {
+    @NonNull
+    private static NoteItem getNoteFromCursor(@NonNull Cursor c) {
         String title = c.getString(c.getColumnIndex(DataBase.COLUMN_SUMMARY));
         byte[] image = c.getBlob(c.getColumnIndex(DataBase.COLUMN_IMAGE));
         String date = c.getString(c.getColumnIndex(DataBase.COLUMN_DT));
