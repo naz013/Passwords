@@ -1,19 +1,61 @@
--libraryjars libs
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable
+-keepattributes InnerClasses,EnclosingMethod
 
+-dontwarn com.google.firebase.**
+-dontwarn com.roughike.bottombar.**
+
+-keep class com.roughike.bottombar.** { *; }
 -keep class android.support.v4.app.** { *; }
 -keep interface android.support.v4.app.** { *; }
+-keep class com.dropbox.** {*;}
+-keep class org.apache.http.** { *; }
+-keep class ch.boye.** { *; }
+-keep class jp.wasabeef.** { *; }
+-keep class io.codetail.animation.arcanimator.** { *; }
+-keep class android.support.v8.renderscript.** { *; }
+-keep class android.support.design.** { *; }
+-keep interface android.support.design.** { *; }
+-keep class com.meg7.widget.** { *; }
+-keep class android.support.v7.widget.** { *; }
+-keep class android.support.v7.widget.SearchView { *; }
+-keep interface android.support.v7.widget.** { *; }
+-keep public class android.support.design.R$* { *; }
+-keep public class * extends android.support.v7.widget.SearchView {
+   public <init>(android.content.Context);
+   public <init>(android.content.Context, android.util.AttributeSet);
+}
+
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+
 -dontwarn org.apache.**
+-dontwarn ch.boye.**
 -dontwarn com.google.android.gms.**
+-dontwarn com.google.api.client.http.**
 -dontwarn org.bouncycastle.**
 -dontwarn org.json.**
 -dontwarn com.dropbox.**
--keep class com.dropbox.** {*;}
--keep class org.apache.http.** { *; }
+-dontwarn jp.wasabeef.**
+-dontwarn com.squareup.okhttp.**
+-dontwarn android.support.v8.**
+-dontwarn android.support.design.**
+-dontwarn okio.**
 
--printmapping out.map
-
--renamesourcefileattribute SourceFile
--keepattributes SourceFile,LineNumberTable
+-dontnote android.net.http.**
+-dontnote org.apache.http.**
+-dontnote com.dropbox.**
+-dontnote org.json.**
+-dontnote org.dmfs.rfc5545.**
+-dontnote com.backdoor.simpleai.**
 
 -keep class * extends java.util.ListResourceBundle {
     protected Object[][] getContents();
@@ -121,19 +163,32 @@
 -dontnote sun.misc.Unsafe
 -dontwarn sun.misc.Unsafe
 
--keep public class com.google.android.gms.ads.** {
-   public *;
-}
+-dontwarn java.lang.invoke.*
 
--keep public class com.google.ads.** {
-   public *;
-}
+-keepattributes Signature
+# Retain declared checked exceptions for use by a Proxy instance.
+-keepattributes Exceptions
 
 -keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.AppGlideModule
 -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
   **[] $VALUES;
   public *;
 }
 
-# for DexGuard only
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+-dontwarn org.hamcrest.**
+-dontwarn android.test.**
+-dontwarn android.support.test.**
+
+-keep class org.hamcrest.** {
+   *;
+}
+
+-keep class org.junit.** { *; }
+-dontwarn org.junit.**
+
+-keep class junit.** { *; }
+-dontwarn junit.**
+
+-keep class sun.misc.** { *; }
+-dontwarn sun.misc.**
