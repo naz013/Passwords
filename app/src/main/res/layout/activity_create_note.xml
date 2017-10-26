@@ -11,15 +11,14 @@
             android:id="@+id/appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat" />
 
         </android.support.design.widget.AppBarLayout>
 
@@ -46,11 +45,28 @@
                     android:layout_marginBottom="80dp"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/noteImage"
+                    <RelativeLayout
+                        android:id="@+id/image_container"
                         android:layout_width="match_parent"
-                        android:layout_height="256dp"
-                        android:scaleType="centerCrop" />
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/noteImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="256dp"
+                            android:scaleType="centerCrop" />
+
+                        <ImageView
+                            android:id="@+id/delete_image"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:background="?attr/selectableItemBackground"
+                            android:scaleType="centerInside"
+                            app:srcCompat="@drawable/ic_clear_black_24dp" />
+
+                    </RelativeLayout>
 
                     <EditText
                         android:id="@+id/task_message"

@@ -22,7 +22,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.cray.software.passwords.R;
@@ -68,13 +67,13 @@ public class CreateNoteActivity extends AppCompatActivity {
     private int mColor = 0;
     private Uri mImageUri;
 
-    private RelativeLayout layoutContainer;
-
     private ActivityCreateNoteBinding binding;
 
     private NoteItem mItem;
     private AppBarLayout toolbar;
     private EditText taskField;
+
+    private ThemeUtil themeUtil;
 
     private void setText(String text) {
         binding.taskMessage.setText(text);
@@ -84,23 +83,45 @@ public class CreateNoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        themeUtil = ThemeUtil.getInstance(this);
+        setTheme(themeUtil.getStyle());
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_note);
         initActionBar();
         initMenu();
-        initBgContainer();
         loadNote();
+        binding.imageContainer.setVisibility(View.GONE);
         if (mItem != null) {
             mColor = mItem.getColor();
             setText(SuperUtil.decrypt(mItem.getSummary()));
-            Glide.with(this).asBitmap().load(mItem.getImage()).into(binding.noteImage);
+            if (mItem.getImage() != null) {
+                binding.imageContainer.setVisibility(View.VISIBLE);
+                Glide.with(this).asBitmap().load(mItem.getImage()).into(binding.noteImage);
+            }
         } else {
             mColor = new Random().nextInt(16);
         }
         updateBackground();
+
+        binding.bottomBarView.setBackgroundColor(themeUtil.getBackgroundStyle());
+        if (themeUtil.isDark()) {
+            binding.colorButton.setImageResource(R.drawable.ic_palette_white_24dp);
+            binding.imageButton.setImageResource(R.drawable.ic_image_white_24dp);
+            binding.deleteImage.setImageResource(R.drawable.ic_clear_white_24dp);
+        } else {
+            binding.colorButton.setImageResource(R.drawable.ic_palette_black_24dp);
+            binding.imageButton.setImageResource(R.drawable.ic_image_black_24dp);
+            binding.deleteImage.setImageResource(R.drawable.ic_clear_black_24dp);
+        }
+
+        binding.deleteImage.setOnClickListener(v -> clearImage());
     }
 
-    private void initBgContainer() {
-        layoutContainer = binding.layoutContainer;
+    private void clearImage() {
+        if (mItem != null) {
+            mItem.setImage(null);
+        }
+        mImageUri = null;
+        binding.imageContainer.setVisibility(View.GONE);
     }
 
     private void initMenu() {
@@ -260,8 +281,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     public String getRealPathFromURI(Uri contentUri) {
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
@@ -296,6 +316,7 @@ public class CreateNoteActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         if (bitmapImage != null) {
+            binding.imageContainer.setVisibility(View.VISIBLE);
             binding.noteImage.setImageBitmap(bitmapImage);
         }
     }
@@ -310,8 +331,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     }
 
     private void updateBackground() {
-        ThemeUtil themeUtil = ThemeUtil.getInstance(this);
-        layoutContainer.setBackgroundColor(themeUtil.getColor(mColor));
+        binding.layoutContainer.setBackgroundColor(themeUtil.getColor(themeUtil.colorPrimary(mColor)));
         toolbar.setBackgroundColor(themeUtil.getColor(themeUtil.colorPrimary(mColor)));
         if (Module.isLollipop()) {
             getWindow().setStatusBarColor(themeUtil.getColor(themeUtil.colorPrimaryDark(mColor)));
@@ -322,7 +342,9 @@ public class CreateNoteActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(taskField.getWindowToken(), 0);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(taskField.getWindowToken(), 0);
+        }
     }
 
     @Override
