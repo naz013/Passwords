@@ -74,6 +74,12 @@ public class ManagePassword extends ThemedActivity {
         mColor = new Random().nextInt(16) + 1;
         showPassword();
         updateBackground();
+
+        if (getThemeUtil().isDark()) {
+            binding.generateDialog.setImageResource(R.drawable.ic_vpn_key_white_24dp);
+        } else {
+            binding.generateDialog.setImageResource(R.drawable.ic_vpn_key_black_24dp);
+        }
     }
 
     private void showPassword() {
