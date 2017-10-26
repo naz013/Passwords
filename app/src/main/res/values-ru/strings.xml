@@ -60,7 +60,6 @@
     <string name="gen_insert">ВСТАВ</string>
     <string name="pass_length">Длина пароля должна быть больше 0</string>
     <string name="pass_checks">Вы должны отметить хотя бы один пункт</string>
-    <string name="copyright_text">2015© Nazar Suhovych. Все права защищены.</string>
 
     <string name="export_settings_block">Экспорт и синхронизация</string>
     <string name="interface_block">Интерфейс пользователя</string>
@@ -146,10 +145,37 @@
     <string name="dark_orange">"Темно-оранжевый"</string>
     <string name="dark_purple">"Темно фиолетовый"</string>
     <string name="teal">"Темно-зеленый"</string>
-    <string name="you_dont_select_a_color">Вы не выбрали цвет!</string>
     <string name="delete">Удалить</string>
     <string name="edit">Редактировать</string>
     <string name="open_source_licenses">ПО с открытым кодом</string>
     <string name="saved">Сохранено</string>
     <string name="removed">Удалено</string>
+    <string name="copyright">2017 © Nazar Suhovich</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="delete_this_password">Удалить этот пароль?</string>
+    <string name="deleting_note">Удаление заметки ...</string>
+    <string name="password_not_match">Пароль не совпадает</string>
+    <string name="note">Заметка</string>
+    <string name="must_be_not_empty">Не должно быть пустым</string>
+    <string name="delete_this_note">Удалить эту заметку</string>
+    <string name="image">Изображение</string>
+    <string name="take_a_shot">Сделайте снимок</string>
+    <string name="from_gallery">Из галереи</string>
+    <string name="dropbox_app_not_installed">Приложение Dropbox не установлено</string>
+    <string name="copy_login">Копировать логин / адрес электронной почты</string>
+    <string name="copy_password">Скопировать пароль</string>
+    <string name="copied">скопирован</string>
+    <string name="home">Главная</string>
+    <string name="passwords">Пароли</string>
+    <string name="no_notes">Нет заметок</string>
+    <string name="notes">Заметки</string>
+    <string name="copy_note">Копировать текст заметки</string>
+    <string name="this_feature_avilable_for_pro">Эта функция доступна только для Pro пользователей</string>
+    <string name="theme">Тема</string>
+    <string name="auto">Авто</string>
+    <string name="theme_color">Цвет темы</string>
+    <string name="light">Светлая</string>
+    <string name="dark">Темная</string>
+    <string name="delete_with_backup">Удалить с резервной копии</string>
 </resources>

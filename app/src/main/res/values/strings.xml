@@ -146,7 +146,6 @@
     <string name="dark_orange">Dark orange</string>
     <string name="dark_purple">Dark purple</string>
     <string name="teal">Dark Green</string>
-    <string name="you_dont_select_a_color">You don\'t select a color!</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
     <string name="open_source_licenses">Open source licenses</string>
@@ -155,10 +154,7 @@
     <string name="yes">Yes</string>
     <string name="delete_this_password">Delete this password?</string>
     <string name="no">No</string>
-    <string name="log_in">Log In</string>
-    <string name="sign_up">Sign Up</string>
     <string name="deleting_note">Deleting note...</string>
-    <string name="enter_a_x_digit_passcode">Enter a %d digit passcode</string>
     <string name="password_not_match">Password not match</string>
     <string name="note">Note</string>
     <string name="must_be_not_empty">Must be not empty</string>

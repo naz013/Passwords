@@ -60,7 +60,6 @@
     <string name="gen_insert">ВСТАВ</string>
     <string name="pass_length">Довжина пароля має бути більшою за 0</string>
     <string name="pass_checks">Ви повинні відмітити хоча б один пункт</string>
-    <string name="copyright_text">2015© Nazar Suhovych. Всі права захищені.</string>
 
     <string name="export_settings_block">Експорт і синхронізація</string>
     <string name="interface_block">Інтерфейс користувача</string>
@@ -146,10 +145,37 @@
     <string name="dark_orange">"Темно-оранжевий"</string>
     <string name="dark_purple">"Темно-фіолетовий"</string>
     <string name="teal">"Темно-зелений"</string>
-    <string name="you_dont_select_a_color">Ви не обрали колір!</string>
     <string name="delete">Видалити</string>
     <string name="edit">Змінити</string>
     <string name="open_source_licenses">ПЗ з відкритим кодом</string>
     <string name="saved">Збережено</string>
     <string name="removed">Видалено</string>
+    <string name="copyright">2017 © Nazar Suhovich</string>
+    <string name="yes">Так</string>
+    <string name="no">Ні</string>
+    <string name="delete_this_password">Видалити цей пароль?</string>
+    <string name="deleting_note">Видалення нотатки ...</string>
+    <string name="password_not_match">Пароль не збігається</string>
+    <string name="note">Нотатка</string>
+    <string name="must_be_not_empty">Не повинно бути порожнім</string>
+    <string name="delete_this_note">Видалити цю нотатку</string>
+    <string name="image">Зображення</string>
+    <string name="take_a_shot">Зробіть знімок</string>
+    <string name="from_gallery">З галереї</string>
+    <string name="dropbox_app_not_installed">Додаток Dropbox не встановлено</string>
+    <string name="copy_login">Скопіювати логін / електронну адресу</string>
+    <string name="copy_password">Копіювати пароль</string>
+    <string name="copied">скопійовано</string>
+    <string name="home">Головна</string>
+    <string name="passwords">Паролі</string>
+    <string name="no_notes">Немає нотаток</string>
+    <string name="notes">Нотатки</string>
+    <string name="copy_note">Копіювати текст нотатки</string>
+    <string name="this_feature_avilable_for_pro">Ця функція доступна лише для Pro користувачів</string>
+    <string name="theme">Тема</string>
+    <string name="auto">Авто</string>
+    <string name="theme_color">Колір теми</string>
+    <string name="light">Світла</string>
+    <string name="dark">Темна</string>
+    <string name="delete_with_backup">Видалити з резервною копією</string>
 </resources>
