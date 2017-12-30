@@ -1,0 +1,50 @@
+{
+  "project_info": {
+    "project_number": "91951938652",
+    "firebase_url": "https://banded-cable-576.firebaseio.com",
+    "project_id": "banded-cable-576"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91951938652:android:c16075a60838f616",
+        "android_client_info": {
+          "package_name": "com.cray.software.passwords"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91951938652-720tk71946nf8ojf3m7840ed3ntnv4ed.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "91951938652.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAo7Cz5nVlFeoND29ycY2fwfrrfqEXJF0s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91951938652-720tk71946nf8ojf3m7840ed3ntnv4ed.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

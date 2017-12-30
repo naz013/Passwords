@@ -80,15 +80,12 @@ class DropboxLogin(context: Activity, callback: LoginCallback) {
 
     private fun isAppInstalled(packageName: String): Boolean {
         val pm = mContext.packageManager
-        var installed: Boolean
-        try {
+        return try {
             pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
-            installed = true
+            true
         } catch (e: PackageManager.NameNotFoundException) {
-            installed = false
+            false
         }
-
-        return installed
     }
 
     private fun checkDialog(): Dialog {
@@ -97,10 +94,10 @@ class DropboxLogin(context: Activity, callback: LoginCallback) {
                 .setPositiveButton(mContext.getString(R.string.open_app_dialog_button), { _, _ ->
                     val i: Intent
                     val manager = mContext.packageManager
-                    if (Module.isPro()) {
-                        i = manager.getLaunchIntentForPackage(MARKET_APP_JUSTREMINDER)
+                    i = if (Module.isPro()) {
+                        manager.getLaunchIntentForPackage(MARKET_APP_JUSTREMINDER)
                     } else {
-                        i = manager.getLaunchIntentForPackage(MARKET_APP_JUSTREMINDER_PRO)
+                        manager.getLaunchIntentForPackage(MARKET_APP_JUSTREMINDER_PRO)
                     }
                     i.addCategory(Intent.CATEGORY_LAUNCHER)
                     mContext.startActivity(i)

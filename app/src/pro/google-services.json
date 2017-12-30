@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "714588246875",
+    "firebase_url": "https://psychic-heading-738.firebaseio.com",
+    "project_id": "psychic-heading-738"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714588246875:android:11678afd177f58d0",
+        "android_client_info": {
+          "package_name": "com.cray.software.passwordspro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "714588246875-g6nt7ra13t74omb6un2mf1tv06th0d11.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuCl5wGXjwB4tblVAQXYcqOdaGyfQcg8w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "714588246875-g6nt7ra13t74omb6un2mf1tv06th0d11.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
