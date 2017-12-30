@@ -50,7 +50,6 @@ android {
             dimension "level"
             applicationId 'com.cray.software.passwordspro'
             buildConfigField "boolean", "IS_PRO", "true"
-            versionCode 25
         }
     }
 
