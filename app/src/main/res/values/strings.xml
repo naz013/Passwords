@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="copyright">\"2017 © Nazar Suhovich\"</string>
+    <string name="copyright">2018 © Nazar Suhovich</string>
     <string name="app_name">Passwords PRO</string>
     <string name="app_name_free">Passwords</string>
     <string name="action_settings">Settings</string>
@@ -154,7 +154,7 @@
     <string name="yes">Yes</string>
     <string name="delete_this_password">Delete this password?</string>
     <string name="no">No</string>
-    <string name="deleting_note">Deleting note...</string>
+    <string name="deleting_note">Deleting note…</string>
     <string name="password_not_match">Password not match</string>
     <string name="note">Note</string>
     <string name="must_be_not_empty">Must be not empty</string>
@@ -180,5 +180,4 @@
     <string name="dark">Dark</string>
     <string name="amoled" translatable="false">AMOLED</string>
     <string name="delete_with_backup">Delete with backup</string>
-
 </resources>
