@@ -58,7 +58,7 @@
     <string name="gen_title">Password Generator</string>
     <string name="gen_symbols">Symbols</string>
     <string name="gen_button">GEN</string>
-    <string name="gen_insert">INS</string>
+    <string name="gen_insert">PASTE</string>
     <string name="pass_length">Password length must be more than 0</string>
     <string name="pass_checks">You must check at least one item</string>
     <string name="export_settings_block">Export &amp; Synchronization</string>
