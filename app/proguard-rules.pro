@@ -153,6 +153,9 @@
 -dontwarn com.google.android.gms.**
 -dontnote com.google.android.gms.**
 
+-dontnote org.greenrobot.eventbus.**
+-dontnote com.bumptech.glide.**
+
 # com.google.client.util.IOUtils references java.nio.file.Files when on Java 7+
 -dontnote java.nio.file.Files, java.nio.file.Path
 
@@ -179,6 +182,7 @@
 -dontwarn org.hamcrest.**
 -dontwarn android.test.**
 -dontwarn android.support.test.**
+-dontwarn okhttp3.internal.platform.**
 
 -keep class org.hamcrest.** {
    *;
