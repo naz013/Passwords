@@ -32,21 +32,17 @@
           <option name="jvmTarget" value="1.8" />
           <option name="addCompilerBuiltIns" value="true" />
           <option name="loadBuiltInsFromDependencies" value="true" />
+          <option name="languageVersion" value="1.2" />
+          <option name="apiVersion" value="1.2" />
           <option name="pluginOptions">
             <array>
               <option value="plugin:org.jetbrains.kotlin.android:experimental=false" />
               <option value="plugin:org.jetbrains.kotlin.android:enabled=true" />
               <option value="plugin:org.jetbrains.kotlin.android:defaultCacheImplementation=hashMap" />
-              <option value="plugin:org.jetbrains.kotlin.android:configuration=rO0ABXf2AAAAAgAHcGFja2FnZQAAAAEAG2NvbS5jcmF5LnNvZnR3YXJlLnBhc3N3b3JkcwAHdmFyaWFudAAAAAMAPW1haW47QzpcVXNlcnNcTmF6YXJcU3R1ZGlvUHJvamVjdHNcUGFzc3dvcmRzXGFwcFxzcmNcbWFpblxyZXMAPWZyZWU7QzpcVXNlcnNcTmF6YXJcU3R1ZGlvUHJvamVjdHNcUGFzc3dvcmRzXGFwcFxzcmNcZnJlZVxyZXMAO3BybztDOlxVc2Vyc1xOYXphclxTdHVkaW9Qcm9qZWN0c1xQYXNzd29yZHNcYXBwXHNyY1xwcm9ccmVz" />
-              <option value="plugin:org.jetbrains.kotlin.android:configuration=rO0ABXf2AAAAAgAHcGFja2FnZQAAAAEAG2NvbS5jcmF5LnNvZnR3YXJlLnBhc3N3b3JkcwAHdmFyaWFudAAAAAMAPW1haW47QzpcVXNlcnNcTmF6YXJcU3R1ZGlvUHJvamVjdHNcUGFzc3dvcmRzXGFwcFxzcmNcbWFpblxyZXMAPWZyZWU7QzpcVXNlcnNcTmF6YXJcU3R1ZGlvUHJvamVjdHNcUGFzc3dvcmRzXGFwcFxzcmNcZnJlZVxyZXMAO3BybztDOlxVc2Vyc1xOYXphclxTdHVkaW9Qcm9qZWN0c1xQYXNzd29yZHNcYXBwXHNyY1xwcm9ccmVz" />
-              <option value="plugin:org.jetbrains.kotlin.android:configuration=rO0ABXf2AAAAAgAHcGFja2FnZQAAAAEAG2NvbS5jcmF5LnNvZnR3YXJlLnBhc3N3b3JkcwAHdmFyaWFudAAAAAMAPW1haW47QzpcVXNlcnNcTmF6YXJcU3R1ZGlvUHJvamVjdHNcUGFzc3dvcmRzXGFwcFxzcmNcbWFpblxyZXMAPWZyZWU7QzpcVXNlcnNcTmF6YXJcU3R1ZGlvUHJvamVjdHNcUGFzc3dvcmRzXGFwcFxzcmNcZnJlZVxyZXMAO3BybztDOlxVc2Vyc1xOYXphclxTdHVkaW9Qcm9qZWN0c1xQYXNzd29yZHNcYXBwXHNyY1xwcm9ccmVz" />
             </array>
           </option>
           <option name="pluginClasspaths">
             <array>
-              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.2.31/ce9cde5e684db1fe46989899f4ea46e1139d2b00/kotlin-android-extensions-1.2.31.jar" />
-              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.2.31/ce9cde5e684db1fe46989899f4ea46e1139d2b00/kotlin-android-extensions-1.2.31.jar" />
-              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.2.31/ce9cde5e684db1fe46989899f4ea46e1139d2b00/kotlin-android-extensions-1.2.31.jar" />
               <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.2.31/ce9cde5e684db1fe46989899f4ea46e1139d2b00/kotlin-android-extensions-1.2.31.jar" />
             </array>
           </option>
