@@ -42,7 +42,12 @@ public class Dialogues {
 
     public static AlertDialog.Builder getDialog(@NonNull Context context) {
         if (Prefs.getInstance(context).getAppTheme() == THEME_AMOLED) {
-            return new AlertDialog.Builder(context, ThemeUtil.getInstance(context).getDialogStyle());
+            ThemeUtil themeUtil = ThemeUtil.getInstance(context);
+            if (themeUtil != null) {
+                return new AlertDialog.Builder(context, themeUtil.getDialogStyle());
+            } else {
+                return new AlertDialog.Builder(context);
+            }
         } else {
             return new AlertDialog.Builder(context);
         }

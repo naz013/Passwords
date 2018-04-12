@@ -1,6 +1,8 @@
 package com.cray.software.passwords.passwords;
 
 import android.databinding.DataBindingUtil;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -47,7 +49,8 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
     private SimpleListener mEventListener;
 
     public PasswordsRecyclerAdapter(List<ListInterface> list) {
-        this.list = list;
+        this.list.clear();
+        this.list.addAll(list);
     }
 
     public ListInterface getItem(int position) {
@@ -78,8 +81,9 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         }
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         if (viewType == PASSWORD) {
             return new ViewHolder(ListItemCardBinding.inflate(inflater, parent, false).getRoot());
@@ -89,7 +93,7 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof ViewHolder) {
             ViewHolder h = (ViewHolder) holder;
             PasswordListInterface item = (PasswordListInterface) getItem(position);
@@ -97,7 +101,9 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
             h.binding.dateView.setText(item.getDate());
             h.binding.loginView.setText(item.getLogin());
             ThemeUtil util = getTheme(h.binding.itemCard);
-            h.binding.itemCard.setCardBackgroundColor(util.getColor(util.colorPrimary(item.getColor())));
+            if (util != null) {
+                h.binding.itemCard.setCardBackgroundColor(util.getColor(util.colorPrimary(item.getColor())));
+            }
         } else if (holder instanceof NoteHolder) {
             NoteHolder h = (NoteHolder) holder;
             NoteListInterface item = (NoteListInterface) getItem(position);
@@ -119,12 +125,16 @@ public class PasswordsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         textView.setText(summary);
     }
 
+    @Nullable
     private ThemeUtil getTheme(View view) {
         return ThemeUtil.getInstance(view.getContext());
     }
 
     private void loadNoteCard(CardView cardView, int color) {
-        cardView.setCardBackgroundColor(getTheme(cardView).getColor(getTheme(cardView).colorPrimary(color)));
+        ThemeUtil themeUtil = getTheme(cardView);
+        if (themeUtil != null) {
+            cardView.setCardBackgroundColor(themeUtil.getColor(themeUtil.colorPrimary(color)));
+        }
         if (Module.isLollipop()) {
             cardView.setCardElevation(4f);
         }

@@ -28,6 +28,7 @@ import com.cray.software.passwords.tasks.DelayedTask;
 import com.cray.software.passwords.tasks.SyncTask;
 import com.cray.software.passwords.utils.Dialogues;
 import com.cray.software.passwords.utils.Prefs;
+import com.cray.software.passwords.utils.ThemeUtil;
 import com.cray.software.passwords.utils.ThemedActivity;
 import com.cray.software.passwords.utils.ViewUtils;
 import com.roughike.bottombar.BottomBarTab;
@@ -47,7 +48,9 @@ public class MainActivity extends ThemedActivity implements FragmentInterface, F
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         setSupportActionBar(binding.toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
         replaceFragment(HomeFragment.newInstance(), HomeFragment.TAG);
@@ -57,11 +60,14 @@ public class MainActivity extends ThemedActivity implements FragmentInterface, F
     }
 
     private void initBottomBar() {
+        ThemeUtil themeUtil = getThemeUtil();
         for (int i = 0; i < binding.bottomBar.getTabCount(); i++) {
             BottomBarTab tab = binding.bottomBar.getTabAtPosition(i);
-            tab.setActiveColor(getThemeUtil().getColor(getThemeUtil().colorAccent()));
-            tab.setInActiveColor(getThemeUtil().getColor(getThemeUtil().colorPrimary()));
-            tab.setBarColorWhenSelected(getThemeUtil().getBackgroundStyle());
+            if (themeUtil != null) {
+                tab.setActiveColor(themeUtil.getColor(themeUtil.colorAccent()));
+                tab.setInActiveColor(themeUtil.getColor(themeUtil.colorPrimary()));
+                tab.setBarColorWhenSelected(themeUtil.getBackgroundStyle());
+            }
         }
         binding.bottomBar.setDefaultTabPosition(0);
         binding.bottomBar.setOnTabSelectListener(tabId -> {
@@ -216,6 +222,7 @@ public class MainActivity extends ThemedActivity implements FragmentInterface, F
         if (mFragment != null) mFragment.onActivityResult(requestCode, resultCode, data);
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void syncPrefs() {
         boolean isSD = SyncHelper.isSdPresent();
         if (isSD) {

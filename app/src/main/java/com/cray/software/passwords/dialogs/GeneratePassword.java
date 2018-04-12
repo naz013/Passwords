@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -24,19 +25,20 @@ public class GeneratePassword extends Activity implements View.OnClickListener {
     private static final String symbols = "!@#$%()?^*";
 
     private DialogGeneratePasswordBinding binding;
-
+    @NonNull
     private Random rnd = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(ThemeUtil.getInstance(this).getDialogStyle());
+        ThemeUtil themeUtil = ThemeUtil.getInstance(this);
+        if (themeUtil != null) setTheme(themeUtil.getDialogStyle());
         binding = DataBindingUtil.setContentView(this, R.layout.dialog_generate_password);
-        binding.bgView.setBackgroundColor(ThemeUtil.getInstance(this).getBackgroundStyle());
+        if (themeUtil != null) binding.bgView.setBackgroundColor(themeUtil.getBackgroundStyle());
 
         binding.passwordLength.setMax(32);
         binding.passwordLength.setProgress(16);
-        binding.passLength.setText("16");
+        binding.passLength.setText(String.valueOf(binding.passwordLength.getProgress()));
         binding.passwordLength.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

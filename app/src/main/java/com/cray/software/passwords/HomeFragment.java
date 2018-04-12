@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -73,13 +74,13 @@ public class HomeFragment extends BaseFragment implements SyncListener, SimpleLi
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.currentList.setLayoutManager(new LinearLayoutManager(getContext()));
     }
@@ -121,6 +122,7 @@ public class HomeFragment extends BaseFragment implements SyncListener, SimpleLi
     }
 
     private void showOrders() {
+        if (getContext() == null) return;
         final CharSequence[] items = {getString(R.string.sort_by_date_az),
                 getString(R.string.sort_by_date_za),
                 getString(R.string.sort_by_title_az),
@@ -242,6 +244,7 @@ public class HomeFragment extends BaseFragment implements SyncListener, SimpleLi
     }
 
     private void copyText(String label, String value) {
+        if (getActivity() == null) return;
         ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText(label, value);
         if (clipboard != null) {

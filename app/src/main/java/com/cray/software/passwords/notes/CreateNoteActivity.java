@@ -12,7 +12,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -60,19 +62,21 @@ import java.util.Random;
 
 public class CreateNoteActivity extends AppCompatActivity {
 
-    private static final String TAG = "CreateNoteActivity";
     public static final int MENU_ITEM_DELETE = 12;
     private static final int REQUEST_SD_CARD = 1112;
 
     private int mColor = 0;
+    @Nullable
     private Uri mImageUri;
 
     private ActivityCreateNoteBinding binding;
 
+    @Nullable
     private NoteItem mItem;
     private AppBarLayout toolbar;
     private EditText taskField;
 
+    @Nullable
     private ThemeUtil themeUtil;
 
     private void setText(String text) {
@@ -84,7 +88,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         themeUtil = ThemeUtil.getInstance(this);
-        setTheme(themeUtil.getStyle());
+        if (themeUtil != null) setTheme(themeUtil.getStyle());
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_note);
         initActionBar();
         initMenu();
@@ -148,11 +152,14 @@ public class CreateNoteActivity extends AppCompatActivity {
         toolbar = binding.appBar;
         setSupportActionBar(binding.toolbar);
         taskField = binding.taskMessage;
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setElevation(0f);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setElevation(0f);
+        }
         toolbar.setVisibility(View.VISIBLE);
     }
 
@@ -182,7 +189,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         if (!createObject()) {
             return;
         }
-        DataProvider.saveNote(this, mItem);
+        if (mItem != null) DataProvider.saveNote(this, mItem);
         finish();
     }
 
@@ -232,8 +239,10 @@ public class CreateNoteActivity extends AppCompatActivity {
     }
 
     private void deleteNote() {
-        DataProvider.deleteNote(this, mItem);
-        new DeleteNoteFilesAsync(this).execute(mItem.getKey());
+        if (mItem != null) {
+            DataProvider.deleteNote(this, mItem);
+            new DeleteNoteFilesAsync(this).execute(mItem.getKey());
+        }
         finish();
     }
 
@@ -331,10 +340,12 @@ public class CreateNoteActivity extends AppCompatActivity {
     }
 
     private void updateBackground() {
-        binding.layoutContainer.setBackgroundColor(themeUtil.getColor(themeUtil.colorPrimary(mColor)));
-        toolbar.setBackgroundColor(themeUtil.getColor(themeUtil.colorPrimary(mColor)));
-        if (Module.isLollipop()) {
-            getWindow().setStatusBarColor(themeUtil.getColor(themeUtil.colorPrimaryDark(mColor)));
+        if (themeUtil != null) {
+            binding.layoutContainer.setBackgroundColor(themeUtil.getColor(themeUtil.colorPrimary(mColor)));
+            toolbar.setBackgroundColor(themeUtil.getColor(themeUtil.colorPrimary(mColor)));
+            if (Module.isLollipop()) {
+                getWindow().setStatusBarColor(themeUtil.getColor(themeUtil.colorPrimaryDark(mColor)));
+            }
         }
     }
 

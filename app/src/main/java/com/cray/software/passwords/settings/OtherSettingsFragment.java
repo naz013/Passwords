@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,7 @@ public class OtherSettingsFragment extends NestedFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentOtherSettingsBinding.inflate(inflater, container, false);
 
         binding.aboutPref.setOnClickListener(v -> showAboutDialog());
@@ -86,6 +87,7 @@ public class OtherSettingsFragment extends NestedFragment {
     }
 
     private void showAboutDialog() {
+        if (getContext() == null) return;
         AlertDialog.Builder builder = Dialogues.getDialog(getContext());
         DialogAboutLayoutBinding binding = DialogAboutLayoutBinding.inflate(LayoutInflater.from(getContext()));
         String name = getString(R.string.app_name);

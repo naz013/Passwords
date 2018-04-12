@@ -1,6 +1,7 @@
 package com.cray.software.passwords.settings;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -27,7 +28,7 @@ public class SecuritySettingsFragment extends NestedFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSecuritySettingsBinding.inflate(inflater, container, false);
 
         binding.passwordPref.setOnClickListener(view -> showChangePasswordDialog());

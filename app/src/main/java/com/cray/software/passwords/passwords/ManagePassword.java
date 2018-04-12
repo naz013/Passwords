@@ -45,7 +45,9 @@ public class ManagePassword extends ThemedActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_manage_password);
 
         setSupportActionBar(binding.toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
 
         id = getIntent().getLongExtra(Constants.INTENT_ID, 0);
 
@@ -53,7 +55,7 @@ public class ManagePassword extends ThemedActivity {
         binding.commentEnter.setOnKeyListener((v, keyCode, event) -> event.getKeyCode() == KeyEvent.KEYCODE_ENTER);
         binding.generateDialog.setOnClickListener(v ->
                 startActivityForResult(new Intent(ManagePassword.this, GeneratePassword.class),
-                Constants.REQUEST_CODE_PASS));
+                        Constants.REQUEST_CODE_PASS));
         binding.showPass.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 binding.passwordEnter.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
@@ -75,7 +77,7 @@ public class ManagePassword extends ThemedActivity {
         showPassword();
         updateBackground();
 
-        if (getThemeUtil().isDark()) {
+        if (getThemeUtil() != null && getThemeUtil().isDark()) {
             binding.generateDialog.setImageResource(R.drawable.ic_vpn_key_white_24dp);
         } else {
             binding.generateDialog.setImageResource(R.drawable.ic_vpn_key_black_24dp);
@@ -218,9 +220,11 @@ public class ManagePassword extends ThemedActivity {
     }
 
     private void updateBackground() {
-        binding.appBar.setBackgroundColor(getThemeUtil().getColor(getThemeUtil().colorPrimary(mColor)));
-        if (Module.isLollipop()) {
-            getWindow().setStatusBarColor(getThemeUtil().getColor(getThemeUtil().colorPrimaryDark(mColor)));
+        if (getThemeUtil() != null) {
+            binding.appBar.setBackgroundColor(getThemeUtil().getColor(getThemeUtil().colorPrimary(mColor)));
+            if (Module.isLollipop()) {
+                getWindow().setStatusBarColor(getThemeUtil().getColor(getThemeUtil().colorPrimaryDark(mColor)));
+            }
         }
     }
 

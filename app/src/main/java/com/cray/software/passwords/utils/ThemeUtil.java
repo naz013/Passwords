@@ -6,6 +6,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
+import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 
 import com.cray.software.passwords.R;
@@ -37,10 +38,12 @@ public final class ThemeUtil {
     public static final int THEME_AMOLED = 3;
 
     private ContextHolder holder;
+    @Nullable
     private static ThemeUtil instance;
 
-    public static ThemeUtil getInstance(Context context) {
-        if (instance == null) {
+    @Nullable
+    public static ThemeUtil getInstance(@Nullable Context context) {
+        if (instance == null && context != null) {
             synchronized (ThemeUtil.class) {
                 if (instance == null) {
                     instance = new ThemeUtil(context.getApplicationContext());

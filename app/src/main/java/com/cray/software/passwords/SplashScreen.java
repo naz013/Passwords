@@ -29,7 +29,7 @@ public class SplashScreen extends AppCompatActivity {
         checkKeys();
     }
 
-    private void writePrefs() throws Exception {
+    private void writePrefs() {
         boolean isSD = SyncHelper.isSdPresent();
         if (isSD) {
             File sdPath = Environment.getExternalStorageDirectory();

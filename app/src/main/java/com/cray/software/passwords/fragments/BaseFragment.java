@@ -3,6 +3,7 @@ package com.cray.software.passwords.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -24,22 +25,28 @@ import com.cray.software.passwords.utils.ThemeUtil;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 public abstract class BaseFragment extends Fragment {
 
-    protected ThemeUtil themeUtil = ThemeUtil.getInstance(getContext());
+    @Nullable
+    protected ThemeUtil themeUtil;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        themeUtil = ThemeUtil.getInstance(getContext());
+    }
 
     @Nullable
     protected FragmentInterface anInterface;
 
     private void setBackground() {
-        if (getBgView() != null) {
+        if (getBgView() != null && themeUtil != null) {
             getBgView().setBackgroundColor(themeUtil.getBackgroundStyle());
         }
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setBackground();
     }

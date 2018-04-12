@@ -19,8 +19,6 @@ import com.hanks.passcodeview.PasscodeView;
 
 public class ActivityLogin extends ThemedActivity {
 
-    private static final String TAG = "ActivityLogin";
-
     private ActivityLoginBinding binding;
 
     private Prefs prefs;
