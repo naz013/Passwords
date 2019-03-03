@@ -1,7 +1,7 @@
 package com.cray.software.passwords.cloud
 
-import android.app.Activity
-import android.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -27,7 +27,7 @@ import com.cray.software.passwords.utils.LogUtil
  * limitations under the License.
  */
 
-class DropboxLogin(context: Activity, callback: LoginCallback) {
+class DropboxLogin(context: AppCompatActivity, callback: LoginCallback) {
 
     companion object {
         const val TAG: String = "DropboxLogin"
@@ -35,7 +35,7 @@ class DropboxLogin(context: Activity, callback: LoginCallback) {
         const val MARKET_APP_JUSTREMINDER_PRO: String = "com.cray.software.passwordspro"
     }
 
-    private var mContext: Activity = context
+    private var mContext: AppCompatActivity = context
     private var mDropbox: Dropbox = Dropbox(context)
     private var mCallback: LoginCallback = callback
 
@@ -45,7 +45,7 @@ class DropboxLogin(context: Activity, callback: LoginCallback) {
 
     fun login() {
         var isIn = isAppInstalled(MARKET_APP_JUSTREMINDER_PRO)
-        if (Module.isPro()) isIn = isAppInstalled(MARKET_APP_JUSTREMINDER)
+        if (Module.isPro) isIn = isAppInstalled(MARKET_APP_JUSTREMINDER)
         if (isIn) {
             checkDialog().show()
         } else {
@@ -94,7 +94,7 @@ class DropboxLogin(context: Activity, callback: LoginCallback) {
                 .setPositiveButton(mContext.getString(R.string.open_app_dialog_button), { _, _ ->
                     val i: Intent
                     val manager = mContext.packageManager
-                    i = if (Module.isPro()) {
+                    i = if (Module.isPro) {
                         manager.getLaunchIntentForPackage(MARKET_APP_JUSTREMINDER)
                     } else {
                         manager.getLaunchIntentForPackage(MARKET_APP_JUSTREMINDER_PRO)
@@ -104,7 +104,7 @@ class DropboxLogin(context: Activity, callback: LoginCallback) {
                 })
                 .setNegativeButton(mContext.getString(R.string.dialog_button_delete), { _, _ ->
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    if (Module.isPro()) {
+                    if (Module.isPro) {
                         intent.data = Uri.parse("package:" + MARKET_APP_JUSTREMINDER)
                     } else {
                         intent.data = Uri.parse("package:" + MARKET_APP_JUSTREMINDER_PRO)

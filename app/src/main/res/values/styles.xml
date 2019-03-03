@@ -20,7 +20,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
@@ -337,7 +337,7 @@
     </style>
 
     <style name="MyTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
+        <item name="titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
     </style>
 
     <style name="MyTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
@@ -492,7 +492,7 @@
 
     <style name="HomeBlackDialog" parent="Theme.AppCompat.Dialog">
         <item name="colorAccent">@color/bluePrimary</item>
-        <item name="android:background">@color/colorBlack</item>
+        <item name="background">@color/colorBlack</item>
         <item name="android:popupBackground">@color/colorBlack</item>
         <item name="android:windowBackground">@color/colorBlack</item>
         <item name="android:windowMinWidthMajor">90%</item>
