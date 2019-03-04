@@ -1,22 +1,23 @@
 package com.cray.software.passwords.views
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.drawable.Drawable
 import android.os.Build
-import androidx.annotation.DrawableRes
-import androidx.appcompat.content.res.AppCompatResources
+import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
-import android.widget.CheckBox
+import android.view.ViewGroup
 import android.widget.RelativeLayout
-import android.widget.TextView
-
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
+import com.cray.software.passwords.BuildConfig
 import com.cray.software.passwords.R
 import com.cray.software.passwords.interfaces.Module
-import com.cray.software.passwords.utils.LogUtil
-
-import java.util.ArrayList
+import com.cray.software.passwords.utils.hide
+import com.cray.software.passwords.utils.show
+import timber.log.Timber
+import java.util.*
 
 /**
  * Copyright 2016 Nazar Suhovich
@@ -36,37 +37,33 @@ import java.util.ArrayList
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 class PrefsView : RelativeLayout {
 
-    private val check = 0
-    private val text = 2
-    private val view = 1
-
-    private var checkBox: CheckBox? = null
-    private var title: TextView? = null
-    private var detail: TextView? = null
-    private var prefsValue: TextView? = null
-    private var dividerTop: View? = null
-    private var dividerBottom: View? = null
-    private var prefsView: View? = null
+    private lateinit var binding: PrefsViewBinding
 
     var isChecked: Boolean = false
         set(checked) {
             field = checked
-            checkBox!!.isChecked = checked
-            if (mOnCheckedListeners != null) {
-                for (listener in mOnCheckedListeners) {
-                    listener.onCheckedChange(checked)
-                }
+            if (viewType == CHECK)
+                binding.prefsCheck.isChecked = checked
+            else if (viewType == SWITCH) binding.prefsSwitch.isChecked = checked
+            refreshDetailText()
+            for (listener in mOnCheckedListeners) {
+                listener.onCheckedChange(checked)
             }
         }
     private var isForPro: Boolean = false
-    private var viewType = check
-
+    private var isTest: Boolean = false
+    private var viewType = CHECK
+    private var mOnText: String? = null
+    private var mOffText: String? = null
+    private var mSecondaryText: String? = null
     private val mDependencyViews = ArrayList<PrefsView>()
     private val mReverseDependencyViews = ArrayList<PrefsView>()
     private val mOnCheckedListeners = ArrayList<OnCheckedListener>()
+
+    private val isCheckable: Boolean
+        get() = viewType == CHECK || viewType == SWITCH
 
     constructor(context: Context) : super(context) {
         init(context, null)
@@ -81,51 +78,57 @@ class PrefsView : RelativeLayout {
     }
 
     private fun init(context: Context, attrs: AttributeSet?) {
-        View.inflate(context, R.layout.prefs_view_layout, this)
+        View.inflate(context, R.layout.view_prefs, this)
+        binding = PrefsViewBinding(this)
         descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
-        title = findViewById(R.id.prefsPrimaryText)
-        detail = findViewById(R.id.prefsSecondaryText)
-        prefsValue = findViewById(R.id.prefsValue)
-        checkBox = findViewById(R.id.prefsCheck)
-        dividerTop = findViewById(R.id.dividerTop)
-        dividerBottom = findViewById(R.id.dividerBottom)
-        prefsView = findViewById(R.id.prefsView)
+
         if (attrs != null) {
             val a = context.theme.obtainStyledAttributes(
                     attrs, R.styleable.PrefsView, 0, 0)
-            var titleText: String? = ""
-            var detailText: String? = ""
-            var valueText: String? = ""
+            var titleText = ""
+            var valueText = ""
             var divTop = false
             var divBottom = false
             var res = 0
+            var iconId = 0
             try {
-                titleText = a.getString(R.styleable.PrefsView_prefs_primary_text)
-                detailText = a.getString(R.styleable.PrefsView_prefs_secondary_text)
-                valueText = a.getString(R.styleable.PrefsView_prefs_value_text)
+                titleText = a.getString(R.styleable.PrefsView_prefs_primary_text) ?: ""
+                mSecondaryText = a.getString(R.styleable.PrefsView_prefs_secondary_text)
+                mOnText = a.getString(R.styleable.PrefsView_prefs_secondary_text_on)
+                mOffText = a.getString(R.styleable.PrefsView_prefs_secondary_text_off)
+                valueText = a.getString(R.styleable.PrefsView_prefs_value_text) ?: ""
                 divTop = a.getBoolean(R.styleable.PrefsView_prefs_divider_top, false)
                 divBottom = a.getBoolean(R.styleable.PrefsView_prefs_divider_bottom, false)
                 isForPro = a.getBoolean(R.styleable.PrefsView_prefs_pro, false)
-                viewType = a.getInt(R.styleable.PrefsView_prefs_type, check)
+                isTest = a.getBoolean(R.styleable.PrefsView_prefs_isTest, false)
+                viewType = a.getInt(R.styleable.PrefsView_prefs_type, CHECK)
                 res = a.getInt(R.styleable.PrefsView_prefs_view_resource, 0)
+                iconId = a.getResourceId(R.styleable.PrefsView_prefs_icon, 0)
+                val primaryColor = a.getColor(R.styleable.PrefsView_prefs_primary_text_color, -1)
+                if (primaryColor != -1) {
+                    binding.prefsPrimaryText.setTextColor(primaryColor)
+                }
             } catch (e: Exception) {
-                LogUtil.e("PrefsView", "There was an error loading attributes.", e)
+                Timber.d("init: ${e.message}")
             } finally {
                 a.recycle()
             }
+            if (iconId != 0 && SHOW_ICON) {
+                binding.iconView.show()
+                binding.iconView.setImageResource(iconId)
+            } else {
+                binding.iconView.hide()
+            }
             setTitleText(titleText)
-            setDetailText(detailText)
             setDividerTop(divTop)
             setDividerBottom(divBottom)
             setView()
             setValueText(valueText)
             setViewResource(res)
         }
+        setDetailText(mSecondaryText)
         isChecked = isChecked
         setVisible()
-        if (viewType == check && (!isForPro || Module.isPro)) {
-            setOnClickListener { view -> isChecked = !isChecked }
-        }
     }
 
     fun setOnCheckedListener(listener: OnCheckedListener) {
@@ -137,11 +140,13 @@ class PrefsView : RelativeLayout {
         setVisible()
     }
 
-    fun setDependentView(view: PrefsView?) {
-        if (view != null) {
-            mDependencyViews.add(view)
-            view.setOnCheckedListener({ checked -> checkDependency() })
-        }
+    fun setDependentView(view: PrefsView) {
+        mDependencyViews.add(view)
+        view.setOnCheckedListener(object : OnCheckedListener {
+            override fun onCheckedChange(checked: Boolean) {
+                checkDependency()
+            }
+        })
         checkDependency()
     }
 
@@ -156,11 +161,13 @@ class PrefsView : RelativeLayout {
         isEnabled = enable
     }
 
-    fun setReverseDependentView(view: PrefsView?) {
-        if (view != null) {
-            mReverseDependencyViews.add(view)
-            view.setOnCheckedListener({ checked -> checkReverseDependency() })
-        }
+    fun setReverseDependentView(view: PrefsView) {
+        mReverseDependencyViews.add(view)
+        view.setOnCheckedListener(object : OnCheckedListener {
+            override fun onCheckedChange(checked: Boolean) {
+                checkReverseDependency()
+            }
+        })
         checkReverseDependency()
     }
 
@@ -176,96 +183,140 @@ class PrefsView : RelativeLayout {
     }
 
     private fun setVisible() {
-        if (isForPro) {
-            if (Module.isPro) {
-                visibility = View.VISIBLE
+        visibility = if (isTest) {
+            if (BuildConfig.DEBUG) {
+                View.VISIBLE
             } else {
-                visibility = View.GONE
+                View.GONE
+            }
+        } else if (isForPro) {
+            if (Module.isPro) {
+                View.VISIBLE
+            } else {
+                View.GONE
             }
         } else {
-            visibility = View.VISIBLE
+            View.VISIBLE
         }
     }
 
     private fun setView() {
-        if (viewType == check) {
-            checkBox!!.visibility = View.VISIBLE
-            prefsValue!!.visibility = View.GONE
-            prefsView!!.visibility = View.GONE
-        } else if (viewType == text) {
-            checkBox!!.visibility = View.GONE
-            prefsValue!!.visibility = View.VISIBLE
-            prefsView!!.visibility = View.GONE
-        } else if (viewType == view) {
-            checkBox!!.visibility = View.GONE
-            prefsValue!!.visibility = View.GONE
-            prefsView!!.visibility = View.VISIBLE
-        } else {
-            checkBox!!.visibility = View.GONE
-            prefsValue!!.visibility = View.GONE
-            prefsView!!.visibility = View.GONE
+        hideAll()
+        when (viewType) {
+            CHECK -> binding.prefsCheck.show()
+            SWITCH -> binding.prefsSwitch.show()
+            TEXT -> binding.prefsValue.show()
+            VIEW -> binding.prefsView.show()
         }
     }
 
-    fun setTitleText(text: String) {
-        title!!.text = text
+    private fun hideAll() {
+        binding.prefsCheck.hide()
+        binding.prefsSwitch.hide()
+        binding.prefsValue.hide()
+        binding.prefsView.hide()
+    }
+
+    private fun setTitleText(text: String) {
+        binding.prefsPrimaryText.text = text
     }
 
     fun setDetailText(text: String?) {
-        if (text == null) {
-            detail!!.visibility = View.GONE
-            return
+        if (isCheckable && hasOnOff()) {
+            if (isChecked) {
+                binding.prefsSecondaryText.text = mOnText
+            } else {
+                binding.prefsSecondaryText.text = mOffText
+            }
+            binding.prefsSecondaryText.show()
+        } else {
+            if (TextUtils.isEmpty(text)) {
+                binding.prefsSecondaryText.hide()
+            } else {
+                binding.prefsSecondaryText.text = text
+                binding.prefsSecondaryText.show()
+            }
         }
-        detail!!.text = text
-        detail!!.visibility = View.VISIBLE
     }
 
     fun setValue(value: Int) {
-        prefsValue!!.text = value.toString()
+        binding.prefsValue.text = value.toString()
     }
 
     fun setValueText(text: String) {
-        prefsValue!!.text = text
+        binding.prefsValue.text = text
+    }
+
+    fun setViewColor(@ColorInt color: Int) {
+        if (color != 0) {
+            binding.prefsView.setBackgroundColor(color)
+        }
     }
 
     fun setViewResource(@DrawableRes resource: Int) {
         if (resource != 0) {
-            val drawableTop: Drawable?
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                drawableTop = context.getDrawable(resource)
+            val drawableTop: Drawable? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                context.getDrawable(resource)
             } else {
-                drawableTop = AppCompatResources.getDrawable(context, resource)
+                AppCompatResources.getDrawable(context, resource)
             }
-            prefsView!!.background = drawableTop
+            binding.prefsView.background = drawableTop
+        }
+    }
+
+    fun setViewDrawable(drawable: Drawable?) {
+        if (drawable != null) {
+            binding.prefsView.background = drawable
+        }
+    }
+
+    private fun refreshDetailText() {
+        if (isCheckable && hasOnOff()) {
+            setDetailText(mSecondaryText)
         }
     }
 
     override fun setEnabled(enabled: Boolean) {
         super.setEnabled(enabled)
-        checkBox!!.isEnabled = enabled
-        prefsView!!.isEnabled = enabled
-        prefsValue!!.isEnabled = enabled
-        detail!!.isEnabled = enabled
-        title!!.isEnabled = enabled
+        binding.prefsSwitch.isEnabled = enabled
+        binding.prefsCheck.isEnabled = enabled
+        binding.prefsView.isEnabled = enabled
+        binding.prefsValue.isEnabled = enabled
+        binding.prefsSecondaryText.isEnabled = enabled
+        binding.prefsPrimaryText.isEnabled = enabled
+        binding.iconView.isEnabled = enabled
     }
 
-    fun setDividerTop(divider: Boolean) {
+    private fun setDividerTop(divider: Boolean) {
         if (divider) {
-            dividerTop!!.visibility = View.VISIBLE
+            binding.dividerTop.show()
         } else {
-            dividerTop!!.visibility = View.GONE
+            binding.dividerTop.hide()
         }
     }
 
-    fun setDividerBottom(divider: Boolean) {
+    private fun setDividerBottom(divider: Boolean) {
         if (divider) {
-            dividerBottom!!.visibility = View.VISIBLE
+            binding.dividerBottom.show()
         } else {
-            dividerBottom!!.visibility = View.GONE
+            binding.dividerBottom.hide()
         }
+    }
+
+    private fun hasOnOff(): Boolean {
+        return mOffText != null && mOnText != null
     }
 
     interface OnCheckedListener {
         fun onCheckedChange(checked: Boolean)
+    }
+
+    companion object {
+
+        private const val CHECK = 0
+        private const val SWITCH = 1
+        private const val VIEW = 2
+        private const val TEXT = 3
+        private const val SHOW_ICON: Boolean = false
     }
 }
