@@ -6,7 +6,6 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ import android.widget.Toast
 import com.cray.software.passwords.R
 import com.cray.software.passwords.databinding.DialogAboutLayoutBinding
 import com.cray.software.passwords.databinding.FragmentOtherSettingsBinding
-import com.cray.software.passwords.fragments.NestedFragment
+import com.cray.software.passwords.modern_ui.NestedFragment
 import com.cray.software.passwords.interfaces.Module
 import com.cray.software.passwords.utils.Dialogues
 

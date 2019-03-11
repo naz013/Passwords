@@ -19,10 +19,10 @@ package com.cray.software.passwords.utils
  * limitations under the License.
  */
 
-internal open class PrefsConstants {
+open class PrefsConstants {
     companion object {
 
-        protected val PREFS_NAME = "pass_prefs"
+        val PREFS_NAME = "pass_prefs"
 
         val RATE_SHOW = "show_rate_state"
         val APP_RUNS_COUNT = "app_runs_state"
@@ -39,7 +39,7 @@ internal open class PrefsConstants {
         val LOGIN_PASSCODE = "login_passcode"
         val LOGIN_PREFS = "next_settings"
 
-        protected val DRIVE_USER = "ggl_user"
+        val DRIVE_USER = "ggl_user"
         val DROPBOX_UID = "dropbox_uid"
         val DROPBOX_TOKEN = "dropbox_token"
     }

@@ -4,16 +4,15 @@ import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AlertDialog
 import android.text.InputType
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 
 import com.cray.software.passwords.R
+import com.cray.software.passwords.data.Password
 import com.cray.software.passwords.databinding.ActivityManagePasswordBinding
 import com.cray.software.passwords.databinding.DialogColorPickerLayoutBinding
 import com.cray.software.passwords.dialogs.GeneratePassword

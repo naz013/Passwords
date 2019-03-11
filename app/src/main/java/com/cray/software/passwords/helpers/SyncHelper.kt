@@ -3,10 +3,11 @@ package com.cray.software.passwords.helpers
 import android.content.Context
 import android.os.Environment
 import android.util.Log
+import com.cray.software.passwords.data.DataBase
 
 import com.cray.software.passwords.interfaces.Constants
-import com.cray.software.passwords.notes.NoteItem
-import com.cray.software.passwords.passwords.Password
+import com.cray.software.passwords.data.NoteItem
+import com.cray.software.passwords.data.Password
 import com.google.gson.Gson
 
 import org.json.JSONException
@@ -19,7 +20,6 @@ import java.io.FileWriter
 import java.io.IOException
 import java.io.InputStreamReader
 import java.io.StringWriter
-import java.io.Writer
 import java.util.ArrayList
 import java.util.UUID
 

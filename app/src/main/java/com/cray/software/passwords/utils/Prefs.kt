@@ -24,7 +24,7 @@ import com.cray.software.passwords.interfaces.Module
  * limitations under the License.
  */
 
-class Prefs private constructor(context: Context) : SharedPrefs(context) {
+class Prefs(context: Context) : SharedPrefs(context) {
 
     var restoreWord: String?
         get() = prefsPassword.getString(PrefsConstants.KEYWORD, null)
@@ -69,7 +69,7 @@ class Prefs private constructor(context: Context) : SharedPrefs(context) {
         get() = getInt(PrefsConstants.PASSWORD_OLD_LENGTH)
         set(value) = putInt(PrefsConstants.PASSWORD_OLD_LENGTH, value)
 
-    var orderBy: String?
+    var orderBy: String
         get() = getString(PrefsConstants.ORDER_BY, Constants.ORDER_DATE_A_Z)
         set(value) = putString(PrefsConstants.ORDER_BY, value)
 
@@ -77,11 +77,11 @@ class Prefs private constructor(context: Context) : SharedPrefs(context) {
         get() = getInt(PrefsConstants.APP_RUNS_COUNT)
         set(value) = putInt(PrefsConstants.APP_RUNS_COUNT, value)
 
-    var dropboxUid: String?
+    var dropboxUid: String
         get() = getString(PrefsConstants.DROPBOX_UID)
         set(uid) = putString(PrefsConstants.DROPBOX_UID, uid)
 
-    var dropboxToken: String?
+    var dropboxToken: String
         get() = getString(PrefsConstants.DROPBOX_TOKEN)
         set(token) = putString(PrefsConstants.DROPBOX_TOKEN, token)
 
@@ -94,7 +94,7 @@ class Prefs private constructor(context: Context) : SharedPrefs(context) {
     }
 
     fun loadPassPrefs(): String {
-        return prefsPassword.getString(PrefsConstants.LOGIN_PASSCODE, "1111")
+        return prefsPassword.getString(PrefsConstants.LOGIN_PASSCODE, "1111") ?: "1111"
     }
 
     fun saveSystemPrefs(key: String, value: String) {
@@ -133,28 +133,6 @@ class Prefs private constructor(context: Context) : SharedPrefs(context) {
     }
 
     companion object {
-
-        private val TAG = "Prefs"
         val DRIVE_USER_NONE = "none"
-
-        private var instance: Prefs? = null
-
-        fun getInstance(): Prefs {
-            if (instance != null) {
-                return instance
-            }
-            throw IllegalArgumentException("Use Prefs(Context context) constructor!")
-        }
-
-        fun getInstance(context: Context): Prefs {
-            if (instance == null) {
-                synchronized(Prefs::class.java) {
-                    if (instance == null) {
-                        instance = Prefs(context.applicationContext)
-                    }
-                }
-            }
-            return instance
-        }
     }
 }

@@ -12,9 +12,9 @@ import android.view.View
 import android.widget.Toast
 
 import com.cray.software.passwords.databinding.ActivityMainBinding
-import com.cray.software.passwords.fragments.BaseFragment
-import com.cray.software.passwords.fragments.FragmentInterface
-import com.cray.software.passwords.fragments.NestedFragment
+import com.cray.software.passwords.modern_ui.BaseFragment
+import com.cray.software.passwords.modern_ui.FragmentInterface
+import com.cray.software.passwords.modern_ui.NestedFragment
 import com.cray.software.passwords.helpers.SyncHelper
 import com.cray.software.passwords.interfaces.Constants
 import com.cray.software.passwords.interfaces.Module
@@ -26,10 +26,8 @@ import com.cray.software.passwords.tasks.DelayedTask
 import com.cray.software.passwords.tasks.SyncTask
 import com.cray.software.passwords.utils.Dialogues
 import com.cray.software.passwords.utils.Prefs
-import com.cray.software.passwords.utils.ThemeUtil
 import com.cray.software.passwords.utils.ThemedActivity
 import com.cray.software.passwords.utils.ViewUtils
-import com.roughike.bottombar.BottomBarTab
 
 import java.io.File
 

@@ -10,7 +10,7 @@ import com.cray.software.passwords.R
 import com.cray.software.passwords.cloud.DropboxLogin
 import com.cray.software.passwords.cloud.GoogleLogin
 import com.cray.software.passwords.databinding.FragmentCloudBinding
-import com.cray.software.passwords.fragments.NestedFragment
+import com.cray.software.passwords.modern_ui.NestedFragment
 
 /**
  * Copyright 2017 Nazar Suhovich

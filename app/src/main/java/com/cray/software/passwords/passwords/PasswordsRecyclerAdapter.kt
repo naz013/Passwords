@@ -17,7 +17,8 @@ import com.cray.software.passwords.helpers.ListInterface
 import com.cray.software.passwords.interfaces.Module
 import com.cray.software.passwords.interfaces.SimpleListener
 import com.cray.software.passwords.notes.NoteHolder
-import com.cray.software.passwords.notes.NoteListInterface
+import com.cray.software.passwords.data.NoteListInterface
+import com.cray.software.passwords.data.PasswordListInterface
 import com.cray.software.passwords.utils.ThemeUtil
 
 import java.util.ArrayList

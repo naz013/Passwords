@@ -1,6 +1,6 @@
-package com.cray.software.passwords.notes
+package com.cray.software.passwords.modern_ui
 
-import com.cray.software.passwords.helpers.ListInterface
+import android.view.View
 
 /**
  * Copyright 2017 Nazar Suhovich
@@ -21,6 +21,14 @@ import com.cray.software.passwords.helpers.ListInterface
  * limitations under the License.
  */
 
-interface NoteListInterface : ListInterface {
-    val image: ByteArray
+interface FragmentInterface {
+    fun setCurrent(fragment: BaseFragment)
+
+    fun setTitle(title: String)
+
+    fun setClick(clickListener: View.OnClickListener?)
+
+    fun moveBack()
+
+    fun openScreen(fragment: BaseFragment, tag: String)
 }

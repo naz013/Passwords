@@ -10,8 +10,6 @@ import com.cray.software.passwords.helpers.DataProvider
 import com.cray.software.passwords.helpers.PostDataBase
 import com.cray.software.passwords.interfaces.Constants
 import com.cray.software.passwords.interfaces.SyncListener
-import com.cray.software.passwords.passwords.Password
-import com.cray.software.passwords.utils.Prefs
 import com.cray.software.passwords.utils.SuperUtil
 
 import java.io.File

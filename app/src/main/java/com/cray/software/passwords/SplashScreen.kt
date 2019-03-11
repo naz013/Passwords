@@ -2,20 +2,17 @@ package com.cray.software.passwords
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Environment
-import androidx.appcompat.app.AppCompatActivity
-
 import com.cray.software.passwords.helpers.SyncHelper
 import com.cray.software.passwords.interfaces.Constants
 import com.cray.software.passwords.login.ActivityLogin
 import com.cray.software.passwords.login.ActivitySignUp
 import com.cray.software.passwords.utils.Prefs
-
+import com.cray.software.passwords.utils.ThemedActivity
 import java.io.File
 
-class SplashScreen : AppCompatActivity() {
+class SplashScreen : ThemedActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +22,7 @@ class SplashScreen : AppCompatActivity() {
             e.printStackTrace()
         }
 
-        Prefs.getInstance(this).checkPrefs()
+        prefs.checkPrefs()
         checkKeys()
     }
 
@@ -59,7 +56,7 @@ class SplashScreen : AppCompatActivity() {
     private fun checkKeys() {
         val settings = File("/data/data/" + packageName + "/shared_prefs/" + Prefs.LOGIN_PREFS + ".xml")
         if (settings.exists()) {
-            val loadedStr = Prefs.getInstance(this).isPassString
+            val loadedStr = prefs.isPassString
             if (loadedStr) {
                 attachSingle()
             } else {

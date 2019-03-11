@@ -5,7 +5,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.Menu
@@ -16,10 +15,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 
 import com.cray.software.passwords.R
+import com.cray.software.passwords.data.NoteInterfaceImpl
 import com.cray.software.passwords.databinding.FragmentNotesBinding
-import com.cray.software.passwords.fragments.BaseFragment
+import com.cray.software.passwords.modern_ui.BaseFragment
 import com.cray.software.passwords.helpers.DataProvider
-import com.cray.software.passwords.helpers.ListInterface
 import com.cray.software.passwords.helpers.Utils
 import com.cray.software.passwords.interfaces.Constants
 import com.cray.software.passwords.interfaces.SimpleListener

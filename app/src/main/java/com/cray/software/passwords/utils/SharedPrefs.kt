@@ -2,16 +2,7 @@ package com.cray.software.passwords.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-
-import com.google.gson.Gson
-
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.ObjectInputStream
-import java.io.ObjectOutputStream
+import java.io.*
 
 /**
  * Copyright 2016 Nazar Suhovich
@@ -32,16 +23,11 @@ import java.io.ObjectOutputStream
  * limitations under the License.
  */
 
-internal abstract class SharedPrefs : PrefsConstants {
-    private val prefs: SharedPreferences
-    protected var prefsPassword: SharedPreferences
+abstract class SharedPrefs(context: Context) : PrefsConstants() {
 
-    private constructor() {}
+    private val prefs: SharedPreferences = context.getSharedPreferences(PrefsConstants.PREFS_NAME, Context.MODE_PRIVATE)
+    protected var prefsPassword: SharedPreferences = context.getSharedPreferences(PrefsConstants.LOGIN_PREFS, Context.MODE_PRIVATE)
 
-    constructor(context: Context) {
-        prefs = context.getSharedPreferences(PrefsConstants.PREFS_NAME, Context.MODE_PRIVATE)
-        prefsPassword = context.getSharedPreferences(PrefsConstants.LOGIN_PREFS, Context.MODE_PRIVATE)
-    }
 
     fun putString(stringToSave: String, value: String) {
         prefs.edit().putString(stringToSave, value).apply()
@@ -77,22 +63,12 @@ internal abstract class SharedPrefs : PrefsConstants {
         return x
     }
 
-    fun putObject(key: String, obj: Any) {
-        val gson = Gson()
-        putString(key, gson.toJson(obj))
+    fun getString(stringToLoad: String, def: String): String {
+        return prefs.getString(stringToLoad, def) ?: def
     }
 
-    fun getObject(key: String, classOfT: Class<*>): Any {
-        val json = getString(key)
-        return Gson().fromJson<*>(json, classOfT) ?: return Any()
-    }
-
-    fun getString(stringToLoad: String, def: String): String? {
-        return prefs.getString(stringToLoad, def)
-    }
-
-    fun getString(stringToLoad: String): String? {
-        return prefs.getString(stringToLoad, null)
+    fun getString(stringToLoad: String): String {
+        return prefs.getString(stringToLoad, "") ?: ""
     }
 
     fun hasKey(checkString: String): Boolean {

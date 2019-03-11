@@ -7,7 +7,7 @@ import android.view.ViewGroup
 
 import com.cray.software.passwords.R
 import com.cray.software.passwords.databinding.FragmentOssBinding
-import com.cray.software.passwords.fragments.NestedFragment
+import com.cray.software.passwords.modern_ui.NestedFragment
 
 import java.io.BufferedReader
 import java.io.IOException

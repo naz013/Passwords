@@ -3,7 +3,6 @@ package com.cray.software.passwords.settings
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import android.widget.ArrayAdapter
 import com.cray.software.passwords.R
 import com.cray.software.passwords.databinding.FragmentGeneralSettingsBinding
 import com.cray.software.passwords.dialogs.ThemeActivity
-import com.cray.software.passwords.fragments.NestedFragment
+import com.cray.software.passwords.modern_ui.NestedFragment
 import com.cray.software.passwords.utils.Dialogues
 import com.cray.software.passwords.utils.Prefs
 import com.cray.software.passwords.utils.ThemeUtil

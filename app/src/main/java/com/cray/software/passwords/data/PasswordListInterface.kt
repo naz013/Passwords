@@ -1,6 +1,6 @@
-package com.cray.software.passwords.utils
+package com.cray.software.passwords.data
 
-import android.content.Context
+import com.cray.software.passwords.helpers.ListInterface
 
 /**
  * Copyright 2017 Nazar Suhovich
@@ -21,4 +21,8 @@ import android.content.Context
  * limitations under the License.
  */
 
-class ContextHolder(val context: Context)
+interface PasswordListInterface : ListInterface {
+    val login: String
+
+    val password: String
+}

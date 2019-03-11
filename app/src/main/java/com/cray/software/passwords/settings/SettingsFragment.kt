@@ -7,7 +7,7 @@ import android.view.ViewGroup
 
 import com.cray.software.passwords.R
 import com.cray.software.passwords.databinding.FragmentSettingsBinding
-import com.cray.software.passwords.fragments.BaseFragment
+import com.cray.software.passwords.modern_ui.BaseFragment
 
 class SettingsFragment : BaseFragment() {
     private var binding: FragmentSettingsBinding? = null

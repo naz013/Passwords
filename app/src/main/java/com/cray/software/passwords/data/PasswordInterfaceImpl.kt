@@ -1,5 +1,6 @@
-package com.cray.software.passwords.notes
+package com.cray.software.passwords.data
 
+import com.cray.software.passwords.helpers.DataProvider
 import com.cray.software.passwords.helpers.TImeUtils
 import com.cray.software.passwords.passwords.PasswordsRecyclerAdapter
 import com.cray.software.passwords.utils.SuperUtil
@@ -23,23 +24,26 @@ import com.cray.software.passwords.utils.SuperUtil
  * limitations under the License.
  */
 
-class NoteInterfaceImpl(private val mNote: NoteItem) : NoteListInterface {
+class PasswordInterfaceImpl(private val mPassword: Password) : PasswordListInterface {
 
     override val color: Int
-        get() = mNote.color
+        get() = mPassword.color
 
     override val id: Long
-        get() = mNote.id
+        get() = mPassword.id
 
     override val viewType: Int
-        get() = PasswordsRecyclerAdapter.NOTE
+        get() = PasswordsRecyclerAdapter.PASSWORD
 
     override val title: String
-        get() = SuperUtil.decrypt(mNote.summary)
+        get() = SuperUtil.decrypt(mPassword.title)
+
+    override val login: String
+        get() = DataProvider.getStarred(SuperUtil.decrypt(mPassword.login))
 
     override val date: String
-        get() = TImeUtils.getDateFromGmt(SuperUtil.decrypt(mNote.date))
+        get() = TImeUtils.getDateFromGmt(SuperUtil.decrypt(mPassword.date))
 
-    override val image: ByteArray?
-        get() = mNote.image
+    override val password: String
+        get() = SuperUtil.decrypt(mPassword.password)
 }

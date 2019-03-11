@@ -8,7 +8,7 @@ import android.widget.Toast
 
 import com.cray.software.passwords.R
 import com.cray.software.passwords.databinding.FragmentExportSettingsBinding
-import com.cray.software.passwords.fragments.NestedFragment
+import com.cray.software.passwords.modern_ui.NestedFragment
 import com.cray.software.passwords.interfaces.Module
 import com.cray.software.passwords.utils.Prefs
 

@@ -5,7 +5,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,7 +16,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 
 import com.cray.software.passwords.databinding.FragmentHomeBinding
-import com.cray.software.passwords.fragments.BaseFragment
+import com.cray.software.passwords.modern_ui.BaseFragment
 import com.cray.software.passwords.helpers.DataProvider
 import com.cray.software.passwords.helpers.ListInterface
 import com.cray.software.passwords.helpers.Utils
@@ -26,7 +25,7 @@ import com.cray.software.passwords.interfaces.SimpleListener
 import com.cray.software.passwords.interfaces.SyncListener
 import com.cray.software.passwords.notes.CreateNoteActivity
 import com.cray.software.passwords.passwords.ManagePassword
-import com.cray.software.passwords.passwords.PasswordListInterface
+import com.cray.software.passwords.data.PasswordListInterface
 import com.cray.software.passwords.passwords.PasswordsRecyclerAdapter
 import com.cray.software.passwords.tasks.DeleteNoteTask
 import com.cray.software.passwords.tasks.DeleteTask

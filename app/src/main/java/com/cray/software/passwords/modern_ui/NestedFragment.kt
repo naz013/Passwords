@@ -1,6 +1,4 @@
-package com.cray.software.passwords.fragments
-
-import android.view.View
+package com.cray.software.passwords.modern_ui
 
 /**
  * Copyright 2017 Nazar Suhovich
@@ -21,14 +19,4 @@ import android.view.View
  * limitations under the License.
  */
 
-interface FragmentInterface {
-    fun setCurrent(fragment: BaseFragment)
-
-    fun setTitle(title: String)
-
-    fun setClick(clickListener: View.OnClickListener?)
-
-    fun moveBack()
-
-    fun openScreen(fragment: BaseFragment, tag: String)
-}
+abstract class NestedFragment : BaseFragment()

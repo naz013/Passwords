@@ -1,4 +1,6 @@
-package com.cray.software.passwords.fragments
+package com.cray.software.passwords.data
+
+import com.cray.software.passwords.helpers.ListInterface
 
 /**
  * Copyright 2017 Nazar Suhovich
@@ -19,4 +21,6 @@ package com.cray.software.passwords.fragments
  * limitations under the License.
  */
 
-abstract class NestedFragment : BaseFragment()
+interface NoteListInterface : ListInterface {
+    val image: ByteArray
+}
