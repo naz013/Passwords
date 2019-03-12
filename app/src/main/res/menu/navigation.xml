@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/actionHome"
+        android:icon="@drawable/ic_home_icon_silhouette"
+        android:title="@string/home"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/actionPasswords"
+        android:icon="@drawable/ic_vpn_key_black_24dp"
+        android:title="@string/passwords"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/actionNotes"
+        android:icon="@drawable/ic_black_notes_interface_square_symbol_with_spring"
+        android:title="@string/notes"
+        app:showAsAction="ifRoom" />
+</menu>

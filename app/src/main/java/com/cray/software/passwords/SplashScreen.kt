@@ -8,7 +8,7 @@ import com.cray.software.passwords.helpers.SyncHelper
 import com.cray.software.passwords.interfaces.Constants
 import com.cray.software.passwords.login.ActivityLogin
 import com.cray.software.passwords.login.ActivitySignUp
-import com.cray.software.passwords.utils.Prefs
+import com.cray.software.passwords.utils.PrefsConstants
 import com.cray.software.passwords.utils.ThemedActivity
 import java.io.File
 
@@ -36,9 +36,9 @@ class SplashScreen : ThemedActivity() {
             }
             val prefs = File("$sdPathDr/prefs.xml")
             if (prefs.exists()) {
-                Prefs.getInstance(this).loadSharedPreferencesFromFile(prefs)
+                this.prefs.loadSharedPreferencesFromFile(prefs)
             } else {
-                Prefs.getInstance(this).saveSharedPreferencesToFile(prefs)
+                this.prefs.saveSharedPreferencesToFile(prefs)
             }
         }
     }
@@ -54,7 +54,7 @@ class SplashScreen : ThemedActivity() {
     }
 
     private fun checkKeys() {
-        val settings = File("/data/data/" + packageName + "/shared_prefs/" + Prefs.LOGIN_PREFS + ".xml")
+        val settings = File("/data/data/" + packageName + "/shared_prefs/" + PrefsConstants.LOGIN_PREFS + ".xml")
         if (settings.exists()) {
             val loadedStr = prefs.isPassString
             if (loadedStr) {
@@ -63,7 +63,7 @@ class SplashScreen : ThemedActivity() {
                 attachDouble()
             }
         } else {
-            val appSettings = getSharedPreferences(Prefs.LOGIN_PREFS, Context.MODE_PRIVATE)
+            val appSettings = getSharedPreferences(PrefsConstants.LOGIN_PREFS, Context.MODE_PRIVATE)
             val ed = appSettings.edit()
             ed.apply()
             attachDouble()

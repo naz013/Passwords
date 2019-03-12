@@ -180,4 +180,6 @@
     <string name="dark">Dark</string>
     <string name="amoled" translatable="false">AMOLED</string>
     <string name="delete_with_backup">Delete with backup</string>
+    <string name="new_note">New note</string>
+    <string name="new_password">New password</string>
 </resources>

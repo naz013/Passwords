@@ -1,8 +1,6 @@
 package com.cray.software.passwords.data
 
-import com.cray.software.passwords.helpers.DataProvider
 import com.cray.software.passwords.helpers.TImeUtils
-import com.cray.software.passwords.passwords.PasswordsRecyclerAdapter
 import com.cray.software.passwords.utils.SuperUtil
 
 /**
@@ -33,13 +31,15 @@ class PasswordInterfaceImpl(private val mPassword: Password) : PasswordListInter
         get() = mPassword.id
 
     override val viewType: Int
-        get() = PasswordsRecyclerAdapter.PASSWORD
+        get() = 0
+//        get() = PasswordsRecyclerAdapter.PASSWORD
 
     override val title: String
         get() = SuperUtil.decrypt(mPassword.title)
 
     override val login: String
-        get() = DataProvider.getStarred(SuperUtil.decrypt(mPassword.login))
+        get() = ""
+//        get() = DataProvider.getStarred(SuperUtil.decrypt(mPassword.login))
 
     override val date: String
         get() = TImeUtils.getDateFromGmt(SuperUtil.decrypt(mPassword.date))

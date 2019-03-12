@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/actionHome">
+
+    <fragment
+        android:id="@+id/actionHome"
+        android:name="com.cray.software.passwords.modern_ui.home.HomeFragment"
+        android:label="@string/home"
+        tools:layout="@layout/home_fragment" />
+    <fragment
+        android:id="@+id/actionPasswords"
+        android:name="com.cray.software.passwords.modern_ui.passwords.PasswordsFragment"
+        android:label="@string/passwords"
+        tools:layout="@layout/passwords_fragment" >
+        <action
+            android:id="@+id/action_passwordsFragment_to_createPasswordFragment"
+            app:destination="@id/createPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/actionNotes"
+        android:name="com.cray.software.passwords.modern_ui.notes.NotesFragment"
+        android:label="@string/notes"
+        tools:layout="@layout/notes_fragment" >
+        <action
+            android:id="@+id/action_notesFragment_to_createNoteFragment"
+            app:destination="@id/createNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createNoteFragment"
+        android:name="com.cray.software.passwords.modern_ui.notes.create.CreateNoteFragment"
+        android:label="@string/new_note"
+        tools:layout="@layout/create_note_fragment" />
+    <fragment
+        android:id="@+id/createPasswordFragment"
+        android:name="com.cray.software.passwords.modern_ui.passwords.create.CreatePasswordFragment"
+        android:label="@string/new_password"
+        tools:layout="@layout/create_password_fragment" />
+</navigation>

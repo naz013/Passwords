@@ -36,7 +36,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        themeUtil = ThemeUtil.getInstance(context)
+//        themeUtil = ThemeUtil.getInstance(context)
     }
 
     private fun setBackground() {
@@ -67,19 +67,5 @@ abstract class BaseFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         onFragmentResume()
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        if (anInterface == null) {
-            anInterface = context as FragmentInterface?
-        }
-    }
-
-    override fun onAttach(activity: Activity?) {
-        super.onAttach(activity)
-        if (anInterface == null) {
-            anInterface = activity as FragmentInterface?
-        }
     }
 }

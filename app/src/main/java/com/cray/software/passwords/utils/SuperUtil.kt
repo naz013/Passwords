@@ -5,17 +5,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.net.Uri
-import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Base64
 import android.widget.Toast
-
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-
 import java.io.UnsupportedEncodingException
+import java.nio.charset.Charset
 
 /**
  * Copyright 2016 Nazar Suhovich
@@ -59,7 +57,6 @@ object SuperUtil {
     fun checkGooglePlayServicesAvailability(a: AppCompatActivity): Boolean {
         val googleAPI = GoogleApiAvailability.getInstance()
         val result = googleAPI.isGooglePlayServicesAvailable(a)
-        LogUtil.d(TAG, "Result is: $result")
         if (result != ConnectionResult.SUCCESS) {
             if (googleAPI.isUserResolvableError(result)) {
                 googleAPI.getErrorDialog(a, result, 69).show()
@@ -104,7 +101,7 @@ object SuperUtil {
         var result = ""
         val byte_string = Base64.decode(string, Base64.DEFAULT)
         try {
-            result = String(byte_string, "UTF-8")
+            result = String(byte_string, Charset.forName("UTF-8"))
         } catch (e1: UnsupportedEncodingException) {
             e1.printStackTrace()
         }

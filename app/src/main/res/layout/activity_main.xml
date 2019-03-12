@@ -2,52 +2,32 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:fitsSystemWindows="true">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBar"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="?attr/colorPrimary" />
+
+        <fragment
+            android:id="@+id/mainNavigationFragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/main_nav" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/navigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/HomeWhite.AppBarOverlay">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/HomeWhite.PopupOverlay" />
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <FrameLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_bar"
-            android:layout_below="@+id/appBar" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/bottom_bar"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_add_white_24dp"
-            app:backgroundTint="?attr/colorAccent"
-            app:fabSize="normal" />
-
-        <com.roughike.bottombar.BottomBar
-            android:id="@+id/bottom_bar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_alignParentBottom="true"
-            app:bb_behavior="iconsOnly"
-            app:bb_tabXmlResource="@xml/bars" />
-    </RelativeLayout>
+            android:background="?android:attr/windowBackground"
+            app:menu="@menu/navigation" />
+    </LinearLayout>
 </layout>
