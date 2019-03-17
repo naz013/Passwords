@@ -20,6 +20,7 @@ package com.cray.software.passwords.helpers
  */
 
 interface ListInterface {
+
     val color: Int
 
     val id: Long

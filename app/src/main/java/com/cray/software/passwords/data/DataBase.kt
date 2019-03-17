@@ -6,15 +6,18 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
+import android.os.Looper
 
 class DataBase(private val context: Context) {
+
+    private val observers: MutableList<DbObserver> = mutableListOf()
 
     private var dbHelper: DBHelper? = null
     var database: SQLiteDatabase? = null
         private set
 
     private val isOpen: Boolean
-        get() = database != null && database?.isOpen == true
+        get() = database?.isOpen == true
 
     inner class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
 
@@ -30,6 +33,22 @@ class DataBase(private val context: Context) {
         }
     }
 
+    fun addObserver(observer: DbObserver) {
+        if (!observers.contains(observer)) {
+            observers.add(observer)
+        }
+    }
+
+    fun removeObserver(observer: DbObserver) {
+        if (observers.contains(observer)) {
+            observers.remove(observer)
+        }
+    }
+
+    private fun notifyObservers() {
+        for (o in observers) o.onChanged()
+    }
+
     fun open(): DataBase {
         dbHelper = DBHelper(context)
         database = dbHelper?.writableDatabase
@@ -41,7 +60,14 @@ class DataBase(private val context: Context) {
         dbHelper?.close()
     }
 
+    private fun checkMain() {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            throw IllegalStateException("DB operations not allowed on main thread!")
+        }
+    }
+
     fun saveNote(item: NoteItem) {
+        checkMain()
         try {
             openGuard()
             val cv = ContentValues()
@@ -55,20 +81,23 @@ class DataBase(private val context: Context) {
             } else {
                 database?.update(TABLE_NOTES_NAME, cv, COLUMN_ID + "=" + item.id, null)
             }
+            notifyObservers()
         } catch (e: Exception) {
         }
     }
 
-    fun deleteNote(rowId: Long): Boolean {
+    fun deleteNote(rowId: Long) {
+        checkMain()
         return try {
             openGuard()
-            database?.delete(TABLE_NOTES_NAME, "$COLUMN_ID=$rowId", null) ?: 0 > 0
+            database?.delete(TABLE_NOTES_NAME, "$COLUMN_ID=$rowId", null) ?: 0
+            notifyObservers()
         } catch (e: Exception) {
-            false
         }
     }
 
     fun getNote(rowId: Long): NoteItem? {
+        checkMain()
         var item: NoteItem? = null
         try {
             openGuard()
@@ -84,6 +113,7 @@ class DataBase(private val context: Context) {
     }
 
     fun getNotes(): List<NoteItem> {
+        checkMain()
         return try {
             openGuard()
             val list = mutableListOf<NoteItem>()
@@ -101,7 +131,8 @@ class DataBase(private val context: Context) {
         }
     }
 
-    fun savePassword(password: Password): Long {
+    fun savePassword(password: Password) {
+        checkMain()
         try {
             openGuard()
             val cv = ContentValues()
@@ -113,27 +144,28 @@ class DataBase(private val context: Context) {
             cv.put(COLUMN_DATE, password.date)
             cv.put(COLUMN_TECHNICAL, password.color)
             cv.put(COLUMN_PIC_SEL, password.uuId)
-            return if (password.id == 0L) {
+            if (password.id == 0L) {
                 database?.insert(TABLE_NAME, null, cv) ?: 0L
             } else {
                 database?.update(TABLE_NAME, cv, COLUMN_ID + "=" + password.id, null)
-                password.id
             }
+            notifyObservers()
         } catch (e: Exception) {
-            return 0L
         }
     }
 
-    fun deletePass(rowId: Long): Boolean {
-        return try {
+    fun deletePass(rowId: Long) {
+        checkMain()
+        try {
             openGuard()
-            database?.delete(TABLE_NAME, "$COLUMN_ID=$rowId", null) ?: 0 > 0
+            database?.delete(TABLE_NAME, "$COLUMN_ID=$rowId", null)
+            notifyObservers()
         } catch (e: Exception) {
-            false
         }
     }
 
     fun getPasswords(): List<Password> {
+        checkMain()
         return try {
             openGuard()
             val list = mutableListOf<Password>()
@@ -152,6 +184,7 @@ class DataBase(private val context: Context) {
     }
 
     fun getPassword(rowId: Long): Password? {
+        checkMain()
         return try {
             openGuard()
             val c = database?.query(TABLE_NAME, null, "$COLUMN_ID=$rowId", null, null, null, null, null)
