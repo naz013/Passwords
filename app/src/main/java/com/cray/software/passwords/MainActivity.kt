@@ -18,11 +18,6 @@ class MainActivity : ThemedActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        setSupportActionBar(binding.toolbar)
-
-        val navController = findNavController(R.id.mainNavigationFragment)
-        setupActionBarWithNavController(navController)
-        NavigationUI.setupWithNavController(binding.navigationView, navController)
     }
 
     override fun onSupportNavigateUp() =
