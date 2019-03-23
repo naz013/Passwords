@@ -13,7 +13,7 @@ class DataBase(private val context: Context) {
     private val observers: MutableList<DbObserver> = mutableListOf()
 
     private var dbHelper: DBHelper? = null
-    var database: SQLiteDatabase? = null
+    private var database: SQLiteDatabase? = null
         private set
 
     private val isOpen: Boolean
