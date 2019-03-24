@@ -53,9 +53,9 @@ class Prefs(context: Context) : SharedPrefs(context) {
         get() = getBoolean(PrefsConstants.AUTO_SYNC)
         set(value) = putBoolean(PrefsConstants.AUTO_SYNC, value)
 
-    var appThemeColor: Int
-        get() = getInt(PrefsConstants.APP_THEME_COLOR)
-        set(value) = putInt(PrefsConstants.APP_THEME_COLOR, value)
+//    var appThemeColor: Int
+//        get() = getInt(PrefsConstants.APP_THEME_COLOR)
+//        set(value) = putInt(PrefsConstants.APP_THEME_COLOR, value)
 
     var appTheme: Int
         get() = getInt(PrefsConstants.APP_THEME)

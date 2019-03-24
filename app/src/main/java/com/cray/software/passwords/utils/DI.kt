@@ -9,6 +9,7 @@ fun utilModule() = module {
     single { DataBase(androidContext()) }
     single { Prefs(androidContext()) }
     single { ThemeUtil(androidContext(), get()) }
+    single { Dialogues(get()) }
 }
 
 fun viewModels() = module {
