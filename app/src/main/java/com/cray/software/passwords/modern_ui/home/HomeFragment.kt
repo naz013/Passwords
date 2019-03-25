@@ -1,31 +1,52 @@
 package com.cray.software.passwords.modern_ui.home
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import com.cray.software.passwords.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.cray.software.passwords.databinding.HomeFragmentBinding
+import com.cray.software.passwords.helpers.ListInterface
+import com.cray.software.passwords.modern_ui.list.DataAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
-
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by viewModel()
+    private val adapter = DataAdapter()
+    private lateinit var binding: HomeFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.home_fragment, container, false)
+        binding = HomeFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.buttonSettings.setOnClickListener {  }
+        binding.cardPasswords.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionActionHomeToActionPasswords()) }
+        binding.cardNotes.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionActionHomeToActionNotes()) }
+
+        binding.dataList.layoutManager = LinearLayoutManager(context)
+        binding.dataList.adapter = adapter
+
+        setupViewModel()
     }
 
+    private fun setupViewModel() {
+        viewModel.homeLiveData.observe(this, Observer {
+            if (it != null) {
+                showData(it)
+            }
+        })
+    }
+
+    private fun showData(list: List<ListInterface>) {
+        adapter.setData(list)
+    }
 }

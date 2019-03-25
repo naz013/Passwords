@@ -9,7 +9,14 @@
         android:id="@+id/actionHome"
         android:name="com.cray.software.passwords.modern_ui.home.HomeFragment"
         android:label="@string/home"
-        tools:layout="@layout/home_fragment" />
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_actionHome_to_actionPasswords"
+            app:destination="@id/actionPasswords" />
+        <action
+            android:id="@+id/action_actionHome_to_actionNotes"
+            app:destination="@id/actionNotes" />
+    </fragment>
     <fragment
         android:id="@+id/actionPasswords"
         android:name="com.cray.software.passwords.modern_ui.passwords.PasswordsFragment"

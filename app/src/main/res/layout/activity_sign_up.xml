@@ -7,12 +7,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/colorPrimary"
-        app:correctStateColor="@color/colorBlack"
+        app:correctStateColor="@color/pureBlack"
         app:firstInputTip="@string/enter_pass"
-        app:normalStateColor="@color/colorBlack"
-        app:numberTextColor="@color/colorBlack"
+        app:normalStateColor="@color/pureBlack"
+        app:numberTextColor="@color/pureBlack"
         app:passcodeViewType="set_passcode"
         app:secondInputTip="@string/repeat_pass"
         app:wrongInputTip="@string/password_not_match"
-        app:wrongStateColor="@color/colorBlack" />
+        app:wrongStateColor="@color/pureBlack" />
 </layout>

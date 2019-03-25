@@ -16,17 +16,6 @@
         tools:replace="android:label"
         android:label="@string/app_name"
         android:icon="@drawable/ic_launcher"
-        android:theme="@style/HomeWhite">
-
-        <activity
-            android:name="com.cray.software.passwords.SplashScreen"
-            android:label="@string/app_name" android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-    </application>
+        android:theme="@style/PureWhite"
+        tools:ignore="GoogleAppIndexingWarning" />
 </manifest>

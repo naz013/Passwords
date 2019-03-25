@@ -23,6 +23,10 @@ class SplashScreen : ThemedActivity() {
         }
 
         prefs.checkPrefs()
+    }
+
+    override fun onResume() {
+        super.onResume()
         checkKeys()
     }
 
