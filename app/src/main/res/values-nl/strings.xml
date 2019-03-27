@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="copyright">2018 © Nazar Suhovich</string>
+    <string name="app_name">Passwords PRO</string>
+    <string name="app_name_free">Passwords</string>
+    <string name="action_settings">Instellingen</string>
+    <string name="enter_button">Starten</string>
+    <string name="repeat_pass">Bevestig het wachtwoord</string>
+    <string name="enter_pass">Voer een wachtwoord in</string>
+    <string name="activity_title">Wachtwoord toevoegen</string>
+    <string name="item_title">Voer een titel in</string>
+    <string name="item_login">Gebruikersnaam/E-mailadres</string>
+    <string name="item_password">Wachtwoord</string>
+    <string name="item_link">URL</string>
+    <string name="item_comment">Opmerkingen</string>
+    <string name="item_date">Datum</string>
+    <string name="view_act_item_close_in">Sluiten</string>
+    <string name="set_att_if_all_field_empty">Mag niet blanco zijn!</string>
+    <string name="set_att_if_inserted_not_match_saved">Geen overeenkomst!</string>
+    <string name="show_pass_check">Wachtwoord tonen</string>
+    <string name="url_part">http://www.</string>
+    <string name="edit_title_is_empty">Je moet een titel opgeven.</string>
+    <string name="edit_login_is_empty">Je moet een gebruikersnaam of e-mailadres opgeven.</string>
+    <string name="edit_pass_is_empty">Je moet een wachtwoord opgeven.</string>
+    <string name="menu_about">Over</string>
+    <string name="menu_feedback">Feedback versturen</string>
+
+    <string name="back_button_toast">Druk nogmaals om af te sluiten</string>
+
+    <string name="about_dialog_title">App-wachtwoord wijzigen</string>
+    <string name="dialog_old_text">Voer het oude wachtwoord in</string>
+    <string name="dialog_new_text">Voer een nieuw wachtwoord in</string>
+    <string name="change_pass_length">Lengte</string>
+
+    <string name="single_screen_forgot_password_title">Wachtwoord vergeten\?</string>
+
+    <string name="restore_dialog_enter_keyword">Voer een trefwoord in</string>
+    <string name="restore_dialog_show_button">TONEN</string>
+    <string name="received_pass_title">Je app-wachtwoord</string>
+    <string name="button_ok">Oké</string>
+    <string name="overflow_main_more">Druk om meer opties te bekijken…</string>
+    <string name="overflow_main_new">Druk om een nieuw wachtwoord toe te voegen</string>
+    <string name="overflow_button_next">Volgende</string>
+    <string name="overflow_main_slide">of veeg naar rechts.</string>
+    <string name="overflow_add_sticker">Kies een stickerkleur</string>
+    <string name="overflow_add_save_plus">of druk om dit item op te slaan en een nieuw wachtwoordformulier te openen</string>
+    <string name="overflow_add_save">Druk om wachtwoord op te slaan…</string>
+    <string name="overflow_add_fields">Voer de benodigde velden in en…</string>
+    <string name="overflow_list_explanation">Veeg een item naar links of rechts om het te verwijderen. \n \n Trek omlaag om te back-uppen en opgeslagen wachtwoorden te herstellen.</string>
+
+    <string name="keyword_not_match">Trefwoord komt niet overeen</string>
+    <string name="help_overlay_button_skip">Overslaan</string>
+
+    <string name="add_item_save_and_clean">Sla dit op en open een nieuw formulier</string>
+    <string name="add_item_save">Opslaan</string>
+
+    <string name="item_deleted">Verwijderd</string>
+    <string name="gen_title">Wachtwoord genereren</string>
+    <string name="gen_symbols">Symbolen</string>
+    <string name="gen_button">GENEREREN</string>
+    <string name="gen_insert">PLAKKEN</string>
+    <string name="pass_length">Het wachtwoord moet langer zijn dan 0 tekens</string>
+    <string name="pass_checks">Vink minimaal één item aan</string>
+    <string name="export_settings_block">Exporteren en synchroniseren</string>
+    <string name="interface_block">Uiterlijk</string>
+    <string name="other_settings">Overig</string>
+    <string name="security_block">Beveiliging</string>
+    <string name="help_settings_title">Hulp</string>
+    <string name="rate_settings_title">App beoordelen</string>
+    <string name="license_settings_title">Licenties</string>
+    <string name="cloud_drives_settings_title">Cloudschijven</string>
+    <string name="auto_backup_title">Automatisch back-uppen</string>
+    <string name="auto_backup_explanation">Vink aan om wachtwoorden automatisch te back-uppen</string>
+    <string name="auto_sync_title">Automatisch synchroniseren</string>
+    <string name="auto_sync_explanation">Vink aan om wachtwoorden automatisch te synchroniseren</string>
+    <string name="button_close">SLUITEN</string>
+    <string name="app_theme_explanation">Kies het appthema</string>
+    <string name="app_theme_title">Themakleur</string>
+    <string name="sync_finished_message">Synchronisatie voltooid</string>
+    <string name="login_button">INLOGGEN</string>
+    <string name="google_drive_title">Google Drive</string>
+    <string name="logout_button">UITLOGGEN</string>
+    <string name="loading_app_message">Bezig met laden van app…</string>
+    <string name="rate_question">Wil je deze app beoordelen?</string>
+    <string name="button_never">NOOIT</string>
+    <string name="button_later">LATER</string>
+    <string name="button_rate">BEOORDELEN</string>
+    <string name="change_password_settings_title">Wachtwoord wijzigen</string>
+    <string name="password_length_title">Lengte</string>
+    <string name="password_length_explanation">Wachtwoordlengte aanpassen</string>
+    <string name="keyword_setting_title">Trefwoord</string>
+    <string name="button_save">OPSLAAN</string>
+    <string name="keyword_dialog">Voer een trefwoord in</string>
+    <string name="not_have_restore_keyword">Je hebt geen opgeslagen trefwoorden!</string>
+    <string name="backup_file_explanation">Vink aan om back-upbestanden te verwijderen middels vegen</string>
+    <string name="backup_file_title">Back-upbestand verwijderen</string>
+    <string name="date_format_title">Datumopmaak</string>
+    <string name="date_format_dialog_title">Kies de datumopmaak</string>
+    <string name="list_item_warming">Kies één van de items</string>
+    <string name="wait_message">Even geduld…</string>
+    <string name="sync_start_message">Synchronisatie is gestart</string>
+    <string name="dialog_button_delete">VERWIJDEREN</string>
+    <string name="open_app_dialog_button">OPENEN</string>
+    <string name="other_version_message">Andere versie van deze app aangetroffen</string>
+    <string name="sync_action_title">Synchroniseren</string>
+    <string name="buy_button">AANSCHAFFEN</string>
+    <string name="verify_message">Bezig met verifiëren…</string>
+    <string name="buy_pro_title">Pro-versie aanschaffen</string>
+    <string name="delete_password_message">Bezig met verwijderen van wachtwoord…</string>
+
+    <array name="settings_list">
+        <item>@string/interface_block</item>
+        <item>@string/security_block</item>
+        <item>@string/export_settings_block</item>
+        <item>@string/other_settings</item>
+    </array>
+
+    <string-array name="date_formats">
+        <item>EU (15.01.2014)</item>
+        <item>US (01/15/2014)</item>
+        <item>CN (2014–01–15)</item>
+    </string-array>
+    <string name="menu_sort_title">Sorteren</string>
+    <string name="sort_by_date_az">Op datum (A-Z)</string>
+    <string name="sort_by_date_za">Op datum (Z-A)</string>
+    <string name="sort_by_title_az">Op naam (A-Z)</string>
+    <string name="sort_by_title_za">Op naam (Z-A)</string>
+    <string name="string_more_apps">Meer apps</string>
+    <string name="no_passwords">Geen wachtwoorden</string>
+    <string name="choose_color">Kies een kleur</string>
+
+    <string name="white">Wit</string>
+    <string name="red">Rood</string>
+    <string name="purple">Paars</string>
+    <string name="green_light">Lichtgroen</string>
+    <string name="green">Groen</string>
+    <string name="blue_light">Lichtblauw</string>
+    <string name="blue">Blauw</string>
+    <string name="yellow">Geel</string>
+    <string name="orange">Oranje</string>
+    <string name="cyan">Cyaan</string>
+    <string name="pink">Roze</string>
+    <string name="amber">Amber</string>
+    <string name="lime">Limoen</string>
+    <string name="indigo">Indigo</string>
+    <string name="dark_orange">Donkeroranje</string>
+    <string name="dark_purple">Donkerpaars</string>
+    <string name="teal">Donkergroen</string>
+    <string name="delete">Verwijderen</string>
+    <string name="edit">Bewerken</string>
+    <string name="open_source_licenses">Opensourcelicenties</string>
+    <string name="saved">Opgeslagen</string>
+    <string name="removed">Verwijderd</string>
+    <string name="yes">Ja</string>
+    <string name="delete_this_password">Wil je dit wachtwoord verwijderen?</string>
+    <string name="no">Nee</string>
+    <string name="deleting_note">Bezig met verwijderen van notitie…</string>
+    <string name="password_not_match">Wachtwoorden komen niet overeen</string>
+    <string name="note">Notitie</string>
+    <string name="must_be_not_empty">Mag niet blanco zijn</string>
+    <string name="delete_this_note">Notitie verwijderen</string>
+    <string name="image">Afbeelding</string>
+    <string name="take_a_shot">Maak een foto</string>
+    <string name="from_gallery">Kies uit de galerij</string>
+    <string name="dropbox_app_not_installed">De Dropbox-app is niet geïnstalleerd</string>
+    <string name="copy_login">Gebruikersnaam kopiëren</string>
+    <string name="copy_password">Wachtwoord kopiëren</string>
+    <string name="copied">Gekopieerd</string>
+    <string name="home">Startpagina</string>
+    <string name="passwords">Wachtwoorden</string>
+    <string name="no_notes">Geen notities</string>
+    <string name="notes">Notities</string>
+    <string name="copy_note">Notitietekst kopiëren</string>
+    <string name="this_feature_avilable_for_pro">Deze functie is alleen beschikbaar in de Pro-versie</string>
+
+    <string name="theme">Thema</string>
+    <string name="auto">Automatisch</string>
+    <string name="theme_color">Themakleur</string>
+    <string name="light">Licht</string>
+    <string name="dark">Donker</string>
+    <string name="amoled" translatable="false">AMOLED</string>
+    <string name="delete_with_backup">Verwijderen, incl. back-up</string>
+</resources>
