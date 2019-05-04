@@ -28,7 +28,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonSettings.setOnClickListener {  }
+        binding.buttonSettings.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionActionHomeToSettingsFragment()) }
         binding.cardPasswords.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionActionHomeToActionPasswords()) }
         binding.cardNotes.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionActionHomeToActionNotes()) }
 

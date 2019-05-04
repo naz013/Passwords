@@ -2,6 +2,7 @@ package com.cray.software.passwords.utils
 
 import com.cray.software.passwords.data.DataBase
 import com.cray.software.passwords.modern_ui.home.HomeViewModel
+import com.cray.software.passwords.modern_ui.passwords.PasswordsViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.Module
@@ -16,6 +17,7 @@ fun utilModule() = module {
 
 fun viewModels() = module {
     viewModel { HomeViewModel() }
+    viewModel { PasswordsViewModel() }
 }
 
 fun components(): List<Module> {

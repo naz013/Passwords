@@ -14,7 +14,6 @@ class DataBase(private val context: Context) {
 
     private var dbHelper: DBHelper? = null
     private var database: SQLiteDatabase? = null
-        private set
 
     private val isOpen: Boolean
         get() = database?.isOpen == true
@@ -209,25 +208,25 @@ class DataBase(private val context: Context) {
     }
 
     private fun getFromCursor(c: Cursor): Password {
-        val title = c.getString(c.getColumnIndex(DataBase.COLUMN_TITLE))
-        val login = c.getString(c.getColumnIndex(DataBase.COLUMN_LOGIN))
-        val password = c.getString(c.getColumnIndex(DataBase.COLUMN_PASSWORD))
-        val url = c.getString(c.getColumnIndex(DataBase.COLUMN_URL))
-        val comment = c.getString(c.getColumnIndex(DataBase.COLUMN_COMMENT))
-        val date = c.getString(c.getColumnIndex(DataBase.COLUMN_DATE))
-        val uuId = c.getString(c.getColumnIndex(DataBase.COLUMN_PIC_SEL))
-        val color = c.getInt(c.getColumnIndex(DataBase.COLUMN_TECHNICAL))
-        val id = c.getLong(c.getColumnIndex(DataBase.COLUMN_ID))
+        val title = c.getString(c.getColumnIndex(COLUMN_TITLE))
+        val login = c.getString(c.getColumnIndex(COLUMN_LOGIN))
+        val password = c.getString(c.getColumnIndex(COLUMN_PASSWORD))
+        val url = c.getString(c.getColumnIndex(COLUMN_URL))
+        val comment = c.getString(c.getColumnIndex(COLUMN_COMMENT))
+        val date = c.getString(c.getColumnIndex(COLUMN_DATE))
+        val uuId = c.getString(c.getColumnIndex(COLUMN_PIC_SEL))
+        val color = c.getInt(c.getColumnIndex(COLUMN_TECHNICAL))
+        val id = c.getLong(c.getColumnIndex(COLUMN_ID))
         return Password(title, date, login, comment, url, id, color, password, uuId)
     }
 
     private fun getNoteFromCursor(c: Cursor): NoteItem {
-        val title = c.getString(c.getColumnIndex(DataBase.COLUMN_SUMMARY))
-        val image = c.getBlob(c.getColumnIndex(DataBase.COLUMN_IMAGE))
-        val date = c.getString(c.getColumnIndex(DataBase.COLUMN_DT))
-        val uuId = c.getString(c.getColumnIndex(DataBase.COLUMN_UUID))
-        val color = c.getInt(c.getColumnIndex(DataBase.COLUMN_COLOR))
-        val id = c.getLong(c.getColumnIndex(DataBase.COLUMN_ID))
+        val title = c.getString(c.getColumnIndex(COLUMN_SUMMARY))
+        val image = c.getBlob(c.getColumnIndex(COLUMN_IMAGE))
+        val date = c.getString(c.getColumnIndex(COLUMN_DT))
+        val uuId = c.getString(c.getColumnIndex(COLUMN_UUID))
+        val color = c.getInt(c.getColumnIndex(COLUMN_COLOR))
+        val id = c.getLong(c.getColumnIndex(COLUMN_ID))
         return NoteItem(title, uuId, date, color, image, id)
     }
 

@@ -5,6 +5,7 @@ import com.cray.software.passwords.utils.components
 import org.koin.android.ext.android.startKoin
 import timber.log.Timber
 
+@Suppress("unused")
 class PasswordsApp : Application() {
 
     override fun onCreate() {

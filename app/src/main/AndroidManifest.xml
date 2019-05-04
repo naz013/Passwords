@@ -22,16 +22,16 @@
     <application
         android:name=".PasswordsApp"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name_free"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/PureWhite">
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity
-            android:name=".MainActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".login.ActivityLogin" />
         <activity android:name=".login.ActivitySignUp" />
 
@@ -60,8 +60,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.cray.software.passwords.SplashScreen">
+        <activity android:name="com.cray.software.passwords.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_actionHome_to_actionNotes"
             app:destination="@id/actionNotes" />
+        <action
+            android:id="@+id/action_actionHome_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/actionPasswords"
@@ -45,4 +48,9 @@
         android:name="com.cray.software.passwords.modern_ui.passwords.create.CreatePasswordFragment"
         android:label="@string/new_password"
         tools:layout="@layout/create_password_fragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.cray.software.passwords.modern_ui.settings.SettingsFragment"
+        android:label="@string/action_settings"
+        tools:layout="@layout/fragment_settings"/>
 </navigation>

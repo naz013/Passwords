@@ -11,10 +11,6 @@ import com.cray.software.passwords.R
 
 class NotesFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = NotesFragment()
-    }
-
     private lateinit var viewModel: NotesViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

@@ -33,6 +33,7 @@
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:background="?selectableItemBackgroundBorderless"
+                android:scaleType="centerInside"
                 android:tint="?android:textColorPrimary"
                 app:srcCompat="@drawable/ic_settings" />
 
