@@ -42,12 +42,22 @@
         android:id="@+id/createNoteFragment"
         android:name="com.cray.software.passwords.modern_ui.notes.create.CreateNoteFragment"
         android:label="@string/new_note"
-        tools:layout="@layout/create_note_fragment" />
+        tools:layout="@layout/create_note_fragment" >
+        <argument
+            android:name="arg_id"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
     <fragment
         android:id="@+id/createPasswordFragment"
         android:name="com.cray.software.passwords.modern_ui.passwords.create.CreatePasswordFragment"
         android:label="@string/new_password"
-        tools:layout="@layout/create_password_fragment" />
+        tools:layout="@layout/create_password_fragment" >
+        <argument
+            android:name="arg_id"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.cray.software.passwords.modern_ui.settings.SettingsFragment"

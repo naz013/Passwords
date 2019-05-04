@@ -8,7 +8,8 @@ import com.cray.software.passwords.utils.launchDefault
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
-class HomeLiveDate(val addPasswords: Boolean = true, val addNotes: Boolean = true) : LiveData<List<ListInterface>>(), KoinComponent, DbObserver {
+class HomeLiveDate(private val addPasswords: Boolean = true, private val addNotes: Boolean = true)
+    : LiveData<List<ListInterface>>(), KoinComponent, DbObserver {
 
     private val db: DataBase by inject()
     private val prefs: Prefs by inject()
@@ -19,8 +20,7 @@ class HomeLiveDate(val addPasswords: Boolean = true, val addNotes: Boolean = tru
     }
 
     private fun sort(list: List<ListInterface>): List<ListInterface> {
-        val orderPrefs = prefs.orderBy
-        when (orderPrefs) {
+        when (prefs.orderBy) {
             Constants.ORDER_DATE_A_Z -> list.sortedBy { it.date }
             Constants.ORDER_DATE_Z_A -> list.sortedByDescending { it.date }
             Constants.ORDER_TITLE_A_Z -> list.sortedBy { it.title }
