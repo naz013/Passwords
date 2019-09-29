@@ -5,8 +5,8 @@ import com.cray.software.passwords.helpers.ListInterface
 import com.cray.software.passwords.interfaces.Constants
 import com.cray.software.passwords.utils.Prefs
 import com.cray.software.passwords.utils.launchDefault
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 class HomeLiveDate(private val addPasswords: Boolean = true, private val addNotes: Boolean = true)
     : LiveData<List<ListInterface>>(), KoinComponent, DbObserver {

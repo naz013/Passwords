@@ -6,16 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cray.software.passwords.databinding.HomeFragmentBinding
 import com.cray.software.passwords.helpers.ListInterface
 import com.cray.software.passwords.modern_ui.list.DataAdapter
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
-    private val viewModel: HomeViewModel by viewModel()
+    private val viewModel: HomeViewModel by lazy {
+        ViewModelProviders.of(this).get(HomeViewModel::class.java)
+    }
     private val adapter = DataAdapter()
     private lateinit var binding: HomeFragmentBinding
 

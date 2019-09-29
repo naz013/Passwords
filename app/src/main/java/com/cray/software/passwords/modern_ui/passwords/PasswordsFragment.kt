@@ -6,16 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cray.software.passwords.databinding.PasswordsFragmentBinding
 import com.cray.software.passwords.helpers.ListInterface
 import com.cray.software.passwords.modern_ui.list.DataAdapter
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PasswordsFragment : Fragment() {
 
-    private val viewModel: PasswordsViewModel by viewModel()
+    private val viewModel: PasswordsViewModel by lazy {
+        ViewModelProviders.of(this).get(PasswordsViewModel::class.java)
+    }
     private lateinit var binding: PasswordsFragmentBinding
     private val adapter = DataAdapter()
 
